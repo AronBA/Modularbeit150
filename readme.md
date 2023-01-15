@@ -1,6 +1,16 @@
 # Weather Plugin
 WIP
 
+# Docker
+### Ports
+Wordpress:8000
+PhPMyAdmin:8080
 
+```
+# create container
+$ docker-compose up -d
 
-Boilerplate: https://github.com/DevinVinson/WordPress-Plugin-Boilerplate
+# delete container
+$ docker-compose down --volumes
+
+``` 
