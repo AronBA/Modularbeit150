@@ -76,15 +76,52 @@ class WeatherApi
         return $result;
     }
     /**
-     * gets the results or makes a Get Request if they don't exist
+     * gets the results from the main section
      *
      * @return mixed all the temperatur data from the request in encoded json
      */
-    private function getDataTemperatur(){
-        if (!isset($this->result)){
-            $this->getWeatherData();
-        }
+    private function getDataMain(){
         return $this->result["main"];
+    }
+    /**
+     * gets the results from the weather section
+     *
+     * @return mixed all the weather data from the request in encoded json
+     */
+    private function getDataWeather(){
+        return $this->result["weather"];
+    }
+    /**
+     * gets the results from the coord section
+     *
+     * @return mixed all the coord data from the request in encoded json
+     */
+    private function getDataCoord(){
+        return $this->result["coord"];
+    }
+    /**
+     * gets the results from the wind section
+     *
+     * @return mixed all the wind data from the request in encoded json
+     */
+    private function getDataWind(){
+        return $this->result["wind"];
+    }
+    /**
+     * gets the visibilty, the max is 10'000
+     *
+     * @return int the visivility in meters.
+     */
+    public function getVisibility(){
+        return $this->result["visibility"];
+    }
+    /**
+     * gets procentage amount of clouds
+     *
+     * @return int amount of clouds in procent
+     */
+    public function getClouds(){
+        return $this->result["all"];
     }
     /**
      * Gets the Temperatur from the results
@@ -97,7 +134,7 @@ class WeatherApi
      * @return double the temperatur converted in a specific unit
      */
     public function getTemperatur(string $unit = "k"){
-        $temp = $this->getTemperaturData()["temp"];
+        $temp = $this->getDataMain()["temp"];
         switch ($unit){
             case "k":
                 return $temp;
@@ -106,6 +143,7 @@ class WeatherApi
             case "f":
                 return 1.8 * ($temp - 273.15) + 32;
         }
+        return null;
     }
     /**
      * Gets the max Temperatur from the results
@@ -118,7 +156,7 @@ class WeatherApi
      * @return double the max temperatur converted in a specific unit
      */
     public function getTemperaturMax(string $unit = "k"){
-        $temp = $this->getTemperaturData()["temp_Max"];
+        $temp = $this->getDataMain()["temp_Max"];
         switch ($unit){
             case "k":
                 return $temp;
@@ -127,6 +165,7 @@ class WeatherApi
             case "f":
                 return 1.8 * ($temp - 273.15) + 32;
         }
+        return null;
     }
     /**
      * Gets the min Temperatur from the results
@@ -139,7 +178,7 @@ class WeatherApi
      * @return double the min temperatur converted in a specific unit
      */
     public function getTemperaturMin(string $unit = "k"){
-        $temp = $this->getTemperaturData()["temp_Min"];
+        $temp = $this->getDataMain()["temp_Min"];
         switch ($unit){
             case "k":
                 return $temp;
@@ -148,6 +187,7 @@ class WeatherApi
             case "f":
                 return 1.8 * ($temp - 273.15) + 32;
         }
+        return null;
     }
     /**
      * Gets how the Temperatur feels like from the results
@@ -160,7 +200,7 @@ class WeatherApi
      * @return double how the temperatur feels like converted in a specific unit
      */
     public function getTemperaturFeelslike(string $unit = "k"){
-        $temp = $this->getTemperaturData()["feels_like"];
+        $temp = $this->getDataMain()["feels_like"];
         switch ($unit){
             case "k":
                 return $temp;
@@ -169,13 +209,26 @@ class WeatherApi
             case "f":
                 return 1.8 * ($temp - 273.15) + 32;
         }
+        return null;
+    }
+    /**
+     * @return string
+     */
+    public function getApikey(): string
+    {
+        return $this->apikey;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 }
-/* Example
-/$weatherapi = new Weatherapi("50e3d65a1f02700fcb69068f25d7521c");
-/$weatherapi->getData(12,12);
-echo $weatherapi->getTemperatur("c");
-*/
+
+
 
 
 
