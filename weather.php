@@ -48,6 +48,7 @@ if ( !class_exists( 'Weather' ) ) {
 
         function register() {
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
+            add_shortcode('temperatureWeather', array($this->shortcodes,'temperatureShortcode'));
         }
 
         function activate() {

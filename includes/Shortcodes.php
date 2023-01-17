@@ -23,6 +23,14 @@ class Shortcodes
             <p>Temperatur: $temperatur °</p>
         </div>";
         return $string;
+    }
 
+    function  temperatureShortcode(): string {
+        $this->api->getData(12, 12);
+        $temperature = $this->api->getTemperatur("c");
+        $icon = $this->api->getWeatherIcon();
+        $iconLink = "http://openweathermap.org/img/wn/$icon@2x.png";
+        $string = "<h2>We have a temperature of: $temperature <img src='$iconLink' alt='weather icon' /></h2>";
+        return  $string;
     }
 }
