@@ -39,8 +39,12 @@ if ( !class_exists( 'Weather' ) ) {
         public $plugin;
 
         function __construct() {
+            include_once "includes/Shortcodes.php";
             $this->plugin = plugin_basename( __FILE__ );
+            $shortcodes = new Shortcodes();
+            add_shortcode('testWeather', array($shortcodes,'testShortcode'));
         }
+
 
         function register() {
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
@@ -75,5 +79,7 @@ if ( !class_exists( 'Weather' ) ) {
 
     register_activation_hook( __FILE__, array( $weather, 'activate' ) );
     register_deactivation_hook( __FILE__, array( $weather, 'deactivate' ) );
+
+
 
 }
