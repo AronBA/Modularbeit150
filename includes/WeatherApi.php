@@ -94,7 +94,7 @@ class WeatherApi
      */
     private function getDataWeather(): mixed
     {
-        return $this->result["weather"];
+        return $this->result["weather"]["0"];
     }
     /**
      * gets the results from the coord section
