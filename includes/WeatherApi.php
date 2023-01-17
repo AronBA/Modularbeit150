@@ -24,7 +24,6 @@ class WeatherApi
     {
         $this->apikey = $apikey;
     }
-
     /**
      *
      * @param string $method the method of the api call
@@ -32,7 +31,7 @@ class WeatherApi
      * @param mixed $data data
      * @return bool|string|void the encoded result of an api call
      */
-    private function callAPI($method,$url,$data){
+    private function callAPI(string $method, string $url, mixed $data){
         $curl = curl_init();
         switch ($method){
             case "POST":
@@ -62,15 +61,19 @@ class WeatherApi
         curl_close($curl);
         return $result;
     }
+
     /**
      * Makes a Get Request to the API
      *
-     * @param    int               $lon         City geo location, longitude
-     * @param    int               $lat        City geo location, latitude
+     * @param int $lon City geo location, longitude
+     * @param int $lat City geo location, latitude
+     * @param string $lang the language of the result
      * @return mixed all the data from the request in encoded json
      */
-    public function getData(int $lon, int $lat){
-        $json=$this->callAPI('GET', "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$this->apikey", false);
+    public function getData(int $lon, int $lat,string $lang = "en"): mixed
+    {
+        $lang = "lang=$lang";
+        $json=$this->callAPI('GET', "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey", false);
         $result = json_decode($json, true);
         $this->result = $result;
         return $result;
@@ -80,7 +83,8 @@ class WeatherApi
      *
      * @return mixed all the temperatur data from the request in encoded json
      */
-    private function getDataMain(){
+    private function getDataMain(): mixed
+    {
         return $this->result["main"];
     }
     /**
@@ -88,7 +92,8 @@ class WeatherApi
      *
      * @return mixed all the weather data from the request in encoded json
      */
-    private function getDataWeather(){
+    private function getDataWeather(): mixed
+    {
         return $this->result["weather"];
     }
     /**
@@ -96,7 +101,8 @@ class WeatherApi
      *
      * @return mixed all the coord data from the request in encoded json
      */
-    private function getDataCoord(){
+    private function getDataCoord(): mixed
+    {
         return $this->result["coord"];
     }
     /**
@@ -104,7 +110,8 @@ class WeatherApi
      *
      * @return mixed all the wind data from the request in encoded json
      */
-    private function getDataWind(){
+    private function getDataWind(): mixed
+    {
         return $this->result["wind"];
     }
     /**
@@ -112,7 +119,8 @@ class WeatherApi
      *
      * @return int the visivility in meters.
      */
-    public function getVisibility(){
+    public function getVisibility(): int
+    {
         return $this->result["visibility"];
     }
     /**
@@ -120,96 +128,173 @@ class WeatherApi
      *
      * @return int amount of clouds in procent
      */
-    public function getClouds(){
+    public function getClouds(): int
+    {
         return $this->result["all"];
+    }
+    /**
+     * gets the name of the city
+     *
+     * @return string name of the city
+     */
+    public function getCity(): string
+    {
+        return $this->result["name"];
+    }
+    /**
+     * gets the name of the weather
+     *
+     * @return string the weather
+     */
+    public function getWeather(): string
+    {
+        return $this->getDataWeather()["main"];
+    }
+    /**
+     * gets the description of the weather
+     *
+     * @return string description the weather
+     */
+    public function getWeatherDescription(): string
+    {
+        return $this->getDataWeather()["description"];
+    }
+    /**
+     * gets the icon of the weather
+     *
+     * @return string the icon of the weather
+     */
+    public function getWeatherIcon(): string
+    {
+        return $this->getDataWeather()["icon"];
+    }
+    /**
+     * gets the speed of the wind
+     *
+     * @return float the speed of the wind meter/sec
+     */
+    public function getWindSpeed(): float
+    {
+        return $this->getDataWind()["speed"];
+    }
+    /**
+     * gets the direction of the wind
+     *
+     * @return float direction in degrees
+     */
+    public function getWindDegree(): float
+    {
+        return $this->getDataWind()["deg"];
+    }
+    /**
+     * gets the wind gust
+     *
+     * @return float the wind gust in meter/second
+     */
+    public function getWindGust(): float
+    {
+        return $this->getDataWind()["gust"];
     }
     /**
      * Gets the Temperatur from the results
      *
      * @param string $unit [optional] <br>
      * "k" = Kelvin <br>
-     * "c" = Celcius <br>
+     * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return double the temperatur converted in a specific unit
+     * @return float|int|null the temperatur converted in a specific unit
      */
-    public function getTemperatur(string $unit = "k"){
+    public function getTemperatur(string $unit = "k"): float|int|null
+    {
         $temp = $this->getDataMain()["temp"];
-        switch ($unit){
-            case "k":
-                return $temp;
-            case "c":
-                return $temp - 273.15;
-            case "f":
-                return 1.8 * ($temp - 273.15) + 32;
-        }
-        return null;
+        return match ($unit) {
+            "k" => $temp,
+            "c" => $temp - 273.15,
+            "f" => 1.8 * ($temp - 273.15) + 32,
+            default => null,
+        };
     }
+
     /**
      * Gets the max Temperatur from the results
      *
      * @param string $unit [optional] <br>
      * "k" = Kelvin <br>
-     * "c" = Celcius <br>
+     * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return double the max temperatur converted in a specific unit
+     * @return float|int|null the max temperatur converted in a specific unit
      */
-    public function getTemperaturMax(string $unit = "k"){
+    public function getTemperaturMax(string $unit = "k"): float|int|null
+    {
         $temp = $this->getDataMain()["temp_Max"];
-        switch ($unit){
-            case "k":
-                return $temp;
-            case "c":
-                return $temp - 273.15;
-            case "f":
-                return 1.8 * ($temp - 273.15) + 32;
-        }
-        return null;
+        return match ($unit) {
+            "k" => $temp,
+            "c" => $temp - 273.15,
+            "f" => 1.8 * ($temp - 273.15) + 32,
+            default => null,
+        };
     }
+
     /**
      * Gets the min Temperatur from the results
      *
      * @param string $unit [optional] <br>
      * "k" = Kelvin <br>
-     * "c" = Celcius <br>
+     * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return double the min temperatur converted in a specific unit
+     * @return float|int|null the min temperatur converted in a specific unit
      */
-    public function getTemperaturMin(string $unit = "k"){
+    public function getTemperaturMin(string $unit = "k"): float|int|null
+    {
         $temp = $this->getDataMain()["temp_Min"];
-        switch ($unit){
-            case "k":
-                return $temp;
-            case "c":
-                return $temp - 273.15;
-            case "f":
-                return 1.8 * ($temp - 273.15) + 32;
-        }
-        return null;
+        return match ($unit) {
+            "k" => $temp,
+            "c" => $temp - 273.15,
+            "f" => 1.8 * ($temp - 273.15) + 32,
+            default => null,
+        };
     }
+
     /**
      * Gets how the Temperatur feels like from the results
      *
      * @param string $unit [optional] <br>
      * "k" = Kelvin <br>
-     * "c" = Celcius <br>
+     * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return double how the temperatur feels like converted in a specific unit
+     * @return float|int|null how the temperatur feels like converted in a specific unit
      */
-    public function getTemperaturFeelslike(string $unit = "k"){
+    public function getTemperaturFeelslike(string $unit = "k"): float|int|null
+    {
         $temp = $this->getDataMain()["feels_like"];
-        switch ($unit){
-            case "k":
-                return $temp;
-            case "c":
-                return $temp - 273.15;
-            case "f":
-                return 1.8 * ($temp - 273.15) + 32;
-        }
-        return null;
+        return match ($unit) {
+            "k" => $temp,
+            "c" => $temp - 273.15,
+            "f" => 1.8 * ($temp - 273.15) + 32,
+            default => null,
+        };
+    }
+    /**
+     * gets the humidity in %
+     *
+     * @return int humidity in %
+     */
+    public function getHumidity(): int
+    {
+        return $this->getDataMain()["humidity"];
+    }
+    /**
+     * gets the Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data)
+     *
+     * @return int pressure in hPa
+     */
+    public function getPressure(): int
+    {
+        return $this->getDataMain()["pressure"];
     }
     /**
      * @return string
@@ -222,9 +307,25 @@ class WeatherApi
     /**
      * @return mixed
      */
-    public function getResult()
+    public function getResult(): mixed
     {
         return $this->result;
+    }
+
+    /**
+     * @param string $apikey
+     */
+    public function setApikey(string $apikey): void
+    {
+        $this->apikey = $apikey;
+    }
+
+    /**
+     * @param mixed $result
+     */
+    public function setResult(mixed $result): void
+    {
+        $this->result = $result;
     }
 }
 
