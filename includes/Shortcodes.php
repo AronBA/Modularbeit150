@@ -25,12 +25,12 @@ class Shortcodes
         return $string;
     }
 
-    function  temperatureShortcode(): string {
+    function  weatherShortcode(): string {
         $this->api->getData(12, 12);
-        $temperature = $this->api->getTemperatur("c");
-        $icon = $this->api->getWeatherIcon();
-        $iconLink = "http://openweathermap.org/img/wn/$icon@2x.png";
-        $string = "<h2>We have a temperature of: $temperature <img src='$iconLink' alt='weather icon' /></h2>";
-        return  $string;
+        $weather = $this->api->getWeather();
+        $weatherDescription = $this->api->getWeatherDescription();
+        $weatherIcon = $this->api->getWeatherIcon();
+        $iconLink = "http://openweathermap.org/img/wn/$weatherIcon@2x.png";
+        return "<div><h2>$weather</h2><h3>$weatherDescription</h3><img src='$iconLink' alt='weather icon'/></div>";
     }
 }
