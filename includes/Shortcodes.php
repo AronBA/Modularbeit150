@@ -11,8 +11,14 @@ class Shortcodes
     function testShortcode(): string
     {
         $this->api->getData(12,12);
-        $temp = $this->api->getTemperaturFeelslike();
-        return "<h1>Temperatur Feels Like:$temp</h1>";
+        $feellike = $this->api->getTemperaturFeelslike("c");
+        $realtemo = $this->api->getTemperatur("c");
+        $string = "<div>
+<h2>Thermometer</h2>
+Fühlt sich an wie: $feellike °
+Ist in wirklichkeit: $realtemo °
+</div>";
+        return $string;
 
     }
 }

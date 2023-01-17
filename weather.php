@@ -35,32 +35,19 @@ if ( !class_exists( 'Weather' ) ) {
 
     class Weather
     {
-
-        public $plugin;
+        private Shortcodes $shortcodes;
+        public string $plugin;
 
         function __construct() {
             include_once "includes/Shortcodes.php";
             $this->plugin = plugin_basename( __FILE__ );
-            $shortcodes = new Shortcodes();
-            add_shortcode('testWeather', array($shortcodes,'testShortcode'));
+            $this->shortcodes = new Shortcodes();
+
         }
 
 
         function register() {
-            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
-        }
-
-        protected function create_post_type() {
-            add_action( 'init', array( $this, 'custom_post_type' ) );
-        }
-
-        function custom_post_type() {
-            register_post_type( 'book', ['public' => true, 'label' => 'Books'] );
-        }
-
-        function enqueue() {
-            wp_enqueue_style( 'mypluginstyle', plugins_url( '/assets/styles.css', __FILE__ ) );
-            wp_enqueue_script( 'mypluginscript', plugins_url( '/assets/scripts.js', __FILE__ ) );
+            add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
         }
 
         function activate() {
