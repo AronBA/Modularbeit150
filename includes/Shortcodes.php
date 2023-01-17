@@ -6,18 +6,22 @@ class Shortcodes
     public function __construct()
     {
         $this->api = new WeatherApi("50e3d65a1f02700fcb69068f25d7521c");
-        add_shortcode('testWeather', 'testShortcode');
+
     }
     function testShortcode(): string
     {
+        //pull data from the api
         $this->api->getData(12,12);
-        $feellike = $this->api->getTemperaturFeelslike("c");
-        $realtemo = $this->api->getTemperatur("c");
-        $string = "<div>
-<h2>Thermometer</h2>
-Fühlt sich an wie: $feellike °
-Ist in wirklichkeit: $realtemo °
-</div>";
+        //get temperatur from the result
+        $temperatur = $this->api->getTemperatur("c");
+        //get city name from the result
+        $city = $this->api->getCity();
+        //shortcode
+        $string = "
+        <div>
+            <h2>Stadt: $city</h2
+            <p>Temperatur: $temperatur °</p>
+        </div>";
         return $string;
 
     }
