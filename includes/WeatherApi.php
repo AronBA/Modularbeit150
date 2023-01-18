@@ -70,7 +70,7 @@ class WeatherApi
      * @param string $lang the language of the result
      * @return mixed all the data from the request in encoded json
      */
-    public function getData(int $lon, int $lat,string $lang = "en"): mixed
+    public function getData(float $lon, float $lat,string $lang = "de"): mixed
     {
         $lang = "lang=$lang";
         $json=$this->callAPI('GET', "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey", false);
@@ -115,9 +115,18 @@ class WeatherApi
         return $this->result["wind"];
     }
     /**
+     * gets the result from the System section
+     *
+     * @return mixed all the system data from the request in encoded json
+     */
+    private function getDataSystem(): mixed
+    {
+        return $this->result["sys"];
+    }
+    /**
      * gets the visibilty, the max is 10'000
      *
-     * @return int the visivility in meters.
+     * @return int the visibility in meters.
      */
     public function getVisibility(): int
     {
@@ -295,6 +304,10 @@ class WeatherApi
     public function getPressure(): int
     {
         return $this->getDataMain()["pressure"];
+    }
+    public function getCountry(): string
+    {
+        return $this->getDataSystem()["country"];
     }
     /**
      * @return string
