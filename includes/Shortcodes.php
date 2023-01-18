@@ -44,7 +44,8 @@ class Shortcodes
                 </div>";
     }
 
-	function sunShortcode() {
+	function sunShortcode() :string{
+        $this->api->getData(12,12);
 		$city = $this->api->getCity();
 		$sunrise = date("Y-m-d H:i:s", $this->api->getSunrise());
 		$sunset = date("Y-m-d H:i:s", $this->api->getSunset());
