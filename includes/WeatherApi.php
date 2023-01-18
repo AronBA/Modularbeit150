@@ -166,7 +166,7 @@ class WeatherApi
      */
     public function getWeatherIcon(): string
     {
-        return $this->getDataWeather()["icon"];
+        return $this->getDataWeather()["0"]["icon"];
     }
     /**
      * gets the speed of the wind
