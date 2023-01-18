@@ -42,4 +42,12 @@ class Shortcodes
                     <h3 style='border-top: solid #6ea7ff; width: 100%; text-align: center; margin: 0; display: grid; place-items: center; height: 80px;'>$weatherDescription</h3>
                 </div>";
     }
+
+	function sunShortcode() {
+		$city = $this->api->getCity();
+		$sunrise = date("Y-m-d H:i:s", $this->api->getSunrise());
+		$sunset = date("Y-m-d H:i:s", $this->api->getSunset());
+
+		return "City: $city, Sunrise: $sunrise, Sunset: $sunset";
+	}
 }
