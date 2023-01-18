@@ -44,6 +44,14 @@ class Shortcodes
                 </div>";
     }
 
+	function sunShortcode() {
+		$city = $this->api->getCity();
+		$sunrise = date("Y-m-d H:i:s", $this->api->getSunrise());
+		$sunset = date("Y-m-d H:i:s", $this->api->getSunset());
+
+		return "City: $city, Sunrise: $sunrise, Sunset: $sunset";
+	}
+
 	function  smallWeatherShortcode(): string {
 		$this->api->getData(12, 12);
 		$temperature = $this->api->getTemperatur("c");
