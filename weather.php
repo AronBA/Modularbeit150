@@ -50,6 +50,9 @@ if ( !class_exists( 'Weather' ) ) {
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
             add_shortcode('Wind', array($this->shortcodes,'Wind'));
 
+            add_shortcode('temperatureWeather', array($this->shortcodes, 'weatherShortcode'));
+	        add_shortcode('sunWeather', array($this->shortcodes, 'sunShortcode'));
+            add_shortcode('largeWeather', array($this->shortcodes, 'largeWeatherShortcode'));
         }
 
         function activate() {
