@@ -43,4 +43,12 @@ class Shortcodes
                     </div>
                 </div>";
     }
+
+	function sunShortcode() {
+		$city = $this->api->getCity();
+		$sunrise = date("Y-m-d H:i:s", $this->api->getSunrise());
+		$sunset = date("Y-m-d H:i:s", $this->api->getSunset());
+
+		return "City: $city, Sunrise: $sunrise, Sunset: $sunset";
+	}
 }

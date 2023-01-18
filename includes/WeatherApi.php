@@ -309,6 +309,24 @@ class WeatherApi
     {
         return $this->getDataSystem()["country"];
     }
+	/**
+	 * gets the Sunrise
+	 *
+	 * @return int returns as UTC Timestamp
+	 */
+	public function getSunrise(): int
+	{
+		return $this->getDataSystem()["sunrise"];
+	}
+	/**
+	 * gets the Sunset
+	 *
+	 * @return int returns as UTC Timestamp
+	 */
+	public function getSunset(): int
+	{
+		return $this->getDataSystem()["sunset"];
+	}
     /**
      * @return string
      */
