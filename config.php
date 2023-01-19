@@ -1,4 +1,4 @@
 <?php
 
 //API KEY
-define("APIKEY","");
+define("APIKEY","abc123");
