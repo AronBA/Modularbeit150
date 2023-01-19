@@ -175,7 +175,7 @@ class WeatherApi
      */
     public function getWeatherIcon(): string
     {
-        return $this->getDataWeather()["0"]["icon"];
+        return $this->getDataWeather()["icon"];
     }
     /**
      * gets the speed of the wind
@@ -305,6 +305,11 @@ class WeatherApi
     {
         return $this->getDataMain()["pressure"];
     }
+    /**
+     * gets the Country name
+     *
+     * @return string Country name as string
+     */
     public function getCountry(): string
     {
         return $this->getDataSystem()["country"];
@@ -359,13 +364,3 @@ class WeatherApi
         $this->result = $result;
     }
 }
-
-
-
-
-
-
-
-
-
-
