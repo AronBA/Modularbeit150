@@ -6,7 +6,7 @@ class Shortcodes
     private WeatherApi $api;
     public function __construct()
     {
-        $this->api = new WeatherApi(APIKEY);
+        $this->api = WeatherApi::construct(APIKEY,LON,LAT,LANG);
     }
     function weather_enqueue_scripts(): void
     {
@@ -16,7 +16,7 @@ class Shortcodes
     function testShortcode(): string
     {
         //pull data from the api
-        $this->api->getData(12,12);
+
         //get temperatur from the result
         $temperatur = $this->api->getTemperatur("c");
         //get city name from the result
@@ -31,7 +31,6 @@ class Shortcodes
     }
 
     function  weatherShortcode(): string {
-        $this->api->getData(12, 12);
         $cityName = $this->api->getCity();
         $country = $this->api->getCountry();
         $temperature = $this->api->getTemperatur("c");
@@ -53,7 +52,7 @@ class Shortcodes
     }
 
 	function sunShortcode() :string{
-        $this->api->getData(12,12);
+
 		$city = $this->api->getCity();
 		$sunrise = date("Y-m-d H:i:s", $this->api->getSunrise());
 		$sunset = date("Y-m-d H:i:s", $this->api->getSunset());
@@ -62,7 +61,7 @@ class Shortcodes
 	}
 
 	function  smallWeatherShortcode(): string {
-		$this->api->getData(12, 12);
+
 		$temperature = $this->api->getTemperatur("c");
 		$weatherIcon = $this->api->getWeatherIcon();
 		$iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
@@ -76,7 +75,6 @@ class Shortcodes
                 </div>";
 	}
 	function  largeWeatherShortcode(): string {
-		$this->api->getData(12, 12);
 		$cityName = $this->api->getCity();
 		$country = $this->api->getCountry();
 		$temperature = $this->api->getTemperatur("c");
@@ -112,7 +110,6 @@ class Shortcodes
     }
     function Wind(): string
     {
-        $this->api->getData(12,12);
         $WSP = $this->api->getWindSpeed();
         $WD = $this->api->getWindDegree();
         $WG = $this->api->getWindGust();

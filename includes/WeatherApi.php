@@ -20,46 +20,23 @@ class WeatherApi
      *
      * @param string $apikey your api key
      */
-    public function __construct(string $apikey)
+    private function __construct(string $apikey)
     {
         $this->apikey = $apikey;
     }
+
     /**
      *
-     * @param string $method the method of the api call
-     * @param string $url the url of the api
-     * @param mixed $data data
-     * @return bool|string|void the encoded result of an api call
+     * @param string $apikey
+     * @param float $lon
+     * @param float $lat
+     * @return WeatherApi the encoded result of an api call
      */
-    private function callAPI(string $method, string $url, mixed $data){
-        $curl = curl_init();
-        switch ($method){
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            default:
-                if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            "APIKEY: $this->apikey",
-            'Content-Type: application/json',
-        ));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-
-        $result = curl_exec($curl);
-        if(!$result){die("Connection Failure");}
-        curl_close($curl);
-        return $result;
+    public static function construct(string $apikey,float $lon, float $lat,string $lang): WeatherApi
+    {
+     $api = new WeatherApi($apikey);
+     $api->getData($lon,$lat,$lang);
+     return $api;
     }
 
     /**
@@ -73,7 +50,9 @@ class WeatherApi
     public function getData(float $lon, float $lat,string $lang = "de"): mixed
     {
         $lang = "lang=$lang";
-        $json=$this->callAPI('GET', "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey", false);
+        $response=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey");
+        $json     = wp_remote_retrieve_body( $response );
+
         $result = json_decode($json, true);
         $this->result = $result;
         return $result;
