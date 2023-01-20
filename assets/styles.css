@@ -1,5 +1,35 @@
-mohammed{
-    margin-left: auto;
-    margin-right: auto;
-    width: 8em
+:root {
+    --mainColour: #6ea7ff;
+    --shadow: rgb(14, 14, 14);
+}
+
+.wrapWeather {
+    border-style: solid;
+    border-color: black;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.weatherBar {
+    background-color: var(--mainColour);
+    box-shadow: 0 0 12px 4px var(--shadow);
+    display: grid;
+    place-items: center;
+}
+.weatherBar h2, h3 {
+    margin: 0;
+}
+.weatherHeader {
+    border-radius: 12px 12px 0 0;
+    height: 100px;
+}
+.weatherFooter {
+    background-color: var(--mainColour);
+    height: 80px;
+}
+.weatherContent {
+    display: flex;
+    align-items: center;
 }

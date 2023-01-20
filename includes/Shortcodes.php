@@ -8,7 +8,8 @@ class Shortcodes
     {
         $this->api = new WeatherApi(APIKEY);
     }
-    function weather_enqueue_scripts() {
+    function weather_enqueue_scripts(): void
+    {
         wp_register_style( 'weather-stylesheet',  plugin_dir_url( __FILE__ ) . '../assets/styles.css' );
         wp_enqueue_style( 'weather-stylesheet' );
     }
@@ -37,14 +38,16 @@ class Shortcodes
         $weatherDescription = $this->api->getWeatherDescription();
         $weatherIcon = $this->api->getWeatherIcon();
         $iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
-        return "<div class='wrapWeather' style='border: solid black; border-radius: 15px; width: 500px; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: center'>
-                    <h2 style='border-radius: 12px 12px 0 0; margin: 0; height: 100px; background-color: #6ea7ff; width: 100%; display: flex; justify-content: center; align-items: center'>$cityName , $country</h2>
-                    <div style='display: flex; align-items: center'>
-                    	<div style='flex-basis: 20%; display: flex; align-items: center; flex-direction: column;'>
-                    		<img src='$iconLink' alt='weather icon'/>
-                    		<h3 style='margin-top: -2rem'>$weatherDescription</h3>
-						</div>
-                        <h1 style='flex-basis: 50%'>$temperature °C</h1>
+        return "<div class='wrapWeather'>
+                    <div class='weatherBar weatherHeader'>
+                        <h2>$cityName, $country</h2>
+                    </div>
+                    <div class='weatherContent'>
+                        <img src='$iconLink' alt='weather icon'/>
+                        <h1>$temperature °C</h1>
+                    </div>
+                    <div class='weatherBar weatherFooter'>
+                        <h3>$weatherDescription</h3>
                     </div>
                 </div>";
     }
