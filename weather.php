@@ -42,11 +42,10 @@ if ( !class_exists( 'Weather' ) ) {
             include_once "includes/Shortcodes.php";
             $this->plugin = plugin_basename( __FILE__ );
             $this->shortcodes = new Shortcodes();
-
         }
 
-
         function register() {
+            add_action( 'wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
             add_shortcode('Wind', array($this->shortcodes,'Wind'));
             add_shortcode('temperatureWeather', array($this->shortcodes, 'weatherShortcode'));
@@ -67,10 +66,6 @@ if ( !class_exists( 'Weather' ) ) {
     $weather = new Weather();
     $weather->register();
 
-
     register_activation_hook( __FILE__, array( $weather, 'activate' ) );
     register_deactivation_hook( __FILE__, array( $weather, 'deactivate' ) );
-
-
-
 }
