@@ -11,10 +11,10 @@ class WeatherApi
      */
     private string $apikey;
     /**
-     * @var mixed $result the result of an api call
+     * @var mixed $response the result of an api call
      * @access protected
      */
-    private mixed $result;
+    private mixed $response;
     /**
      * Initalize the apikey
      *
@@ -37,10 +37,14 @@ class WeatherApi
     {
          $api = new WeatherApi($apikey);
          $api->getData($lon,$lat,$lang);
-         if (isset($api->result)){
+         if (isset($api->response)){
              return $api;
          }
-         return false;
+         else {
+             wp_die(__("OOOPS, something went wrong while trying to retrieve the weather data. Please check your API key and location and try again."));
+             return false;
+         }
+
     }
 
     /**
@@ -57,7 +61,7 @@ class WeatherApi
         $response=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey");
         $json = wp_remote_retrieve_body( $response );
         $result = json_decode($json, true);
-        $this->result = $result;
+        $this->response = $result;
         return $result;
     }
     /**
@@ -67,7 +71,7 @@ class WeatherApi
      */
     private function getDataFrom(string $data): mixed
     {
-        return $this->result[$data];
+        return $this->response[$data];
     }
     /**
      * gets the visibilty, the max is 10'000
@@ -76,7 +80,7 @@ class WeatherApi
      */
     public function getVisibility(): int
     {
-        return $this->result["visibility"];
+        return $this->response["visibility"];
     }
     /**
      * gets procentage amount of clouds
@@ -85,7 +89,7 @@ class WeatherApi
      */
     public function getClouds(): int
     {
-        return $this->result["all"];
+        return $this->response["all"];
     }
     /**
      * gets the name of the city
@@ -94,7 +98,7 @@ class WeatherApi
      */
     public function getCity(): string
     {
-        return $this->result["name"];
+        return $this->response["name"];
     }
     /**
      * gets the name of the weather
@@ -164,9 +168,9 @@ class WeatherApi
     {
         $temp = $this->getDataFrom("main")["temp"];
         return match ($unit) {
-            "k" => $temp,
-            "c" => $temp - 273.15,
-            "f" => 1.8 * ($temp - 273.15) + 32,
+            "k" => round($temp),
+            "c" => round($temp - 273.15),
+            "f" => round(1.8 * ($temp - 273.15) + 32),
             default => null,
         };
     }
@@ -185,9 +189,9 @@ class WeatherApi
     {
         $temp = $this->getDataFrom("main")["temp_Max"];
         return match ($unit) {
-            "k" => $temp,
-            "c" => $temp - 273.15,
-            "f" => 1.8 * ($temp - 273.15) + 32,
+            "k" => round($temp),
+            "c" => round($temp - 273.15),
+            "f" => round(1.8 * ($temp - 273.15) + 32),
             default => null,
         };
     }
@@ -206,9 +210,9 @@ class WeatherApi
     {
         $temp = $this->getDataFrom("main")["temp_Min"];
         return match ($unit) {
-            "k" => $temp,
-            "c" => $temp - 273.15,
-            "f" => 1.8 * ($temp - 273.15) + 32,
+            "k" => round($temp),
+            "c" => round($temp - 273.15),
+            "f" => round(1.8 * ($temp - 273.15) + 32),
             default => null,
         };
     }
@@ -227,9 +231,9 @@ class WeatherApi
     {
         $temp = $this->getDataFrom("main")["feels_like"];
         return match ($unit) {
-            "k" => $temp,
-            "c" => $temp - 273.15,
-            "f" => 1.8 * ($temp - 273.15) + 32,
+            "k" => round($temp),
+            "c" => round($temp - 273.15),
+            "f" => round(1.8 * ($temp - 273.15) + 32),
             default => null,
         };
     }
@@ -289,9 +293,9 @@ class WeatherApi
     /**
      * @return mixed
      */
-    public function getResult(): mixed
+    public function getResponse(): mixed
     {
-        return $this->result;
+        return $this->response;
     }
     /**
      * @param string $apikey
@@ -301,10 +305,10 @@ class WeatherApi
         $this->apikey = $apikey;
     }
     /**
-     * @param mixed $result
+     * @param mixed $response
      */
-    public function setResult(mixed $result): void
+    public function setResponse(mixed $response): void
     {
-        $this->result = $result;
+        $this->response = $response;
     }
 }
