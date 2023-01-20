@@ -9,12 +9,12 @@ class WeatherApi
      * @var string $apikey your api key
      * @access protected
      */
-    private $apikey;
+    private string $apikey;
     /**
      * @var mixed $result the result of an api call
      * @access protected
      */
-    private $result;
+    private mixed $result;
     /**
      * Initalize the apikey
      *
@@ -30,20 +30,24 @@ class WeatherApi
      * @param string $apikey
      * @param float $lon
      * @param float $lat
-     * @return WeatherApi the encoded result of an api call
+     * @param string $lang
+     * @return WeatherApi|false an instance of the WeatherAPI Class or false if no result
      */
-    public static function construct(string $apikey,float $lon, float $lat,string $lang): WeatherApi
+    public static function construct(string $apikey,float $lon, float $lat,string $lang): ?WeatherApi
     {
-     $api = new WeatherApi($apikey);
-     $api->getData($lon,$lat,$lang);
-     return $api;
+         $api = new WeatherApi($apikey);
+         $api->getData($lon,$lat,$lang);
+         if (isset($api->result)){
+             return $api;
+         }
+         return false;
     }
 
     /**
      * Makes a Get Request to the API
      *
-     * @param int $lon City geo location, longitude
-     * @param int $lat City geo location, latitude
+     * @param float $lon City geo location, longitude
+     * @param float $lat City geo location, latitude
      * @param string $lang the language of the result
      * @return mixed all the data from the request in encoded json
      */
@@ -51,8 +55,7 @@ class WeatherApi
     {
         $lang = "lang=$lang";
         $response=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey");
-        $json     = wp_remote_retrieve_body( $response );
-
+        $json = wp_remote_retrieve_body( $response );
         $result = json_decode($json, true);
         $this->result = $result;
         return $result;
@@ -62,45 +65,9 @@ class WeatherApi
      *
      * @return mixed all the temperatur data from the request in encoded json
      */
-    private function getDataMain(): mixed
+    private function getDataFrom(string $data): mixed
     {
-        return $this->result["main"];
-    }
-    /**
-     * gets the results from the weather section
-     *
-     * @return mixed all the weather data from the request in encoded json
-     */
-    private function getDataWeather(): mixed
-    {
-        return $this->result["weather"]["0"];
-    }
-    /**
-     * gets the results from the coord section
-     *
-     * @return mixed all the coord data from the request in encoded json
-     */
-    private function getDataCoord(): mixed
-    {
-        return $this->result["coord"];
-    }
-    /**
-     * gets the results from the wind section
-     *
-     * @return mixed all the wind data from the request in encoded json
-     */
-    private function getDataWind(): mixed
-    {
-        return $this->result["wind"];
-    }
-    /**
-     * gets the result from the System section
-     *
-     * @return mixed all the system data from the request in encoded json
-     */
-    private function getDataSystem(): mixed
-    {
-        return $this->result["sys"];
+        return $this->result[$data];
     }
     /**
      * gets the visibilty, the max is 10'000
@@ -136,7 +103,7 @@ class WeatherApi
      */
     public function getWeather(): string
     {
-        return $this->getDataWeather()["main"];
+        return $this->getDataFrom("weather")[0]["main"];
     }
     /**
      * gets the description of the weather
@@ -145,7 +112,7 @@ class WeatherApi
      */
     public function getWeatherDescription(): string
     {
-        return $this->getDataWeather()["description"];
+        return $this->getDataFrom("weather")[0]["description"];
     }
     /**
      * gets the icon of the weather
@@ -154,7 +121,7 @@ class WeatherApi
      */
     public function getWeatherIcon(): string
     {
-        return $this->getDataWeather()["icon"];
+        return $this->getDataFrom("weather")[0]["icon"];
     }
     /**
      * gets the speed of the wind
@@ -163,7 +130,7 @@ class WeatherApi
      */
     public function getWindSpeed(): float
     {
-        return $this->getDataWind()["speed"];
+        return $this->getDataFrom("wind")["speed"];
     }
     /**
      * gets the direction of the wind
@@ -172,7 +139,7 @@ class WeatherApi
      */
     public function getWindDegree(): float
     {
-        return $this->getDataWind()["deg"];
+        return $this->getDataFrom("wind")["deg"];
     }
     /**
      * gets the wind gust
@@ -181,7 +148,7 @@ class WeatherApi
      */
     public function getWindGust(): float
     {
-        return $this->getDataWind()["gust"];
+        return $this->getDataFrom("wind")["gust"];
     }
     /**
      * Gets the Temperatur from the results
@@ -195,7 +162,7 @@ class WeatherApi
      */
     public function getTemperatur(string $unit = "k"): float|int|null
     {
-        $temp = $this->getDataMain()["temp"];
+        $temp = $this->getDataFrom("main")["temp"];
         return match ($unit) {
             "k" => $temp,
             "c" => $temp - 273.15,
@@ -216,7 +183,7 @@ class WeatherApi
      */
     public function getTemperaturMax(string $unit = "k"): float|int|null
     {
-        $temp = $this->getDataMain()["temp_Max"];
+        $temp = $this->getDataFrom("main")["temp_Max"];
         return match ($unit) {
             "k" => $temp,
             "c" => $temp - 273.15,
@@ -237,7 +204,7 @@ class WeatherApi
      */
     public function getTemperaturMin(string $unit = "k"): float|int|null
     {
-        $temp = $this->getDataMain()["temp_Min"];
+        $temp = $this->getDataFrom("main")["temp_Min"];
         return match ($unit) {
             "k" => $temp,
             "c" => $temp - 273.15,
@@ -258,7 +225,7 @@ class WeatherApi
      */
     public function getTemperaturFeelslike(string $unit = "k"): float|int|null
     {
-        $temp = $this->getDataMain()["feels_like"];
+        $temp = $this->getDataFrom("main")["feels_like"];
         return match ($unit) {
             "k" => $temp,
             "c" => $temp - 273.15,
@@ -273,7 +240,7 @@ class WeatherApi
      */
     public function getHumidity(): int
     {
-        return $this->getDataMain()["humidity"];
+        return $this->getDataFrom("main")["humidity"];
     }
     /**
      * gets the Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data)
@@ -282,7 +249,7 @@ class WeatherApi
      */
     public function getPressure(): int
     {
-        return $this->getDataMain()["pressure"];
+        return $this->getDataFrom("main")["pressure"];
     }
     /**
      * gets the Country name
@@ -291,7 +258,7 @@ class WeatherApi
      */
     public function getCountry(): string
     {
-        return $this->getDataSystem()["country"];
+        return $this->getDataFrom("sys")["country"];
     }
 	/**
 	 * gets the Sunrise
@@ -300,7 +267,7 @@ class WeatherApi
 	 */
 	public function getSunrise(): int
 	{
-		return $this->getDataSystem()["sunrise"];
+        return $this->getDataFrom("sys")["sunrise"];
 	}
 	/**
 	 * gets the Sunset
@@ -309,7 +276,7 @@ class WeatherApi
 	 */
 	public function getSunset(): int
 	{
-		return $this->getDataSystem()["sunset"];
+        return $this->getDataFrom("sys")["sunset"];
 	}
     /**
      * @return string
@@ -326,7 +293,6 @@ class WeatherApi
     {
         return $this->result;
     }
-
     /**
      * @param string $apikey
      */
@@ -334,7 +300,6 @@ class WeatherApi
     {
         $this->apikey = $apikey;
     }
-
     /**
      * @param mixed $result
      */
