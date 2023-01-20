@@ -117,7 +117,7 @@ class Shortcodes
                     </div>
                 </div>";
     }
-    function Wind(): string
+    function windShortcode(): string
     {
         $WSP = $this->api->getWindSpeed();
         $WD = $this->api->getWindDegree();
@@ -125,9 +125,9 @@ class Shortcodes
         $iconL = $this->api->getWeatherIcon();
         $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
         return "<div class='wrapWeather'>
-                    Windgeschwindigkeit: $WSP km/h <br/>
+                    Windgeschwindigkeit: $WSP m/s <br/>
                     Windrichtung: $WD ° <br/>
-                    Windböhen: $WG m per s <br/>
+                    Windböhen: $WG m/s <br/>
                 </div>";
 
 	}

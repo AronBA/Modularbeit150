@@ -47,7 +47,7 @@ if ( !class_exists( 'Weather' ) ) {
         function register() {
             add_action( 'wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
-            add_shortcode('Wind', array($this->shortcodes,'Wind'));
+            add_shortcode('windWeather', array($this->shortcodes,'windShortcode'));
             add_shortcode('temperatureWeather', array($this->shortcodes, 'weatherShortcode'));
 	        add_shortcode('sunWeather', array($this->shortcodes, 'sunShortcode'));
             add_shortcode('largeWeather', array($this->shortcodes, 'largeWeatherShortcode'));
