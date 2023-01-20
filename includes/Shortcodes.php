@@ -54,10 +54,19 @@ class Shortcodes
 	function sunShortcode() :string{
 
 		$city = $this->api->getCity();
-		$sunrise = date("Y-m-d H:i:s", $this->api->getSunrise());
-		$sunset = date("Y-m-d H:i:s", $this->api->getSunset());
+        $dateFormat = "H:i:s";
+		$sunrise = date($dateFormat, $this->api->getSunrise());
+		$sunset = date($dateFormat, $this->api->getSunset());
 
-		return "City: $city, Sunrise: $sunrise, Sunset: $sunset";
+		return "<div class='wrapWeather'>
+                    <div class='weatherBar weatherHeader'>
+                        <h2>$city</h2>
+                    </div>
+                    <div class='weatherContent'>
+                        <h3>Sunrise: $sunrise</h3>
+                        <h3>Sunset: $sunset</h3>
+                    </div>
+                </div>";
 	}
 
 	function  smallWeatherShortcode(): string {
@@ -108,23 +117,18 @@ class Shortcodes
                     </div>
                 </div>";
     }
-    function Wind(): string
+    function windShortcode(): string
     {
         $WSP = $this->api->getWindSpeed();
         $WD = $this->api->getWindDegree();
         $WG = $this->api->getWindGust();
         $iconL = $this->api->getWeatherIcon();
         $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
-        $string = "
-        <style>
-        </style>
-        <div style='height: 12rem;border: solid black; border-radius: 12px; width: 18rem; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: whitesmoke'>
-        <h3 style='border-radius: 12px 12px 0 0; height: 4rem; background-color: #6ea7ff; width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 3rem; margin-top: 0'>Wind    <img src='$icon' style='width: 30px'/> </h3>
-        Windgeschwindigkeit: $WSP km/h <br/>
-        Windrichtung: $WD ° <br/>
-        Windböhen: $WG m per s <br/>
-        ";
-        return $string;
+        return "<div class='wrapWeather'>
+                    Windgeschwindigkeit: $WSP m/s <br/>
+                    Windrichtung: $WD ° <br/>
+                    Windböhen: $WG m/s <br/>
+                </div>";
 
 	}
 }
