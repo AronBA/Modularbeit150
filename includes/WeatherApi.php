@@ -16,7 +16,7 @@ class WeatherApi
      */
     private mixed $response;
     /**
-     * Initalize the apikey
+     * Initialize the apikey
      *
      * @param string $apikey your api key
      */
@@ -26,12 +26,12 @@ class WeatherApi
     }
 
     /**
-     *
+     * The Constructor for the Class
      * @param string $apikey
      * @param float $lon
      * @param float $lat
      * @param string $lang
-     * @return WeatherApi|false an instance of the WeatherAPI Class or false if no result
+     * @return WeatherApi|false an instance of the WeatherAPI Class or throws a WordPress error
      */
     public static function construct(string $apikey,float $lon, float $lat,string $lang): ?WeatherApi
     {
@@ -50,8 +50,8 @@ class WeatherApi
     /**
      * Makes a Get Request to the API
      *
-     * @param float $lon City geo location, longitude
-     * @param float $lat City geo location, latitude
+     * @param float $lon City geolocation, longitude
+     * @param float $lat City geolocation, latitude
      * @param string $lang the language of the result
      * @return mixed all the data from the request in encoded json
      */
@@ -65,16 +65,16 @@ class WeatherApi
         return $result;
     }
     /**
-     * gets the results from the main section
+     * gets the results from a specific section
      *
-     * @return mixed all the temperatur data from the request in encoded json
+     * @return mixed all data from the request in encoded json
      */
     private function getDataFrom(string $data): mixed
     {
         return $this->response[$data];
     }
     /**
-     * gets the visibilty, the max is 10'000
+     * gets the visibility, the max is 10'000
      *
      * @return int the visibility in meters.
      */
@@ -83,9 +83,9 @@ class WeatherApi
         return $this->response["visibility"];
     }
     /**
-     * gets procentage amount of clouds
+     * gets percentage amount of clouds
      *
-     * @return int amount of clouds in procent
+     * @return int amount of clouds in percent
      */
     public function getClouds(): int
     {
@@ -162,7 +162,7 @@ class WeatherApi
      * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return float|int|null the temperatur converted in a specific unit
+     * @return float|int|null the temperature converted in a specific unit
      */
     public function getTemperatur(string $unit = "k"): float|int|null
     {
@@ -183,7 +183,7 @@ class WeatherApi
      * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return float|int|null the max temperatur converted in a specific unit
+     * @return float|int|null the max temperature converted in a specific unit
      */
     public function getTemperaturMax(string $unit = "k"): float|int|null
     {
@@ -204,7 +204,7 @@ class WeatherApi
      * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return float|int|null the min temperatur converted in a specific unit
+     * @return float|int|null the min temperature converted in a specific unit
      */
     public function getTemperaturMin(string $unit = "k"): float|int|null
     {
@@ -225,7 +225,7 @@ class WeatherApi
      * "c" = Celsius <br>
      * "f" = Fahrenheit <br>
      * </p>
-     * @return float|int|null how the temperatur feels like converted in a specific unit
+     * @return float|int|null how the temperature feels like converted in a specific unit
      */
     public function getTemperaturFeelslike(string $unit = "k"): float|int|null
     {
