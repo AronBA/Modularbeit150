@@ -38,3 +38,35 @@
     flex-direction: column;
     align-items: center;
 }
+#progressWeather {
+    width: 80%;
+}
+.wrapProgressBar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.wrapBar {
+    width: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.progressBar {
+    background-color: var(--textColor);
+    width: 4px;
+    height: 20px;
+}
+.progressBar:not(.now) {
+    opacity: 75%;
+}
+.wrapBar:nth-child(even) .progressBar:not(.now) {
+    opacity: 50%;
+}
+.progressBar.now {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(0.25turn, #ffd938, #ffb336);
+}

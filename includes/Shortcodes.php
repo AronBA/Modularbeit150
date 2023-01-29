@@ -58,12 +58,13 @@ class Shortcodes
         $timeInt = $this->api->getDayTime();
         $sunriseInt = $this->api->getSunrise();
         $sunsetInt = $this->api->getSunset();
-        $dateFormat = "H:i";
+        $dateFormat = "h:i a";
         $time = date($dateFormat, $timeInt);
 		$sunrise = date($dateFormat, $sunriseInt);
 		$sunset = date($dateFormat, $sunsetInt);
 		return "<div class='wrapWeather wrapSun' id='sunWeather'>
                     <h2>$city</h2>
+                    <div id='progressWeather'></div>
                     <div class='sunTime'>
                         <div>
                             <h3>$sunrise</h3>
@@ -78,7 +79,8 @@ class Shortcodes
                             <h4>Sunset</h4>
                         </div>
                     </div>
-                    <script type='text/javascript'>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
+                    <script>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
+                    <script>setProgress()</script>
                 </div>";
 	}
 
