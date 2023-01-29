@@ -1,39 +1,40 @@
 :root {
-    --mainColour: 110, 167, 255;
-    --lightColour: #73c3ff;
+    --mainColour: rgb(21, 51, 101);
+    --lightColour: #3f779f;
     --shadow: rgb(16, 16, 16);
 }
 
 .wrapWeather {
-    height: 350px;
-    aspect-ratio: 1.4;
-    border-style: solid;
-    border-color: black;
-    border-radius: 15px;
-    overflow: hidden;
+    height: 400px;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    box-shadow: 0 0 12px 4px var(--shadow);
+}
+#sunWeather {
+    --textColor: black;
+    --backgroundUrl: url("../assets/sunrise/day.png");
+    color: var(--textColor);
+    background: var(--backgroundUrl);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    aspect-ratio: 2;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgba(var(--mainColour), 15%);
+    align-items: center;
+    padding: 30px;
 }
-.wrapWeather h1, h2, h3 {
+#sunWeather h2, h3, h4 {
     margin: 0;
 }
-.weatherBar {
-    background: linear-gradient(to top left, rgb(var(--mainColour)), var(--lightColour));
-    box-shadow: 0 0 10px 2px var(--shadow);
-    display: grid;
-    place-items: center;
-}
-.weatherHeader {
-    border-radius: 12px 12px 0 0;
-    height: 100px;
-}
-.weatherFooter {
-    background-color: var(--mainColour);
-    height: 80px;
-}
-.weatherContent {
+.sunTime {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
+}
+.sunTime div {
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }

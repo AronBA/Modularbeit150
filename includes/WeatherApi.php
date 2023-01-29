@@ -264,6 +264,10 @@ class WeatherApi
     {
         return $this->getDataFrom("sys")["country"];
     }
+    public function getDayTime(): int
+    {
+        return $this->getDataFrom("dt");
+    }
 	/**
 	 * gets the Sunrise
 	 *

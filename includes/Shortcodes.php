@@ -11,7 +11,9 @@ class Shortcodes
     function weather_enqueue_scripts(): void
     {
         wp_register_style( 'weather-stylesheet',  plugin_dir_url( __FILE__ ) . '../assets/styles.css' );
+        wp_register_script( 'weather-scripts',  plugin_dir_url( __FILE__ ) . '../assets/scripts.js', array(), '1.0.0', false);
         wp_enqueue_style( 'weather-stylesheet' );
+        wp_enqueue_script( 'weather-scripts' );
     }
     function testShortcode(): string
     {
@@ -24,7 +26,7 @@ class Shortcodes
         //shortcode
         $string = "
         <div>
-            <h2>Stadt: $city</h2
+            <h2>Stadt: $city</h2>
             <p>Temperatur: $temperatur °</p>
         </div>";
         return $string;
@@ -51,21 +53,32 @@ class Shortcodes
                 </div>";
     }
 
-	function sunShortcode() :string{
-
+	function sunShortcode() :string {
 		$city = $this->api->getCity();
-        $dateFormat = "H:i:s";
-		$sunrise = date($dateFormat, $this->api->getSunrise());
-		$sunset = date($dateFormat, $this->api->getSunset());
-
-		return "<div class='wrapWeather'>
-                    <div class='weatherBar weatherHeader'>
-                        <h2>$city</h2>
+        $timeInt = $this->api->getDayTime();
+        $sunriseInt = $this->api->getSunrise();
+        $sunsetInt = $this->api->getSunset();
+        $dateFormat = "H:i";
+        $time = date($dateFormat, $timeInt);
+		$sunrise = date($dateFormat, $sunriseInt);
+		$sunset = date($dateFormat, $sunsetInt);
+		return "<div class='wrapWeather wrapSun' id='sunWeather'>
+                    <h2>$city</h2>
+                    <div class='sunTime'>
+                        <div>
+                            <h3>$sunrise</h3>
+                            <h4>Sunrise</h4>
+                        </div>
+                        <div>
+                            <h3>$time</h3>
+                            <h4>Current Time</h4>
+                        </div>                        
+                        <div>
+                            <h3>$sunset</h3>
+                            <h4>Sunset</h4>
+                        </div>
                     </div>
-                    <div class='weatherContent'>
-                        <h3>Sunrise: $sunrise</h3>
-                        <h3>Sunset: $sunset</h3>
-                    </div>
+                    <script type='text/javascript'>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
                 </div>";
 	}
 
@@ -129,6 +142,5 @@ class Shortcodes
                     Windrichtung: $WD ° <br/>
                     Windböhen: $WG m/s <br/>
                 </div>";
-
 	}
 }
