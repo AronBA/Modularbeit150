@@ -80,7 +80,7 @@ class Shortcodes
                         </div>
                     </div>
                     <script>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
-                    <script>setProgress()</script>
+                    <script>setProgress($timeInt)</script>
                 </div>";
 	}
 

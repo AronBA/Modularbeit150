@@ -16,7 +16,7 @@ function create(tag = "div") {return document.createElement(tag)}
 function getHour(time) {
     return new Date(time).getHours()
 }
-function setProgress(time = 28201000) {
+function setProgress(time) {
     const hour = getHour(time)
     const progress = getId("progressWeather")
     const parent = create()

@@ -45,6 +45,10 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
+    padding: 20px 10px 8px 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px black;
+    backdrop-filter: blur(10px) brightness(120%);
 }
 
 .wrapBar {
