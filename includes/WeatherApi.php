@@ -43,8 +43,8 @@ class WeatherApi
     public static function construct(string $apikey,float $lon, float $lat,string $lang): ?WeatherApi
     {
          $api = new WeatherApi($apikey);
-         $api->getData($lon,$lat,$lang);
-         if (isset($api->response)){
+
+         if ($api->getData($lon,$lat,$lang)){
              return $api;
          }
          else {
@@ -72,10 +72,14 @@ class WeatherApi
         $resultWeatherAPI = json_decode($jsonWeatherAPI, true);
         $resultPollutionAPI = json_decode($jsonPollutionAPI, true);
 
+	    $this->responseWeatherAPI = $resultWeatherAPI;
+	    $this->responsePollutionAPI = $resultPollutionAPI;
+		if(!$this->responseWeatherAPI && $this->responsePollutionAPI){
+			return false;
+		}
 
-        $this->responseWeatherAPI = $resultWeatherAPI;
-        $this->responsePollutionAPI = $resultPollutionAPI;
 
+		return true;
     }
     /**
      * gets the results from a specific section
@@ -320,19 +324,19 @@ class WeatherApi
     /**
      * gets the compenents of the air in an array. All units in μg/m3
      *
-     * [co] => 201.94053649902344       Carbon monoxide
-     * [no] => 0.01877197064459324      Nitrogen monoxide
-     * [no2] => 0.7711350917816162      Nitrogen dioxide
-     * [o3] => 68.66455078125           Ozone
-     * [so2] => 0.6407499313354492      Sulphur dioxide
-     * [pm2_5] => 0.5                   Fine particles matter
-     * [pm10] => 0.540438711643219      Coarse particulate matter
-     * [nh3] => 0.12369127571582794     Ammonia
+     * [co] => 201.94053649902344       Carbon monoxide <br>
+     * [no] => 0.01877197064459324      Nitrogen monoxide <br>
+     * [no2] => 0.7711350917816162      Nitrogen dioxide <br>
+     * [o3] => 68.66455078125           Ozone <br>
+     * [so2] => 0.6407499313354492      Sulphur dioxide <br>
+     * [pm2_5] => 0.5                   Fine particles matter <br>
+     * [pm10] => 0.540438711643219      Coarse particulate matter <br>
+     * [nh3] => 0.12369127571582794     Ammonia <br>
      *
      * @return array returns an array of the compnents and their conecntraition
      */
     public function getAirCompenents(){
-        return json_decode($this->getDataFrom("list","PollutionAPI")[0]["components"],true);
+        return $this->getDataFrom("list","PollutionAPI")[0]["components"];
     }
 
 
