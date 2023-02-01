@@ -12,9 +12,13 @@ class adminPanel
     public string $lang = "en";
 
     function __construct(){
-
+        $this->defGlobals($this->key, $this->unit, $this->lang, $this->color, $this->lon, $this->lat);
     }
 
+    /**
+     * @return void
+     * Sets Global values to Inputted values from the Admin Panel
+     */
     function setValues(): void{
         if(isset($_POST["key"])){
             $this->key = $_POST["key"];
@@ -34,6 +38,26 @@ class adminPanel
         if(isset($_POST["unit"])){
             $this->unit = $_POST["unit"];
         }
+
+        $this->defGlobals($this->key, $this->unit, $this->lang, $this->color, $this->lon, $this->lat);
+    }
+
+    /**
+     * @param string $key
+     * @param string $unit
+     * @param string $language
+     * @param string $color
+     * @param number $longitude
+     * @param number $latitude
+     * @return void
+     */
+    public function defGlobals(string $key, string $unit, string $language, string $color, float $longitude, float $latitude){
+        $GLOBALS['color'] = $color;
+        $GLOBALS['unit'] = $unit;
+        $GLOBALS['key'] = $key;
+        $GLOBALS['lang'] = $language;
+        $GLOBALS['lon'] = $longitude;
+        $GLOBALS['lat'] = $latitude;
     }
 
     function getAdminPanel(){
