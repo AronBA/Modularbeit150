@@ -36,15 +36,19 @@ if ( !class_exists( 'Weather' ) ) {
     class Weather
     {
         private Shortcodes $shortcodes;
+        private adminPanel $adminPanel;
         public string $plugin;
 
         function __construct() {
             include_once "includes/Shortcodes.php";
+            include_once "includes/adminPanel.php";
             $this->plugin = plugin_basename( __FILE__ );
             $this->shortcodes = new Shortcodes();
+            $this->adminPanel = new adminPanel();
         }
 
         function register() {
+            add_menu_page( 'Weather Plugin Manager', 'Weather Plugin', 'author', 'weather-plugin', array($this->adminPanel,'getAdminPanel'));
             add_action( 'wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
             add_shortcode('windWeather', array($this->shortcodes,'windShortcode'));

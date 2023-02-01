@@ -1,6 +1,6 @@
 <?php
 include "WeatherApi.php";
-include "config.php";
+include "./config.php";
 class Shortcodes
 {
     private WeatherApi $api;
@@ -112,7 +112,7 @@ class Shortcodes
 		$iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
 		$iconLink2 = "https://cdn-icons-png.flaticon.com/512/1622/1622158.png";
 		$iconLink3 = "https://cdn-icons-png.flaticon.com/512/959/959711.png";
-		return "<div style='height: 28rem;border: solid black; border-radius: 15px; width: 35rem; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: whitesmoke'>
+		return "<div style='height: 28rem;border: solid black; border-radius: 15px; width: 35rem; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: lightcyan'>
 					<h2 style='border-radius: 12px 12px 0 0; height: 4rem; background-color: #6ea7ff; width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 2rem; margin-top: 0'>$cityName , $country</h2>
                     <div style='display: flex; align-items: center; margin-left: -2rem;	flex-wrap: wrap;'>
                     	<div style='flex-basis: 50%; display: flex; align-items: center; height: 12rem; flex-direction: column; margin-top: -4rem'>
