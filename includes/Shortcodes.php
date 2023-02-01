@@ -141,10 +141,12 @@ class Shortcodes
         $WG = $this->api->getWindGust();
         $iconL = $this->api->getWeatherIcon();
         $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
-        return "<div class='wrapWeather'>
+        return "<div class='wrapWeather wrapWind'>
+                    <div id='dangerLevels' class='dangerLevels'></div>
                     Windgeschwindigkeit: $WSP m/s <br/>
                     Windrichtung: $WD ° <br/>
                     Windböhen: $WG m/s <br/>
+                    <script>setDangerLevels($WSP)</script>
                 </div>";
 	}
 }
