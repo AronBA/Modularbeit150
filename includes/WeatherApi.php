@@ -11,10 +11,17 @@ class WeatherApi
      */
     private string $apikey;
     /**
-     * @var mixed $response the result of an api call
+     * @var mixed $responseWeatherAPI the result of an api call
      * @access protected
      */
-    private mixed $response;
+    private mixed $responseWeatherAPI;
+
+
+    /**
+     * @var mixed $responseWeatherAPI the result of an api call
+     * @access protected
+     */
+    private mixed $responsePollutionAPI;
     /**
      * Initialize the apikey
      *
@@ -36,8 +43,8 @@ class WeatherApi
     public static function construct(string $apikey,float $lon, float $lat,string $lang): ?WeatherApi
     {
          $api = new WeatherApi($apikey);
-         $api->getData($lon,$lat,$lang);
-         if (isset($api->response)){
+
+         if ($api->getData($lon,$lat,$lang)){
              return $api;
          }
          else {
@@ -53,25 +60,40 @@ class WeatherApi
      * @param float $lon City geolocation, longitude
      * @param float $lat City geolocation, latitude
      * @param string $lang the language of the result
-     * @return mixed all the data from the request in encoded json
      */
-    public function getData(float $lon, float $lat,string $lang = "de"): mixed
+    public function getData(float $lon, float $lat,string $lang = "de")
     {
         $lang = "lang=$lang";
-        $response=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey");
-        $json = wp_remote_retrieve_body( $response );
-        $result = json_decode($json, true);
-        $this->response = $result;
-        return $result;
+        $responseWeatherAPI=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey");
+        $responsePollutionAPI=wp_remote_get("http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lon&appid=$this->apikey");
+
+        $jsonWeatherAPI = wp_remote_retrieve_body($responseWeatherAPI);
+        $jsonPollutionAPI = wp_remote_retrieve_body($responsePollutionAPI);
+        $resultWeatherAPI = json_decode($jsonWeatherAPI, true);
+        $resultPollutionAPI = json_decode($jsonPollutionAPI, true);
+
+	    $this->responseWeatherAPI = $resultWeatherAPI;
+	    $this->responsePollutionAPI = $resultPollutionAPI;
+		if(!$this->responseWeatherAPI && $this->responsePollutionAPI){
+			return false;
+		}
+
+
+		return true;
     }
     /**
      * gets the results from a specific section
      *
      * @return mixed all data from the request in encoded json
      */
-    private function getDataFrom(string $data): mixed
+    private function getDataFrom(string $data, string $api="WeatherAPI"): mixed
     {
-        return $this->response[$data];
+        if($api == "PollutionAPI"){
+            return $this->responsePollutionAPI[$data];
+        } else  {
+            return $this->responseWeatherAPI[$data];
+        }
+
     }
     /**
      * gets the visibility, the max is 10'000
@@ -80,7 +102,7 @@ class WeatherApi
      */
     public function getVisibility(): int
     {
-        return $this->response["visibility"];
+        return $this->responseWeatherAPI["visibility"];
     }
     /**
      * gets percentage amount of clouds
@@ -89,7 +111,7 @@ class WeatherApi
      */
     public function getClouds(): int
     {
-        return $this->response["all"];
+        return $this->responseWeatherAPI["all"];
     }
     /**
      * gets the name of the city
@@ -98,7 +120,7 @@ class WeatherApi
      */
     public function getCity(): string
     {
-        return $this->response["name"];
+        return $this->responseWeatherAPI["name"];
     }
     /**
      * gets the name of the weather
@@ -287,6 +309,46 @@ class WeatherApi
         return $this->getDataFrom("sys")["sunset"];
 	}
     /**
+     * gets the AirQualityIndex
+     * 1 = Good
+     * 2 = Fair
+     * 3 = Moderate
+     * 4 = Poor
+     * 5 = Very Poor
+     *
+     * @return int returns the AQI as int
+     */
+    public function getAirQualityIndex(){
+        return $this->getDataFrom("list","PollutionAPI")[0]["main"]["aqi"];
+    }
+    /**
+     * gets the compenents of the air in an array. All units in μg/m3
+     *
+     * [co] => 201.94053649902344       Carbon monoxide <br>
+     * [no] => 0.01877197064459324      Nitrogen monoxide <br>
+     * [no2] => 0.7711350917816162      Nitrogen dioxide <br>
+     * [o3] => 68.66455078125           Ozone <br>
+     * [so2] => 0.6407499313354492      Sulphur dioxide <br>
+     * [pm2_5] => 0.5                   Fine particles matter <br>
+     * [pm10] => 0.540438711643219      Coarse particulate matter <br>
+     * [nh3] => 0.12369127571582794     Ammonia <br>
+     *
+     * @return array returns an array of the compnents and their conecntraition
+     */
+    public function getAirCompenents(){
+        return $this->getDataFrom("list","PollutionAPI")[0]["components"];
+    }
+
+
+
+
+
+
+
+
+
+
+    /**
      * @return string
      */
     public function getApikey(): string
@@ -297,9 +359,9 @@ class WeatherApi
     /**
      * @return mixed
      */
-    public function getResponse(): mixed
+    public function getResponseWeatherAPI(): mixed
     {
-        return $this->response;
+        return $this->responseWeatherAPI;
     }
     /**
      * @param string $apikey
@@ -309,10 +371,26 @@ class WeatherApi
         $this->apikey = $apikey;
     }
     /**
-     * @param mixed $response
+     * @param mixed $responseWeatherAPI
      */
-    public function setResponse(mixed $response): void
+    public function setResponseWeatherAPI(mixed $responseWeatherAPI): void
     {
-        $this->response = $response;
+        $responseWeatherAPI->response = $responseWeatherAPI;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponsePollutionAPI(): mixed
+    {
+        return $this->responsePollutionAPI;
+    }
+
+    /**
+     * @param mixed $responsePollutionAPI
+     */
+    public function setResponsePollutionAPI(mixed $responsePollutionAPI): void
+    {
+        $this->responsePollutionAPI = $responsePollutionAPI;
     }
 }

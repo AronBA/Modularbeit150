@@ -20,14 +20,16 @@ class Shortcodes
         //pull data from the api
 
         //get temperatur from the result
-        $temperatur = $this->api->getTemperatur("c");
+        $temperatur = $this->api->getAirQualityIndex();
         //get city name from the result
         $city = $this->api->getCity();
+		$co = $this->api->getAirCompenents()["co"];
         //shortcode
         $string = "
         <div>
             <h2>Stadt: $city</h2>
-            <p>Temperatur: $temperatur °</p>
+            <p>Air Quality index: $temperatur °</p>
+             <p>amount of bullshit in the air: $co °</p>
         </div>";
         return $string;
     }
