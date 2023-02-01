@@ -1,15 +1,7 @@
-const urlDay = "../assets/sunrise/day.png"
-const urlNight = "../assets/sunrise/night.png"
-
 function getId(id){return document.getElementById(id)}
 function setSun(time, sunrise, sunset) {
-    const background = getId("sunWeather").style
-    let day = true
-    if (time < sunrise || time > sunset) day = false
-    const url = day ? urlDay : urlNight
-    const textColor = day ? "black" : "white"
-    background.setProperty("--textColor", textColor)
-    background.setProperty("--backgroundUrl", "url(" + url + ")")
+    const background = getId("sunWeather")
+    if (time < sunrise || time > sunset) background.classList.add("sunWeatherDark")
 }
 function create(tag = "div") {return document.createElement(tag)}
 

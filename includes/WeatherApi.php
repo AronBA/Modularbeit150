@@ -88,12 +88,19 @@ class WeatherApi
      */
     private function getDataFrom(string $data, string $api="WeatherAPI"): mixed
     {
-        if($api == "PollutionAPI"){
-            return $this->responsePollutionAPI[$data];
-        } else  {
-            return $this->responseWeatherAPI[$data];
+        try {
+            if($api == "PollutionAPI"){
+                return $this->responsePollutionAPI[$data];
+            } else  {
+                return $this->responseWeatherAPI[$data];
+            }
         }
-
+        catch (Error) {
+            return null;
+        }
+    }
+    private function getTimeZone() {
+        return $this->getDataFrom("timezone");
     }
     /**
      * gets the visibility, the max is 10'000
@@ -167,6 +174,7 @@ class WeatherApi
     {
         return $this->getDataFrom("wind")["deg"];
     }
+
     /**
      * gets the wind gust
      *
@@ -174,7 +182,8 @@ class WeatherApi
      */
     public function getWindGust(): float
     {
-        return $this->getDataFrom("wind")["gust"];
+        if (isset($this->getDataFrom("wind")["gust"])) return $this->getDataFrom("wind")["gust"];
+        return 0;
     }
     /**
      * Gets the Temperatur from the results
@@ -256,7 +265,7 @@ class WeatherApi
             "k" => round($temp),
             "c" => round($temp - 273.15),
             "f" => round(1.8 * ($temp - 273.15) + 32),
-            default => null,
+            default => null
         };
     }
     /**
@@ -288,7 +297,7 @@ class WeatherApi
     }
     public function getDayTime(): int
     {
-        return $this->getDataFrom("dt");
+        return date("h") + $this->getTimeZone();
     }
 	/**
 	 * gets the Sunrise
@@ -297,7 +306,7 @@ class WeatherApi
 	 */
 	public function getSunrise(): int
 	{
-        return $this->getDataFrom("sys")["sunrise"];
+        return $this->getDataFrom("sys")["sunrise"] + $this->getTimeZone();
 	}
 	/**
 	 * gets the Sunset
@@ -306,7 +315,7 @@ class WeatherApi
 	 */
 	public function getSunset(): int
 	{
-        return $this->getDataFrom("sys")["sunset"];
+        return $this->getDataFrom("sys")["sunset"] + $this->getTimeZone();
 	}
     /**
      * gets the AirQualityIndex

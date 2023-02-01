@@ -1,7 +1,7 @@
 :root {
     --mainColour: rgb(21, 51, 101);
     --lightColour: #3f779f;
-    --shadow: rgb(16, 16, 16);
+    --shadow: rgb(24, 24, 24);
 }
 
 .wrapWeather {
@@ -24,6 +24,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 30px;
+}
+.sunWeatherDark {
+    --textColor: white !important;
+    --backgroundUrl: url("../assets/sunrise/night.png") !important;
 }
 #sunWeather h2, h3, h4 {
     margin: 0;
@@ -48,9 +52,11 @@
     padding: 20px 10px 8px 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px 2px black;
+    backdrop-filter: blur(6px) brightness(90%);
+}
+.sunWeatherDark .wrapProgressBar {
     backdrop-filter: blur(6px) brightness(120%);
 }
-
 .wrapBar {
     width: 20px;
     display: flex;
