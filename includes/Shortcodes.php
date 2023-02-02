@@ -149,18 +149,9 @@ class Shortcodes
                     Windböhen: $windGust m/s <br/>
                     <div class='compas'><div id='arrow' class='arrow'></div></div>
                     <script>setDangerLevels($windSpeed)</script>
-                    <script>setArrow($windDegree)</script>
+                    <script>setArrow($windDegree)</script>";
 
-        $WSP = $this->api->getWindSpeed();
-        $WD = $this->api->getWindDegree();
-        $WG = $this->api->getHumidity();
-        $iconL = $this->api->getWeatherIcon();
-        $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
-        return "<div class='wrapWeather'>
-                    Windgeschwindigkeit: $WSP m/s <br/>
-                    Windrichtung: $WD ° <br/>
-                    Luftfeuchtigkeit: $WG % <br/>
-                </div>";
+
 	}
     function temparatureShortcode(): string
     {
