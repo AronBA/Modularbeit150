@@ -295,9 +295,8 @@ class WeatherApi
     {
         return $this->getDataFrom("sys")["country"];
     }
-    public function getDayTime(): int
-    {
-        return date("h") + $this->getTimeZone();
+    public function getDayTime(): int {
+        return time() + $this->getTimeZone();
     }
 	/**
 	 * gets the Sunrise
@@ -327,7 +326,7 @@ class WeatherApi
      *
      * @return int returns the AQI as int
      */
-    public function getAirQualityIndex(){
+    public function getAirQualityIndex(): int {
         return $this->getDataFrom("list","PollutionAPI")[0]["main"]["aqi"];
     }
     /**
