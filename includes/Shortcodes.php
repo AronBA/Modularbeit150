@@ -57,34 +57,43 @@ class Shortcodes
 
 	function sunShortcode() :string {
 		$city = $this->api->getCity();
-        $timeInt = $this->api->getDayTime();
-        $sunriseInt = $this->api->getSunrise();
-        $sunsetInt = $this->api->getSunset();
-        $dateFormat = "h:i a";
-        $time = date($dateFormat, $timeInt);
+		$timeInt = $this->api->getDayTime();
+		$sunriseInt = $this->api->getSunrise();
+		$sunsetInt = $this->api->getSunset();
+		$dateFormat = "h:i a";
+		$time = date($dateFormat, $timeInt);
 		$sunrise = date($dateFormat, $sunriseInt);
 		$sunset = date($dateFormat, $sunsetInt);
 		return "<div class='wrapWeather wrapSun' id='sunWeather'>
-                    <h2>$city</h2>
-                    <div id='progressWeather'></div>
-                    <div class='sunTime'>
-                        <div>
-                            <h3>$sunrise</h3>
-                            <h4>Sunrise</h4>
-                        </div>
-                        <div>
-                            <h3>$time</h3>
-                            <h4>Current Time</h4>
-                        </div>                        
-                        <div>
-                            <h3>$sunset</h3>
-                            <h4>Sunset</h4>
-                        </div>
-                    </div>
-                    <script>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
-                    <script>setProgress($timeInt)</script>
-                </div>";
+				<h2>$city</h2>
+				<div id='progressWeather'></div>
+				<div class='sunTime'>
+					<div>
+						<h3>$sunrise</h3>
+						<h4>Sunrise</h4>
+					</div>
+					<div>
+						<h3 id='currentTime'>$time</h3>
+						<h4>Current Time</h4>
+					</div>                        
+					<div>
+						<h3>$sunset</h3>
+						<h4>Sunset</h4>
+					</div>
+				</div>
+				<script>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
+				<script>setProgress('$timeInt')</script>
+				<script>
+					setInterval(function() {
+						var currentTime = document.getElementById('currentTime');
+						var date = new Date();
+						var time = date.toLocaleTimeString();
+						currentTime.innerHTML = time;
+					}, 1000);
+				</script>
+			</div>";
 	}
+
 
 	function  smallWeatherShortcode(): string {
 
