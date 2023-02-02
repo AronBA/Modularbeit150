@@ -126,9 +126,13 @@
     border-right: solid;
     width: 100%;
     height: 20px;
+    opacity: 15%;
 }
 .dangerLevel:last-child {
     border: none;
+}
+.dangerLevel.active {
+    opacity: 100%;
 }
 .compas {
     background-image: url("../assets/compas/compas.png");
@@ -141,11 +145,22 @@
 }
 .compas .arrow {
     --arrowRotation: 0deg;
+    rotate: var(--arrowRotation);
     background-image: url("../assets/compas/arrow.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     width: 28%;
     aspect-ratio: 1;
-    rotate: var(--arrowRotation);
+    transition: 800ms ease;
+}
+.compas:hover .arrow {
+    animation: shake 1s;
+    animation-timing-function: ease;
+}
+@keyframes shake {
+    0% {rotate: var(--arrowRotation)}
+    25% {rotate: calc(var(--arrowRotation) + 12deg)}
+    75% {rotate: calc(var(--arrowRotation) - 5deg)}
+    100% {rotate: var(--arrowRotation)}
 }
