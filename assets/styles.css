@@ -5,7 +5,7 @@
 }
 
 .wrapWeather {
-    height: 40px;
+    height: 400px;
     aspect-ratio: 1;
     border-radius: 8px;
     box-shadow: 0 0 12px 4px var(--shadow);
