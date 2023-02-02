@@ -136,6 +136,7 @@ class Shortcodes
     }
     function windShortcode(): string
     {
+
         $windSpeed = $this->api->getWindSpeed();
         $windDegree = $this->api->getWindDegree();
         $windGust = $this->api->getWindGust();
@@ -149,6 +150,31 @@ class Shortcodes
                     <div class='compas'><div id='arrow' class='arrow'></div></div>
                     <script>setDangerLevels($windSpeed)</script>
                     <script>setArrow($windDegree)</script>
+
+        $WSP = $this->api->getWindSpeed();
+        $WD = $this->api->getWindDegree();
+        $WG = $this->api->getHumidity();
+        $iconL = $this->api->getWeatherIcon();
+        $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
+        return "<div class='wrapWeather'>
+                    Windgeschwindigkeit: $WSP m/s <br/>
+                    Windrichtung: $WD ° <br/>
+                    Luftfeuchtigkeit: $WG % <br/>
                 </div>";
 	}
+    function temparatureShortcode(): string
+    {
+        $CurrentTemp = $this->api->getTemperatur("c");
+        $MaxTemp = $this->api->getTemperaturMax("c");
+        $MinTemp = $this->api->getTemperaturMin("c");
+        $FeelsTemp = $this->api->getTemperaturFeelslike("c");
+        return "<div class='tempWeather'>
+                    <div class='tempTitel'>Temparatur</div>
+                    Temparatur momentan: $CurrentTemp °C<br/>
+                    Min Temparatur: $MaxTemp °C <br/>
+                    Max Temparatur: $MinTemp ° C <br/>
+                    Fühlt sich wie $FeelsTemp ° C an<br/>
+                </div>";
+    }
+
 }

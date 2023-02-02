@@ -5,14 +5,40 @@
 }
 
 .wrapWeather {
-    height: 400px;
+    height: 40px;
     aspect-ratio: 1;
     border-radius: 8px;
     box-shadow: 0 0 12px 4px var(--shadow);
 }
+
 .wrapWeather h2, h3, h4 {
     margin: 0;
 }
+
+.tempWeather{
+
+    border: solid black;
+    border-radius: 15px;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    line-height: 30px
+}
+.tempTitel{
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: deepskyblue;
+}
+
+
 #sunWeather {
     --textColor: black;
     --backgroundUrl: url("../assets/sunrise/day.png");

@@ -48,7 +48,7 @@ class WeatherApi
              return $api;
          }
          else {
-             wp_die(__("OOOPS, something went wrong while trying to retrieve the weather data. Please check your API key and location and try again."));
+             wp_die(__("OOPA, something went wrong while trying to retrieve the weather data. Please check your API key and location and try again."));
              return false;
          }
 
@@ -218,7 +218,7 @@ class WeatherApi
      */
     public function getTemperaturMax(string $unit = "k"): float|int|null
     {
-        $temp = $this->getDataFrom("main")["temp_Max"];
+        $temp = $this->getDataFrom("main")["temp_max"];
         return match ($unit) {
             "k" => round($temp),
             "c" => round($temp - 273.15),
@@ -239,7 +239,7 @@ class WeatherApi
      */
     public function getTemperaturMin(string $unit = "k"): float|int|null
     {
-        $temp = $this->getDataFrom("main")["temp_Min"];
+        $temp = $this->getDataFrom("main")["temp_min"];
         return match ($unit) {
             "k" => round($temp),
             "c" => round($temp - 273.15),
