@@ -11,8 +11,15 @@ class adminPanel
     public string $unit = "k";
     public string $lang = "en";
 
-    function __construct(){
+    function update(): void{
         $this->defGlobals($this->key, $this->unit, $this->lang, $this->color, $this->lon, $this->lat);
+        echo "<script>
+                setTimeout(function(()->{$this->update()}): void, 10000)
+              </script>";
+    }
+
+    function __construct(){
+        $this->update();
     }
 
     /**
@@ -60,7 +67,11 @@ class adminPanel
         $GLOBALS['lat'] = $latitude;
     }
 
-    function getAdminPanel(){
+    /**
+     * @return string
+     * Returns Admin Panel for Weather plugin
+     */
+    public function getAdminPanel(){
         return "
         <div class='adminPanel'>
             <form class='input' method='post' action=''>
