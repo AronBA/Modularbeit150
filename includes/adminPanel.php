@@ -14,7 +14,7 @@ class adminPanel
     function update(): void{
         $this->defGlobals($this->key, $this->unit, $this->lang, $this->color, $this->lon, $this->lat);
         echo "<script>
-                setTimeout(function(()->{$this->update()}): void, 10000)
+                setTimeout(function(()->{update()}): void, 10000)
               </script>";
     }
 
