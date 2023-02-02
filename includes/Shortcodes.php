@@ -136,17 +136,19 @@ class Shortcodes
     }
     function windShortcode(): string
     {
-        $WSP = $this->api->getWindSpeed();
-        $WD = $this->api->getWindDegree();
-        $WG = $this->api->getWindGust();
+        $windSpeed = $this->api->getWindSpeed();
+        $windDegree = $this->api->getWindDegree();
+        $windGust = $this->api->getWindGust();
         $iconL = $this->api->getWeatherIcon();
         $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
         return "<div class='wrapWeather wrapWind'>
+                    <h2>$windSpeed m/s</h2>
                     <div id='dangerLevels' class='dangerLevels'></div>
-                    Windgeschwindigkeit: $WSP m/s <br/>
-                    Windrichtung: $WD ° <br/>
-                    Windböhen: $WG m/s <br/>
-                    <script>setDangerLevels($WSP)</script>
+                    Windrichtung: $windDegree ° <br/>
+                    Windböhen: $windGust m/s <br/>
+                    <div class='compas'><div id='arrow' class='arrow'></div></div>
+                    <script>setDangerLevels($windSpeed)</script>
+                    <script>setArrow($windDegree)</script>
                 </div>";
 	}
 }

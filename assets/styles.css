@@ -10,6 +10,9 @@
     border-radius: 8px;
     box-shadow: 0 0 12px 4px var(--shadow);
 }
+.wrapWeather h2, h3, h4 {
+    margin: 0;
+}
 #sunWeather {
     --textColor: black;
     --backgroundUrl: url("../assets/sunrise/day.png");
@@ -28,9 +31,6 @@
 .sunWeatherDark {
     --textColor: white !important;
     --backgroundUrl: url("../assets/sunrise/night.png") !important;
-}
-#sunWeather h2, h3, h4 {
-    margin: 0;
 }
 .sunTime {
     width: 100%;
@@ -83,6 +83,10 @@
 
 /* WIND */
 .wrapWind {
+    aspect-ratio: 1.75;
+    background-image: url("../assets/sunrise/sunrise.png");
+    background-size: cover;
+    background-position: center;
     padding: 40px;
 }
 .dangerLevels {
@@ -99,4 +103,23 @@
 }
 .dangerLevel:last-child {
     border: none;
+}
+.compas {
+    background-image: url("../assets/compas/compas.png");
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+}
+.compas .arrow {
+    --arrowRotation: 0deg;
+    background-image: url("../assets/compas/arrow.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 28%;
+    aspect-ratio: 1;
+    rotate: var(--arrowRotation);
 }

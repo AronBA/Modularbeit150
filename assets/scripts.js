@@ -48,7 +48,12 @@ function setDangerLevels(speed) {
     for (let i = 0; i < 12; i++) {
         const child = create()
         child.classList.add("dangerLevel")
-        if (i < level) child.style.backgroundColor = "#" + levels[i].c
+        if (i <= level) child.style.backgroundColor = "#" + levels[i].c
         dangerLevels.append(child)
     }
+}
+setDangerLevels(2)
+function setArrow(rotation) {
+    const arrow = getId("arrow")
+    arrow.style.setProperty("--arrowRotation", rotation + "deg")
 }
