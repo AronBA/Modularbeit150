@@ -109,43 +109,73 @@
 
 /* WIND */
 .wrapWind {
+    color: white;
     aspect-ratio: 1.75;
-    background-image: url("../assets/sunrise/sunrise.png");
+    background-image: url("../assets/sunrise/sunset.png");
     background-size: cover;
     background-position: center;
-    padding: 40px;
-}
-.dangerLevels {
-    width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+.wrapDangerLevels {
+    width: 100%;
+    padding: 5px 0 20px 0;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-style: solid;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px black;
+    backdrop-filter: blur(6px) brightness(50%);
+}
+.dangerLevels {
+    display: flex;
+    width: 90%;
 }
 .dangerLevel {
-    border-right: solid;
     width: 100%;
-    height: 20px;
+    height: 10px;
+    opacity: 15%;
+}
+.dangerLevel:first-child {
+    border-radius: 50px 0 0 50px;
 }
 .dangerLevel:last-child {
-    border: none;
+    border-radius: 0 50px 50px 0;
+}
+.dangerLevel.activeLevel {
+    opacity: 100%;
 }
 .compas {
     background-image: url("../assets/compas/compas.png");
     background-position: center;
-    background-size: cover;
-    height: 200px;
+    background-size: contain;
+    width: 100px;
     aspect-ratio: 1;
     display: grid;
     place-items: center;
 }
 .compas .arrow {
     --arrowRotation: 0deg;
+    rotate: var(--arrowRotation);
     background-image: url("../assets/compas/arrow.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     width: 28%;
     aspect-ratio: 1;
-    rotate: var(--arrowRotation);
+    transition: 800ms ease;
+}
+.compas:hover .arrow {
+    animation: shake 1s;
+    animation-timing-function: ease;
+}
+@keyframes shake {
+    0% {rotate: var(--arrowRotation)}
+    25% {rotate: calc(var(--arrowRotation) + 12deg)}
+    75% {rotate: calc(var(--arrowRotation) - 5deg)}
+    100% {rotate: var(--arrowRotation)}
 }
