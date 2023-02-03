@@ -168,4 +168,8 @@ class Shortcodes
                 </div>";
     }
 
+    // aqi = Air Quality Index
+    function aqiShortcode(): string {
+        $aqi = $this->api->getAirQualityIndex();
+    }
 }
