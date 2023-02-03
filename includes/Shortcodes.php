@@ -94,7 +94,6 @@ class Shortcodes
 			</div>";
 	}
 
-
 	function  smallWeatherShortcode(): string {
 
 		$temperature = $this->api->getTemperatur("c");
@@ -152,13 +151,20 @@ class Shortcodes
         $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
         return "<div class='wrapWeather wrapWind'>
                     <h2>Windspeed - $windSpeed m/s</h2>
-                    <div class='wrapDangerLevels'>
+                    <div class='wrapDangerLevels windBlur'>
                         <h4 id='dangerLevelsDescription'></h4>
                         <div id='dangerLevels' class='dangerLevels'></div>
                     </div>
-                    Windrichtung: $windDegree ° <br/>
-                    Windböhen: $windGust m/s <br/>
-                    <div class='compas'><div id='arrow' class='arrow'></div></div>
+                    <div class='wrapWindSub'>
+                        <div class='wrapSub windBlur'>
+                            <h3>" . $windDegree . "°</h3>
+                            <div class='compas'><div id='arrow' class='arrow'></div></div>
+                        </div>
+                        <div class='wrapSub windBlur'>
+                            <h3>$windGust m/s</h3>
+                            <div class='gust'></div>
+                        </div>
+                    </div>
                     <script>setDangerLevels($windSpeed)</script>
                     <script>setArrow($windDegree)</script>";
 	}
