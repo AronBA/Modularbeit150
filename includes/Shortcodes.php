@@ -85,9 +85,9 @@ class Shortcodes
 				<script>setProgress('$timeInt')</script>
 				<script>
 					setInterval(function() {
-						var currentTime = document.getElementById('currentTime');
-						var date = new Date();
-						var time = date.toLocaleTimeString();
+						const currentTime = document.getElementById('currentTime');
+						const date = new Date();
+						const time = date.toLocaleTimeString();
 						currentTime.innerHTML = time;
 					}, 1000);
 				</script>
@@ -145,22 +145,22 @@ class Shortcodes
     }
     function windShortcode(): string
     {
-
         $windSpeed = $this->api->getWindSpeed();
         $windDegree = $this->api->getWindDegree();
         $windGust = $this->api->getWindGust();
         $iconL = $this->api->getWeatherIcon();
         $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
         return "<div class='wrapWeather wrapWind'>
-                    <h2>$windSpeed m/s</h2>
-                    <div id='dangerLevels' class='dangerLevels'></div>
+                    <h2>Windspeed - $windSpeed m/s</h2>
+                    <div class='wrapDangerLevels'>
+                        <h4 id='dangerLevelsDescription'></h4>
+                        <div id='dangerLevels' class='dangerLevels'></div>
+                    </div>
                     Windrichtung: $windDegree ° <br/>
                     Windböhen: $windGust m/s <br/>
                     <div class='compas'><div id='arrow' class='arrow'></div></div>
                     <script>setDangerLevels($windSpeed)</script>
                     <script>setArrow($windDegree)</script>";
-
-
 	}
     function temparatureShortcode(): string
     {
