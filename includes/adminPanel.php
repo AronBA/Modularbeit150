@@ -87,7 +87,6 @@ class adminPanel
         $GLOBALS['lang'] = $language;
         $GLOBALS['lon'] = $longitude;
         $GLOBALS['lat'] = $latitude;
-
     }
 
     /**
@@ -105,33 +104,33 @@ class adminPanel
         <div class='adminPanel'>
             <form class='input' method='post' action=''>
             <div class='groupIn'>
-                <label for='key'>openWeather API Key</label>
+                <label for='key'>openWeather API Key</label><br />
                 <input id='key' name='key' type='text' value='$key' required />
             </div><br />
             <div class='groupIn'>
-                <label for='lon'>Longitude</label>
-                <input type='number' id='lon' name='lon' class='num' value='$lon' required />
-                <label for='lat'>Latitude</label>
+                <label for='lon'>Longitude</label><br />
+                <input type='number' id='lon' name='lon' class='num' value='$lon' required /><br />
+                <label for='lat'>Latitude</label><br />
                 <input type='number' id='lat' name='lat' class='num' value='$lat' required />
             </div><br />
             <div class='groupIn'>
-                <label for='unit'>Measurement Unit</label>
-                <input type='radio' value='Kelvin (°K)' id='unit' name='unit' class='rad' />
-                <input type='radio' value='Celsius (°C)' id='unit' name='unit' class='rad' />
-                <input type='radio' value='Fahrenheit (°F)' id='unit' name='unit' class='rad' />
+                <label for='unit'>Measurement Unit</label><br />
+                <input type='radio' value='K' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
+                <input type='radio' value='C' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
+                <input type='radio' value='F' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />
             </div><br />
             <div class='groupIn'>
-                <label for='lang'>Language</label>
+                <label for='lang'>Language</label><br />
                 <select id='lang' name='lang' class='sel' required />
                     <option value='en'>English</option>
                     <option value='de'>Deutsch</option>
                 </select>
             </div><br />
             <div class='groupIn'>
-            <label for='col'>Color</label>
+                <label for='col'>Color</label><br />
                 <input type='color' id='col' name='col' class='col' value='$color' required />
             </div><br />
-            <button style='width: 20px; height:20px' type='submit' class='submit' value='Submit' onclick='this.form.submit()'>Submit</button>
+            <button type='submit' class='submit' value='Submit' onclick='this.form.submit()'>Submit</button>
             </form>
         </div>";
     }
