@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 Copyright 2005-2015 Automattic, Inc.
 */
 
-
 if(!defined("ABSPATH")){
     die;
 }
@@ -36,16 +35,26 @@ if ( !class_exists( 'Weather' ) ) {
     class Weather
     {
         private Shortcodes $shortcodes;
+        private adminPanel $adminPanel;
         public string $plugin;
 
         function __construct() {
             include_once "includes/Shortcodes.php";
+            include_once "includes/adminPanel.php";
             $this->plugin = plugin_basename( __FILE__ );
             $this->shortcodes = new Shortcodes();
+            $this->adminPanel = new adminPanel();
         }
 
-        function register() {
-            add_action('wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
+        function addAdminMenu(): void
+        {
+            add_menu_page('Weather Manager', 'Weather Manager', 'manage_options', 'weather_plugin_manager', array( $this->adminPanel, 'getAdminPanel'), 'dashicons-admin-generic', 110);
+        }
+
+
+        function register(): void {
+            add_action('admin_menu', array( $this, 'addAdminMenu' ));
+            add_action( 'wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
             add_shortcode('windWeather', array($this->shortcodes,'windShortcode'));
             add_shortcode('temperatureWeather', array($this->shortcodes, 'weatherShortcode'));
@@ -55,11 +64,11 @@ if ( !class_exists( 'Weather' ) ) {
             add_shortcode('aqiAirPollution', array($this->shortcodes, 'aqiShortcode'));
         }
 
-        function activate() {
+        function activate(): void {
             require_once plugin_dir_path( __FILE__ ) . 'includes/weather-activate.php';
             WeatherActivate::activate();
         }
-        function deactivate(){
+        function deactivate(): void{
             require_once plugin_dir_path( __FILE__ ) . 'includes/weather-deactivate.php';
             WeatherDeactivate::deactivate();
         }
