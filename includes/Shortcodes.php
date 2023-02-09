@@ -57,34 +57,43 @@ class Shortcodes
 
 	function sunShortcode() :string {
 		$city = $this->api->getCity();
-        $timeInt = $this->api->getDayTime();
-        $sunriseInt = $this->api->getSunrise();
-        $sunsetInt = $this->api->getSunset();
-        $dateFormat = "h:i a";
-        $time = date($dateFormat, $timeInt);
+		$timeInt = $this->api->getDayTime();
+		$sunriseInt = $this->api->getSunrise();
+		$sunsetInt = $this->api->getSunset();
+		$dateFormat = "h:i a";
+		$time = date($dateFormat, $timeInt);
 		$sunrise = date($dateFormat, $sunriseInt);
 		$sunset = date($dateFormat, $sunsetInt);
 		return "<div class='wrapWeather wrapSun' id='sunWeather'>
-                    <h2>$city</h2>
-                    <div id='progressWeather'></div>
-                    <div class='sunTime'>
-                        <div>
-                            <h3>$sunrise</h3>
-                            <h4>Sunrise</h4>
-                        </div>
-                        <div>
-                            <h3>$time</h3>
-                            <h4>Current Time</h4>
-                        </div>                        
-                        <div>
-                            <h3>$sunset</h3>
-                            <h4>Sunset</h4>
-                        </div>
-                    </div>
-                    <script>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
-                    <script>setProgress($timeInt)</script>
-                </div>";
+				<h2>$city</h2>
+				<div id='progressWeather'></div>
+				<div class='sunTime'>
+					<div>
+						<h3>$sunrise</h3>
+						<h4>Sunrise</h4>
+					</div>
+					<div>
+						<h3 id='currentTime'>$time</h3>
+						<h4>Current Time</h4>
+					</div>                        
+					<div>
+						<h3>$sunset</h3>
+						<h4>Sunset</h4>
+					</div>
+				</div>
+				<script>setSun('$timeInt', '$sunriseInt', '$sunsetInt')</script>
+				<script>setProgress('$timeInt')</script>
+				<script>
+					setInterval(function() {
+						const currentTime = document.getElementById('currentTime');
+						const date = new Date();
+						const time = date.toLocaleTimeString();
+						currentTime.innerHTML = time;
+					}, 1000);
+				</script>
+			</div>";
 	}
+
 
 	function  smallWeatherShortcode(): string {
 
@@ -136,15 +145,44 @@ class Shortcodes
     }
     function windShortcode(): string
     {
-        $WSP = $this->api->getWindSpeed();
-        $WD = $this->api->getWindDegree();
-        $WG = $this->api->getWindGust();
+        $windSpeed = $this->api->getWindSpeed();
+        $windDegree = $this->api->getWindDegree();
+        $windGust = $this->api->getWindGust();
         $iconL = $this->api->getWeatherIcon();
         $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
-        return "<div class='wrapWeather'>
-                    Windgeschwindigkeit: $WSP m/s <br/>
-                    Windrichtung: $WD ° <br/>
-                    Windböhen: $WG m/s <br/>
-                </div>";
+        return "<div class='wrapWeather wrapWind'>
+                    <h2>Windspeed - $windSpeed m/s</h2>
+                    <div class='wrapDangerLevels'>
+                        <h4 id='dangerLevelsDescription'></h4>
+                        <div id='dangerLevels' class='dangerLevels'></div>
+                    </div>
+                    Windrichtung: $windDegree ° <br/>
+                    Windböhen: $windGust m/s <br/>
+                    <div class='compas'><div id='arrow' class='arrow'></div></div>
+                    <script>setDangerLevels($windSpeed)</script>
+                    <script>setArrow($windDegree)</script>";
 	}
+    function temparatureShortcode(): string
+    {
+        $CurrentTemp = $this->api->getTemperatur("c");
+        $MaxTemp = $this->api->getTemperaturMax("c");
+        $MinTemp = $this->api->getTemperaturMin("c");
+        $FeelsTemp = $this->api->getTemperaturFeelslike("c");
+        return "<div class='tempWeather'>
+                    <div class='tempTitel'>Temparatur</div>
+                    Temparatur momentan: $CurrentTemp °C<br/>
+                    Min Temparatur: $MaxTemp °C <br/>
+                    Max Temparatur: $MinTemp ° C <br/>
+                    Fühlt sich wie $FeelsTemp ° C an<br/>
+                </div>";
+    }
+
+    // aqi = Air Quality Index
+    function aqiShortcode(): string {
+        $aqi = $this->api->getAirQualityIndex();
+        return "<div class='aqiWeather'>
+                    <div class='aqiTitel'>Air Quality Index</div>
+                    $aqi
+                </div>";
+    }
 }

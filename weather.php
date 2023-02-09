@@ -48,8 +48,9 @@ if ( !class_exists( 'Weather' ) ) {
 
         function addAdminMenu(): void
         {
-            add_menu_page('Weather Manager', 'Weather Manager', 'author', 'weather_plugin_manager', array( $this->adminPanel, 'getAdminPanel'), 'dashicons-admin-generic', 110);
+            add_menu_page('Weather Manager', 'Weather Manager', 'manage_options', 'weather_plugin_manager', array( $this->adminPanel, 'getAdminPanel'), 'dashicons-admin-generic', 110);
         }
+
 
         function register(): void {
             add_action('admin_menu', array( $this, 'addAdminMenu' ));
@@ -59,6 +60,8 @@ if ( !class_exists( 'Weather' ) ) {
             add_shortcode('temperatureWeather', array($this->shortcodes, 'weatherShortcode'));
 	        add_shortcode('sunWeather', array($this->shortcodes, 'sunShortcode'));
             add_shortcode('largeWeather', array($this->shortcodes, 'largeWeatherShortcode'));
+            add_shortcode('temparature2Weather', array($this->shortcodes, 'temparatureShortcode'));
+            add_shortcode('aqiAirPollution', array($this->shortcodes, 'aqiShortcode'));
         }
 
         function activate(): void {
