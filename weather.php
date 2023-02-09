@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 Copyright 2005-2015 Automattic, Inc.
 */
 
-
 if(!defined("ABSPATH")){
     die;
 }
@@ -47,8 +46,13 @@ if ( !class_exists( 'Weather' ) ) {
             $this->adminPanel = new adminPanel();
         }
 
-        function register() {
-            add_menu_page( 'Weather Plugin Manager', 'Weather Plugin', 'author', 'weather-plugin', array($this->adminPanel,'getAdminPanel'));
+        function addAdminMenu(): void
+        {
+            add_menu_page('Weather Manager', 'Weather Manager', 'author', 'weather_plugin_manager', array( $this->adminPanel, 'getAdminPanel'), 'dashicons-admin-generic', 110);
+        }
+
+        function register(): void {
+            add_action('admin_menu', array( $this, 'addAdminMenu' ));
             add_action( 'wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
             add_shortcode('windWeather', array($this->shortcodes,'windShortcode'));
@@ -57,11 +61,11 @@ if ( !class_exists( 'Weather' ) ) {
             add_shortcode('largeWeather', array($this->shortcodes, 'largeWeatherShortcode'));
         }
 
-        function activate() {
+        function activate(): void {
             require_once plugin_dir_path( __FILE__ ) . 'includes/weather-activate.php';
             WeatherActivate::activate();
         }
-        function deactivate(){
+        function deactivate(): void{
             require_once plugin_dir_path( __FILE__ ) . 'includes/weather-deactivate.php';
             WeatherDeactivate::deactivate();
         }
