@@ -21,19 +21,16 @@ class adminPanel
 
     function pullFromFile(){
         $config = include 'config.php';
-        $this->color = $config['col'];
-        $this->unit = $config['unit'];
-        $this->key = $config['APIKey'];
-        $this->lang = $config['lang'];
-        $this->lon = $config['lon'];
-        $this->lat = $config['lat'];
+        adminPanel::$color = $config['col'];
+        adminPanel::$unit = $config['unit'];
+        adminPanel::$key = $config['APIKey'];
+        adminPanel::$lang = $config['lang'];
+        adminPanel::$lon = $config['lon'];
+        adminPanel::$lat = $config['lat'];
     }
 
     function update(): void{
         $this->defGlobals(adminPanel::$key, adminPanel::$unit, adminPanel::$lang, adminPanel::$color, adminPanel::$lon, adminPanel::$lat);
-        echo "<script>
-                setTimeout(function(()->{update()}): void, 10000)
-              </script>";
     }
 
     function __construct(){
@@ -97,39 +94,44 @@ class adminPanel
      * @return string
      * Returns Admin Panel for Weather plugin
      */
-    public function getAdminPanel(){
-        return "
+    public function getAdminPanel(): void{
+        $key = adminPanel::$key;
+        $lat = adminPanel::$lat;
+        $lon = adminPanel::$lon;
+        $lang = adminPanel::$lang;
+        $unit = adminPanel::$unit;
+        $color = adminPanel::$color;
+        echo "
         <div class='adminPanel'>
             <form class='input' method='post' action=''>
             <div class='groupIn'>
                 <label for='key'>openWeather API Key</label>
-                <input id='key' name='key' type='text' value='$this->key' required />
-            </div>
+                <input id='key' name='key' type='text' value='$key' required />
+            </div><br />
             <div class='groupIn'>
                 <label for='lon'>Longitude</label>
-                <input type='number' id='lon' name='lon' class='num' value='$this->lon' required />
+                <input type='number' id='lon' name='lon' class='num' value='$lon' required />
                 <label for='lat'>Latitude</label>
-                <input type='number' id='lat' name='lat' class='num' value='$this->lat' required />
-            </div>
+                <input type='number' id='lat' name='lat' class='num' value='$lat' required />
+            </div><br />
             <div class='groupIn'>
                 <label for='unit'>Measurement Unit</label>
                 <input type='radio' value='Kelvin (°K)' id='unit' name='unit' class='rad' />
                 <input type='radio' value='Celsius (°C)' id='unit' name='unit' class='rad' />
                 <input type='radio' value='Fahrenheit (°F)' id='unit' name='unit' class='rad' />
-            </div>
+            </div><br />
             <div class='groupIn'>
                 <label for='lang'>Language</label>
                 <select id='lang' name='lang' class='sel' required />
                     <option value='en'>English</option>
                     <option value='de'>Deutsch</option>
                 </select>
-            </div>
+            </div><br />
             <div class='groupIn'>
             <label for='col'>Color</label>
-                <input type='color' id='col' name='col' class='col' value='$this->color' required />
-            </div>
-            
-            <button type='submit' class='submit' value='Submit' onclick='this.form.submit()'/>
+                <input type='color' id='col' name='col' class='col' value='$color' required />
+            </div><br />
+            <button style='width: 20px; height:20px' type='submit' class='submit' value='Submit' onclick='this.form.submit()'>Submit</button>
             </form>
         </div>";
     }
