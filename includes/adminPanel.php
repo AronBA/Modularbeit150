@@ -16,7 +16,7 @@ class adminPanel
         $config['lang'] = adminPanel::$lang;
         $config['lon'] = adminPanel::$lon;
         $config['lat'] = adminPanel::$lat;
-        file_put_contents('config.php', '<?php return ' . var_export($config, true) . '; ?>');
+        file_put_contents('config.php', '<?php return ' . "\n".'$Settings='.var_export($config, true) . '; ?>');
     }
 
     function pullFromFile(){
@@ -29,14 +29,9 @@ class adminPanel
         adminPanel::$lat = $config['lat'];
     }
 
-    function update(): void{
-        $this->defGlobals(adminPanel::$key, adminPanel::$unit, adminPanel::$lang, adminPanel::$color, adminPanel::$lon, adminPanel::$lat);
-    }
-
     function __construct(){
         $this->pullFromFile();
         $this->setValues();
-        $this->update();
     }
 
     /**
@@ -46,29 +41,18 @@ class adminPanel
     function setValues(): void{
         if(isset($_POST["key"])){
             adminPanel::$key = $_POST["key"];
-            $this->saveToFile();
-        }
-        if(isset($_POST["lon"])){
+        } else if(isset($_POST["lon"])){
             adminPanel::$lon = $_POST["lon"];
-            $this->saveToFile();
-        }
-        if(isset($_POST["lat"])){
+        } else if(isset($_POST["lat"])){
             adminPanel::$lat = $_POST["lat"];
-            $this->saveToFile();
-        }
-        if(isset($_POST["lang"])){
+        } else if(isset($_POST["lang"])){
             adminPanel::$lang = $_POST["lang"];
-            $this->saveToFile();
-        }
-        if(isset($_POST["col"])){
+        } else if(isset($_POST["col"])){
             adminPanel::$color = $_POST["col"];
-            $this->saveToFile();
-        }
-        if(isset($_POST["unit"])){
+        } else if(isset($_POST["unit"])){
             adminPanel::$unit = $_POST["unit"];
-            $this->saveToFile();
         }
-        $this->defGlobals(adminPanel::$key, adminPanel::$unit, adminPanel::$lang, adminPanel::$color, adminPanel::$lon, adminPanel::$lat);
+        $this->saveToFile();
     }
 
     /**
@@ -80,14 +64,6 @@ class adminPanel
      * @param number $latitude
      * @return void
      */
-    public function defGlobals(string $key, string $unit, string $language, string $color, float $longitude, float $latitude){
-        $GLOBALS['color'] = $color;
-        $GLOBALS['unit'] = $unit;
-        $GLOBALS['key'] = $key;
-        $GLOBALS['lang'] = $language;
-        $GLOBALS['lon'] = $longitude;
-        $GLOBALS['lat'] = $latitude;
-    }
 
     /**
      * @return string
