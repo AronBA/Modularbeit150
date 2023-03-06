@@ -2,15 +2,46 @@
 
 class adminPanel
 {
-    private static adminPanel $obj;
+    /**
+     * @var float
+     * Contains Latitude Coordinate
+     **/
     public static float $lat = 0;
+    /**
+     * @var float
+     * Contains Longitude Coordinate
+     **/
     public static float $lon = 0;
+    /**
+     * @var string
+     * Contains Api key to Open Weather
+     **/
     public static string $key = "";
+    /**
+     * @var string
+     * Contains Hexadecimal color value
+     **/
     public static string $color = "6666ff";
+    /**
+     * @var string
+     * Contains short-form character to indicate Measurement System
+     **/
     public static string $unit = "k";
+    /**
+     * @var string
+     * Contains Language charachter code
+     **/
     public static string $lang = "en";
+    /**
+     * @var Array
+     * Contains languages that are available
+     **/
     public static Array $langArr = ['en'=>'English', 'de'=>'Deutsch'];
 
+    /**
+     * @return void
+     * Saves current settings to the config file
+     */
     function saveToFile(): void{
         $config = include 'config.php';
         $config['col'] = self::$color;
@@ -22,6 +53,10 @@ class adminPanel
         file_put_contents('config.php', '<?php return ' . "\n".'$Settings='.var_export($config, true) . '; ?>');
     }
 
+    /**
+     * @return void
+     * Gets data from config file
+     */
     function pullFromFile():void{
         $config = include 'config.php';
         self::$color = $config['col'];
@@ -37,7 +72,7 @@ class adminPanel
 
     /**
      * @return void
-     * Sets Global values to Inputted values from the Admin Panel
+     * Sets static values to Inputted values from the Admin Panel
      */
     function setValues(): void{
         if(isset($_POST["key"])){
