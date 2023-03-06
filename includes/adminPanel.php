@@ -1,4 +1,5 @@
 <?php
+
 class adminPanel
 {
     public static float $lat = 0;
@@ -7,26 +8,27 @@ class adminPanel
     public static string $color = "6666ff";
     public static string $unit = "k";
     public static string $lang = "en";
+    public static Array $langArr = ['en'=>'English', 'de'=>'Deutsch'];
 
     function saveToFile(): void{
         $config = include 'config.php';
-        $config['col'] = adminPanel::$color;
-        $config['unit'] = adminPanel::$unit;
-        $config['APIKey'] = adminPanel::$key;
-        $config['lang'] = adminPanel::$lang;
-        $config['lon'] = adminPanel::$lon;
-        $config['lat'] = adminPanel::$lat;
+        $config['col'] = self::$color;
+        $config['unit'] = self::$unit;
+        $config['APIKey'] = self::$key;
+        $config['lang'] = self::$lang;
+        $config['lon'] = self::$lon;
+        $config['lat'] = self::$lat;
         file_put_contents('config.php', '<?php return ' . "\n".'$Settings='.var_export($config, true) . '; ?>');
     }
 
-    function pullFromFile(){
+    function pullFromFile():void{
         $config = include 'config.php';
-        adminPanel::$color = $config['col'];
-        adminPanel::$unit = $config['unit'];
-        adminPanel::$key = $config['APIKey'];
-        adminPanel::$lang = $config['lang'];
-        adminPanel::$lon = $config['lon'];
-        adminPanel::$lat = $config['lat'];
+        self::$color = $config['col'];
+        self::$unit = $config['unit'];
+        self::$key = $config['APIKey'];
+        self::$lang = $config['lang'];
+        self::$lon = $config['lon'];
+        self::$lat = $config['lat'];
     }
 
     function __construct(){
@@ -40,17 +42,17 @@ class adminPanel
      */
     function setValues(): void{
         if(isset($_POST["key"])){
-            adminPanel::$key = $_POST["key"];
+            self::$key = $_POST["key"];
         } else if(isset($_POST["lon"])){
-            adminPanel::$lon = $_POST["lon"];
+            self::$lon = $_POST["lon"];
         } else if(isset($_POST["lat"])){
-            adminPanel::$lat = $_POST["lat"];
+            self::$lat = $_POST["lat"];
         } else if(isset($_POST["lang"])){
-            adminPanel::$lang = $_POST["lang"];
+            self::$lang = $_POST["lang"];
         } else if(isset($_POST["col"])){
-            adminPanel::$color = $_POST["col"];
+            self::$color = $_POST["col"];
         } else if(isset($_POST["unit"])){
-            adminPanel::$unit = $_POST["unit"];
+            self::$unit = $_POST["unit"];
         }
         $this->saveToFile();
     }
@@ -66,17 +68,17 @@ class adminPanel
      */
 
     /**
-     * @return string
-     * Returns Admin Panel for Weather plugin
+     * @return void
+     * Echos Admin Panel for Weather plugin
      */
     public function getAdminPanel(): void{
-        $key = adminPanel::$key;
-        $lat = adminPanel::$lat;
-        $lon = adminPanel::$lon;
-        $lang = adminPanel::$lang;
-        $unit = adminPanel::$unit;
-        $color = adminPanel::$color;
-        echo "
+        $key = self::$key;
+        $lat = self::$lat;
+        $lon = self::$lon;
+        $lang = self::$lang;
+        $unit = strtolower(self::$unit);
+        $color = self::$color;
+        $echoVal  = "
         <div class='adminPanel'>
             <form class='input' method='post' action=''>
             <div class='groupIn'>
@@ -90,16 +92,33 @@ class adminPanel
                 <input type='number' id='lat' name='lat' class='num' value='$lat' required />
             </div><br />
             <div class='groupIn'>
-                <label for='unit'>Measurement Unit</label><br />
-                <input type='radio' value='K' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
-                <input type='radio' value='C' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
-                <input type='radio' value='F' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />
+                <label for='unit'>Measurement Unit</label><br /> ";
+                if($unit == "k"){
+                    $echoVal = $echoVal."<input type='radio' value='k' id='unit' name='unit' class='rad' checked /> <label>Kelvin (°K)</label><br />
+                    <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
+                    <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
+                } elseif ($unit == "c") {
+                    $echoVal = $echoVal."<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
+                    <input type='radio' value='c' id='unit' name='unit' class='rad' checked /> <label>Celsius (°C)</label><br />
+                    <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
+                } else {
+                    $echoVal = $echoVal."<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
+                     <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
+                    <input type='radio' value='f' id='unit' name='unit' class='rad' checked /> <label>Fahrenheit (°F)</label><br />";
+                }
+                $echoVal = $echoVal."
             </div><br />
             <div class='groupIn'>
                 <label for='lang'>Language</label><br />
-                <select id='lang' name='lang' class='sel' required />
-                    <option value='en'>English</option>
-                    <option value='de'>Deutsch</option>
+                <select id='lang' name='lang' class='sel' required />";
+                foreach (self::$langArr as $lan=>$lan_val){
+                    if ($lang == $lan) {
+                        $echoVal = $echoVal . "<option value='$lan' selected>$lan_val</option>";
+                    } else {
+                        $echoVal = $echoVal."<option value='$lan'>$lan_val</option>";
+                    }
+                }
+        $echoVal = $echoVal."
                 </select>
             </div><br />
             <div class='groupIn'>
@@ -109,5 +128,6 @@ class adminPanel
             <button type='submit' class='submit' value='Submit' onclick='this.form.submit()'>Submit</button>
             </form>
         </div>";
+        echo $echoVal;
     }
 }
