@@ -2,6 +2,7 @@
 
 class adminPanel
 {
+    private static adminPanel $obj;
     public static float $lat = 0;
     public static float $lon = 0;
     public static string $key = "";
@@ -30,10 +31,8 @@ class adminPanel
         self::$lon = $config['lon'];
         self::$lat = $config['lat'];
     }
-
-    function __construct(){
+    public function __construct(){
         $this->pullFromFile();
-        $this->setValues();
     }
 
     /**
@@ -43,15 +42,20 @@ class adminPanel
     function setValues(): void{
         if(isset($_POST["key"])){
             self::$key = $_POST["key"];
-        } else if(isset($_POST["lon"])){
+        }
+        if(isset($_POST["lon"])){
             self::$lon = $_POST["lon"];
-        } else if(isset($_POST["lat"])){
+        }
+        if(isset($_POST["lat"])){
             self::$lat = $_POST["lat"];
-        } else if(isset($_POST["lang"])){
+        }
+        if(isset($_POST["lang"])){
             self::$lang = $_POST["lang"];
-        } else if(isset($_POST["col"])){
+        }
+        if(isset($_POST["col"])){
             self::$color = $_POST["col"];
-        } else if(isset($_POST["unit"])){
+        }
+        if(isset($_POST["unit"])){
             self::$unit = $_POST["unit"];
         }
         $this->saveToFile();
@@ -72,6 +76,7 @@ class adminPanel
      * Echos Admin Panel for Weather plugin
      */
     public function getAdminPanel(): void{
+        $this->setValues();
         $key = self::$key;
         $lat = self::$lat;
         $lon = self::$lon;
@@ -80,7 +85,7 @@ class adminPanel
         $color = self::$color;
         $echoVal  = "
         <div class='adminPanel'>
-            <form class='input' method='post' action=''>
+            <form class='input' method='post'>
             <div class='groupIn'>
                 <label for='key'>openWeather API Key</label><br />
                 <input id='key' name='key' type='text' value='$key' required />
