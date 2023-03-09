@@ -1,6 +1,6 @@
 # Weather Plugin
 WIP
-
+This is a test
 # Docker
 ### Ports
 Wordpress:8000

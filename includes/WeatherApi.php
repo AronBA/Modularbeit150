@@ -63,8 +63,7 @@ class WeatherApi
      */
     public function getData(float $lon, float $lat,string $lang = "de")
     {
-        $lang = "lang=$lang";
-        $responseWeatherAPI=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&$lang&appid=$this->apikey");
+        $responseWeatherAPI=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&lang=$lang&appid=$this->apikey");
         $responsePollutionAPI=wp_remote_get("http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lon&appid=$this->apikey");
 
         $jsonWeatherAPI = wp_remote_retrieve_body($responseWeatherAPI);
