@@ -180,7 +180,7 @@ class Shortcodes
     // aqi = Air Quality Index
     function aqiShortcode(): string {
 	    $aqi = $this->api->getAirQualityIndex();
-	    switch ($aqi) {
+	    /* switch ($aqi) {
 		    case 1:
 			    $aqi = 'Sehr gut';
 			    break;
@@ -196,16 +196,14 @@ class Shortcodes
 		    case 5:
 			    $aqi = 'Sehr schlecht';
 			    break;
-	    }
-	    $windSpeed = $this->api->getWindSpeed();
-	    $windDegree = $this->api->getWindDegree();
+	    } */
 	    return "<div class='wrapWeather wrapAQI'>
-                    <h2>Luftqualität - $aqi</h2>
+                    <h2>Luftqualität</h2>
                     <div class='wrapDangerLevels'>
-                        <h4 id='dangerLevelsDescription'></h4>
-                        <div id='dangerLevels' class='dangerLevels'></div>
+                        <h4 id='indexOfAQIDescription'></h4>
+                        <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
                     <div class='iconAQI'></div>
-                    <script>setDangerLevels($windSpeed)</script>";
+                    <script>setAQI($aqi)</script>";
     }
 }

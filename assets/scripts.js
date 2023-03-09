@@ -39,6 +39,28 @@ function setDangerLevels(speed) {
         {min:117,max:9999,c:"FF0000",d:"Hurricane"}]
     setBar(kmh, levels, "dangerLevels")
 }
+
+function setAQI(aqi) {
+    const airQuality = [
+        {
+            min:1,max:1,c:"66FFFF",d:"Sehr gut"
+        },
+        {
+            min:2,max:2,c:"00FF99",d:"Gut"
+        },
+        {
+            min:3,max:3,c:"FFFF00",d:"Mittel"
+        },
+        {
+            min:4,max:3,c:"FF9900",d:"Schlecht"
+        },
+        {
+            min:4,max:3,c:"FF3300",d:"Sehr schlecht"
+        }
+    ]
+    setBar(aqi, airQuality, "indexOfAQI")
+}
+
 function setBar(target, levels, name) {
     const level = levels.find(element => target >= element.min && target <= element.max)
     const description = getId(name + "Description")
