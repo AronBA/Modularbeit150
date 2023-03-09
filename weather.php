@@ -42,8 +42,8 @@ if ( !class_exists( 'Weather' ) ) {
             include_once "includes/Shortcodes.php";
             include_once "includes/adminPanel.php";
             $this->plugin = plugin_basename( __FILE__ );
-            $this->shortcodes = new Shortcodes();
             $this->adminPanel = new adminPanel();
+            $this->shortcodes = new Shortcodes();
         }
 
         function addAdminMenu(): void
