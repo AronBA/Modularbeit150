@@ -30,7 +30,6 @@ function setProgress(time) {
     }
     progress.append(parent)
 }
-
 function setDangerLevels(speed) {
     const kmh = speed * 3.6
     const levels = [{min:0,max:2,c:"66FFFF",d:"Calm"},{min:3,max:5,c:"00FFFF",d:"Light air"},{min:6,max:11,c:"00FF99",d:"Light breeze"},
@@ -38,8 +37,10 @@ function setDangerLevels(speed) {
         {min:40,max:50,c:"CCFF33",d:"Strong breeze"},{min:51,max:61,c:"FFFF00",d:"Moderate gale"},{min:62,max:74,c:"FFC000",d:"Fresh gale"},
         {min:75,max:87,c:"FF9900",d:"Strong gale"},{min:88,max:101,c:"FF6600",d:"Whole gale"},{min:102,max:116,c:"FF3300",d:"Violent storm"},
         {min:117,max:9999,c:"FF0000",d:"Hurricane"}]
-
-    const level = levels.find(element => kmh >= element.min && kmh <= element.max)
+    setBar(kmh, levels)
+}
+function setBar(target, levels) {
+    const level = levels.find(element => target >= element.min && target <= element.max)
     const description = getId("dangerLevelsDescription")
     description.innerHTML = level.d
     const dangerLevels = getId("dangerLevels")
