@@ -1,78 +1,100 @@
 <?php
+
 class adminPanel
 {
-
+    /**
+     * @var float
+     * Contains Latitude Coordinate
+     **/
     public static float $lat = 0;
+    /**
+     * @var float
+     * Contains Longitude Coordinate
+     **/
     public static float $lon = 0;
+    /**
+     * @var string
+     * Contains Api key to Open Weather
+     **/
     public static string $key = "";
+    /**
+     * @var string
+     * Contains Hexadecimal color value
+     **/
     public static string $color = "6666ff";
+    /**
+     * @var string
+     * Contains short-form character to indicate Measurement System
+     **/
     public static string $unit = "k";
+    /**
+     * @var string
+     * Contains Language charachter code
+     **/
     public static string $lang = "en";
+    /**
+     * @var Array
+     * Contains languages that are available
+     **/
+    public static Array $langArr = ['en'=>'English', 'de'=>'Deutsch'];
 
+    /**
+     * @return void
+     * Saves current settings to the config file
+     */
     function saveToFile(): void{
         $config = include 'config.php';
-        $config['col'] = adminPanel::$color;
-        $config['unit'] = adminPanel::$unit;
-        $config['APIKey'] = adminPanel::$key;
-        $config['lang'] = adminPanel::$lang;
-        $config['lon'] = adminPanel::$lon;
-        $config['lat'] = adminPanel::$lat;
-        file_put_contents('config.php', '<?php return ' . var_export($config, true) . '; ?>');
+        $config['col'] = self::$color;
+        $config['unit'] = self::$unit;
+        $config['APIKey'] = self::$key;
+        $config['lang'] = self::$lang;
+        $config['lon'] = self::$lon;
+        $config['lat'] = self::$lat;
+        file_put_contents('config.php', '<?php return ' . "\n".'$Settings='.var_export($config, true) . '; ?>');
     }
 
-    /*
-    function pullFromFile(){
+    /**
+     * @return void
+     * Gets data from config file
+     */
+    function pullFromFile():void{
         $config = include 'config.php';
-        $this->color = $config['col'];
-        $this->unit = $config['unit'];
-        $this->key = $config['APIKey'];
-        $this->lang = $config['lang'];
-        $this->lon = $config['lon'];
-        $this->lat = $config['lat'];
+        self::$color = $config['col'];
+        self::$unit = $config['unit'];
+        self::$key = $config['APIKey'];
+        self::$lang = $config['lang'];
+        self::$lon = $config['lon'];
+        self::$lat = $config['lat'];
     }
-    */
-    function update(): void{
-        $this->defGlobals(adminPanel::$key, adminPanel::$unit, adminPanel::$lang, adminPanel::$color, adminPanel::$lon, adminPanel::$lat);
-
-    }
-
-    function __construct(){
-        //$this->pullFromFile();
-        $this->setValues();
-        $this->update();
+    public function __construct(){
+        $this->pullFromFile();
     }
 
 
     /**
      * @return void
-     * Sets Global values to Inputted values from the Admin Panel
+     * Sets static values to Inputted values from the Admin Panel
      */
     function setValues(): void{
         if(isset($_POST["key"])){
-            adminPanel::$key = $_POST["key"];
-            $this->saveToFile();
+            self::$key = $_POST["key"];
         }
         if(isset($_POST["lon"])){
-            adminPanel::$lon = $_POST["lon"];
-            $this->saveToFile();
+            self::$lon = $_POST["lon"];
         }
         if(isset($_POST["lat"])){
-            adminPanel::$lat = $_POST["lat"];
-            $this->saveToFile();
+            self::$lat = $_POST["lat"];
         }
         if(isset($_POST["lang"])){
-            adminPanel::$lang = $_POST["lang"];
-            $this->saveToFile();
+            self::$lang = $_POST["lang"];
         }
         if(isset($_POST["col"])){
-            adminPanel::$color = $_POST["col"];
-            $this->saveToFile();
+            self::$color = $_POST["col"];
         }
         if(isset($_POST["unit"])){
-            adminPanel::$unit = $_POST["unit"];
-            $this->saveToFile();
+            self::$unit = $_POST["unit"];
         }
-        $this->defGlobals(adminPanel::$key, adminPanel::$unit, adminPanel::$lang, adminPanel::$color, adminPanel::$lon, adminPanel::$lat);
+        $this->saveToFile();
     }
 
     /**
@@ -84,60 +106,69 @@ class adminPanel
      * @param number $latitude
      * @return void
      */
-    public function defGlobals(string $key, string $unit, string $language, string $color, float $longitude, float $latitude){
-        $GLOBALS['color'] = $color;
-        $GLOBALS['unit'] = $unit;
-        $GLOBALS['key'] = $key;
-        $GLOBALS['lang'] = $language;
-        $GLOBALS['lon'] = $longitude;
-        $GLOBALS['lat'] = $latitude;
-
-    }
 
     /**
-     * @return string
-     * Returns Admin Panel for Weather plugin
+     * @return void
+     * Echos Admin Panel for Weather plugin
      */
-    public function getAdminPanel(){
-        $key = adminPanel::$key;
-        $color = adminPanel::$color;
-        $lang = adminPanel::$lang;
-        $lat = adminPanel::$lat;
-        $unit = adminPanel::$unit;
-        $lon = adminPanel::$lon;
-        return "
+    public function getAdminPanel(): void{
+        $this->setValues();
+        $key = self::$key;
+        $lat = self::$lat;
+        $lon = self::$lon;
+        $lang = self::$lang;
+        $unit = strtolower(self::$unit);
+        $color = self::$color;
+        $echoVal  = "
         <div class='adminPanel'>
-            <form class='input' method='post' action=''>
+            <form class='input' method='post'>
             <div class='groupIn'>
-                <label for='key'>openWeather API Key</label>
+                <label for='key'>openWeather API Key</label><br />
                 <input id='key' name='key' type='text' value='$key' required />
-            </div>
+            </div><br />
             <div class='groupIn'>
-                <label for='lon'>Longitude</label>
-                <input type='number' id='lon' name='lon' class='num' value='$lon' required />
-                <label for='lat'>Latitude</label>
+                <label for='lon'>Longitude</label><br />
+                <input type='number' id='lon' name='lon' class='num' value='$lon' required /><br />
+                <label for='lat'>Latitude</label><br />
                 <input type='number' id='lat' name='lat' class='num' value='$lat' required />
-            </div>
+            </div><br />
             <div class='groupIn'>
-                <label for='unit'>Measurement Unit</label>
-                <input type='radio' value='Kelvin (°K)' id='unit' name='unit' class='rad' />
-                <input type='radio' value='Celsius (°C)' id='unit' name='unit' class='rad' />
-                <input type='radio' value='Fahrenheit (°F)' id='unit' name='unit' class='rad' />
-            </div>
+                <label for='unit'>Measurement Unit</label><br /> ";
+                if($unit == "k"){
+                    $echoVal = $echoVal."<input type='radio' value='k' id='unit' name='unit' class='rad' checked /> <label>Kelvin (°K)</label><br />
+                    <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
+                    <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
+                } elseif ($unit == "c") {
+                    $echoVal = $echoVal."<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
+                    <input type='radio' value='c' id='unit' name='unit' class='rad' checked /> <label>Celsius (°C)</label><br />
+                    <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
+                } else {
+                    $echoVal = $echoVal."<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
+                     <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
+                    <input type='radio' value='f' id='unit' name='unit' class='rad' checked /> <label>Fahrenheit (°F)</label><br />";
+                }
+                $echoVal = $echoVal."
+            </div><br />
             <div class='groupIn'>
-                <label for='lang'>Language</label>
-                <select id='lang' name='lang' class='sel' required />
-                    <option value='en'>English</option>
-                    <option value='de'>Deutsch</option>
+                <label for='lang'>Language</label><br />
+                <select id='lang' name='lang' class='sel' required />";
+                foreach (self::$langArr as $lan=>$lan_val){
+                    if ($lang == $lan) {
+                        $echoVal = $echoVal . "<option value='$lan' selected>$lan_val</option>";
+                    } else {
+                        $echoVal = $echoVal."<option value='$lan'>$lan_val</option>";
+                    }
+                }
+        $echoVal = $echoVal."
                 </select>
-            </div>
+            </div><br />
             <div class='groupIn'>
-            <label for='col'>Color</label>
+                <label for='col'>Color</label><br />
                 <input type='color' id='col' name='col' class='col' value='$color' required />
-            </div>
-            
-            <button type='submit' class='submit' value='Submit' onclick='this.form.submit()'/>
+            </div><br />
+            <button type='submit' class='submit' value='Submit' onclick='this.form.submit()'>Submit</button>
             </form>
         </div>";
+        echo $echoVal;
     }
 }

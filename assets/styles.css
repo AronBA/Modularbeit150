@@ -127,8 +127,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.windBlur {
     border-radius: 10px;
     box-shadow: 0 0 10px 2px black;
     backdrop-filter: blur(6px) brightness(50%);
@@ -151,32 +149,11 @@
 .dangerLevel.activeLevel {
     opacity: 100%;
 }
-.wrapWindSub {
-    width: 100%;
-    height: 50%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-.wrapWindSub .wrapSub {
-    height: 90%;
-    aspect-ratio: 1;
-    text-align: center;
-    --textHeight: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 5px;
-}
-.wrapSub h3 {
-    height: var(--textHeight);
-}
 .compas {
-    background-image: url("wind/compas.png");
+    background-image: url("../assets/compas/compas.png");
     background-position: center;
     background-size: contain;
-    background-repeat: no-repeat;
-    height: calc(100% - var(--textHeight));
+    width: 100px;
     aspect-ratio: 1;
     display: grid;
     place-items: center;
@@ -184,11 +161,11 @@
 .compas .arrow {
     --arrowRotation: 0deg;
     rotate: var(--arrowRotation);
-    background-image: url("wind/arrow.png");
+    background-image: url("../assets/compas/arrow.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    width: 25%;
+    width: 28%;
     aspect-ratio: 1;
     transition: 800ms ease;
 }
@@ -203,10 +180,48 @@
     100% {rotate: var(--arrowRotation)}
 }
 
-.wrapSub .gust {
-    height: calc(100% - var(--textHeight));
-    background-image: url("wind/gust.gif");
-    background-position: center;
+.aqiWeather {
+    border: solid black;
+    border-radius: 15px;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    line-height: 30px
+}
+
+.aqiTitel {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: burlywood;
+}
+
+.wrapAQI {
+    color: white;
+    aspect-ratio: 1.75;
+    background-image: url("../assets/aqi/aqi_bg.png");
     background-size: cover;
-    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.iconAQI {
+    background-image: url("../assets/aqi/aqi_icon.png");
+    background-position: center;
+    background-size: contain;
+    width: 100px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
 }
