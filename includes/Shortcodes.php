@@ -166,7 +166,8 @@ class Shortcodes
                         </div>
                     </div>
                     <script>setDangerLevels($windSpeed)</script>
-                    <script>setArrow($windDegree)</script>";
+                    <script>setArrow($windDegree)</script>
+                </div>";
 	}
     function temparatureShortcode(): string
     {
