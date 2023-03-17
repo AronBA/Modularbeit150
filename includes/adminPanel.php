@@ -2,6 +2,10 @@
 
 class adminPanel
 {
+    /**?php
+
+class adminPanel
+{
     /**
      * @var float
      * Contains Latitude Coordinate

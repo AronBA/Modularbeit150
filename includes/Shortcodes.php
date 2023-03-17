@@ -23,7 +23,7 @@ class Shortcodes
         $temperatur = $this->api->getAirQualityIndex();
         //get city name from the result
         $city = $this->api->getCity();
-		$co = $this->api->getAirCompenents()["co"];
+		$co = $this->api->getAirComponents()["co"];
         //shortcode
         $string = "
         <div>
@@ -37,7 +37,7 @@ class Shortcodes
     function  weatherShortcode(): string {
         $cityName = $this->api->getCity();
         $country = $this->api->getCountry();
-        $temperature = $this->api->getTemperatur("c");
+        $temperature = $this->api->getTemperature("c");
         $weatherDescription = $this->api->getWeatherDescription();
         $weatherIcon = $this->api->getWeatherIcon();
         $iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
@@ -97,7 +97,7 @@ class Shortcodes
 
 	function  smallWeatherShortcode(): string {
 
-		$temperature = $this->api->getTemperatur("c");
+		$temperature = $this->api->getTemperature("c");
 		$weatherIcon = $this->api->getWeatherIcon();
 		$iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
 		return "<div style='height: 4rem;border: solid black; border-radius: 15px; width: 12rem; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: center; background-color: #6ea7ff'>
@@ -112,12 +112,12 @@ class Shortcodes
 	function  largeWeatherShortcode(): string {
 		$cityName = $this->api->getCity();
 		$country = $this->api->getCountry();
-		$temperature = $this->api->getTemperatur("c");
+		$temperature = $this->api->getTemperature("c");
 		$weatherDescription = $this->api->getWeatherDescription();
 		$weatherIcon = $this->api->getWeatherIcon();
 		$humidity = $this->api->getHumidity();
 		$windspeed = $this->api->getWindSpeed();
-		$feels_like = $this->api->getTemperaturFeelslike("c");
+		$feels_like = $this->api->getTemperatureFeelsLike("c");
 		$iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
 		$iconLink2 = "https://cdn-icons-png.flaticon.com/512/1622/1622158.png";
 		$iconLink3 = "https://cdn-icons-png.flaticon.com/512/959/959711.png";
@@ -164,10 +164,10 @@ class Shortcodes
 	}
     function temparatureShortcode(): string
     {
-        $CurrentTemp = $this->api->getTemperatur("c");
+        $CurrentTemp = $this->api->getTemperature("c");
         $MaxTemp = $this->api->getTemperaturMax("c");
         $MinTemp = $this->api->getTemperaturMin("c");
-        $FeelsTemp = $this->api->getTemperaturFeelslike("c");
+        $FeelsTemp = $this->api->getTemperatureFeelsLike("c");
         return "<div class='tempWeather'>
                     <div class='tempTitel'>Temparatur</div>
                     Temparatur momentan: $CurrentTemp °C<br/>
