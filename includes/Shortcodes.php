@@ -35,21 +35,23 @@ class Shortcodes
     }
 
     function  weatherShortcode(): string {
+        $tempUnit = "c";
+        $tempUnitUpper = strtoupper($tempUnit);
         $cityName = $this->api->getCity();
         $country = $this->api->getCountry();
-        $temperature = $this->api->getTemperatur("c");
+        $temperature = $this->api->getTemperatur($tempUnit);
         $weatherDescription = $this->api->getWeatherDescription();
         $weatherIcon = $this->api->getWeatherIcon();
         $iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
-        return "<div class='wrapWeather'>
-                    <div class='weatherBar weatherHeader'>
+        return "<div class='wrapWeather wrapCondition'>
+                    <div>
                         <h2>$cityName, $country</h2>
                     </div>
-                    <div class='weatherContent'>
-                        <img src='$iconLink' alt='weather icon'/>
-                        <h1>$temperature °C</h1>
+                    <div class='sunIcon'></div>
+                    <div>
+                        <h1>$temperature °$tempUnitUpper</h1>
                     </div>
-                    <div class='weatherBar weatherFooter'>
+                    <div>
                         <h3>$weatherDescription</h3>
                     </div>
                 </div>";
@@ -95,7 +97,6 @@ class Shortcodes
 	}
 
 	function  smallWeatherShortcode(): string {
-
 		$temperature = $this->api->getTemperatur("c");
 		$weatherIcon = $this->api->getWeatherIcon();
 		$iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
@@ -193,7 +194,7 @@ class Shortcodes
                         <h4 id='indexOfAQIDescription'></h4>
                         <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
-                    <div class='iconAQI'></div>
-                    <script>setAQI($aqi)</script>";
+                    <script>setAQI($aqi)</script>
+                <div class='iconAQI'></div>";
     }
 }

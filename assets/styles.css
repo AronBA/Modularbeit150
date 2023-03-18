@@ -6,17 +6,17 @@
 
 .wrapWeather {
     height: 400px;
-    aspect-ratio: 1;
+    aspect-ratio: 1.75;
     border-radius: 8px;
     box-shadow: 0 0 12px 4px var(--shadow);
+    padding: 30px;
 }
 
-.wrapWeather h2, h3, h4 {
+.wrapWeather h1, h2, h3, h4 {
     margin: 0;
 }
 
-.tempWeather{
-
+.tempWeather {
     border: solid black;
     border-radius: 15px;
     width: 20rem;
@@ -41,22 +41,20 @@
 
 #sunWeather {
     --textColor: black;
-    --backgroundUrl: url("../assets/sunrise/day.png");
+    --backgroundUrl: url("backgrounds/day.png");
     color: var(--textColor);
     background: var(--backgroundUrl);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    aspect-ratio: 2;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
 }
 .sunWeatherDark {
     --textColor: white !important;
-    --backgroundUrl: url("../assets/sunrise/night.png") !important;
+    --backgroundUrl: url("backgrounds/night.png") !important;
 }
 .sunTime {
     width: 100%;
@@ -110,15 +108,13 @@
 /* WIND */
 .wrapWind {
     color: white;
-    aspect-ratio: 1.75;
-    background-image: url("../assets/sunrise/sunset.png");
+    background-image: url("backgrounds/sunset.png");
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
 }
 .wrapDangerLevels {
     width: 100%;
@@ -150,7 +146,7 @@
     opacity: 100%;
 }
 .compas {
-    background-image: url("../assets/compas/compas.png");
+    background-image: url("../assets/wind/compas.png");
     background-position: center;
     background-size: contain;
     width: 100px;
@@ -161,7 +157,7 @@
 .compas .arrow {
     --arrowRotation: 0deg;
     rotate: var(--arrowRotation);
-    background-image: url("../assets/compas/arrow.png");
+    background-image: url("../assets/wind/arrow.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -192,6 +188,7 @@
     line-height: 30px
 }
 
+/* AQI */
 .aqiTitel {
     width: 20rem;
     display: flex;
@@ -205,7 +202,6 @@
 
 .wrapAQI {
     color: white;
-    aspect-ratio: 1.75;
     background-image: url("../assets/aqi/aqi_bg.png");
     background-size: cover;
     background-position: center;
@@ -213,7 +209,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
 }
 
 .iconAQI {
@@ -224,4 +219,27 @@
     aspect-ratio: 1;
     display: grid;
     place-items: center;
+}
+
+/* CONDITION */
+.wrapCondition {
+    background-image: url("../assets/backgrounds/day.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+.sunIcon {
+    --sunSize: 75px;
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    width: var(--sunSize);
+    height: var(--sunSize);
+    border-radius: 50%;
+    background: linear-gradient(0.25turn, #ffd938, #ffb336);
+    box-shadow: 0 0 150px 100px rgba(255, 217, 56, 0.55);
 }
