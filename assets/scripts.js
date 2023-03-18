@@ -66,7 +66,7 @@ function setBar(target, levels, name) {
     const description = getId(name + "Description")
     description.innerHTML = level.d
     const dangerLevels = getId(name)
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < levels.length; i++) {
         const child = create()
         child.classList.add("dangerLevel")
         child.style.backgroundColor = "#" + levels[i].c
@@ -81,4 +81,9 @@ function setBar(target, levels, name) {
 function setArrow(rotation) {
     const arrow = getId("arrow")
     arrow.style.setProperty("--arrowRotation", rotation + "deg")
+}
+
+function setCondition(clouds) {
+    const sunIcon = getId("sunIcon")
+    sunIcon.style.setProperty("--sunStrength", (clouds*-1 + 100) + "px")
 }

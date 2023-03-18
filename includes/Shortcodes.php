@@ -41,19 +41,19 @@ class Shortcodes
         $country = $this->api->getCountry();
         $temperature = $this->api->getTemperatur($tempUnit);
         $weatherDescription = $this->api->getWeatherDescription();
-        $weatherIcon = $this->api->getWeatherIcon();
-        $iconLink = "http://openweathermap.org/img/wn/$weatherIcon@4x.png";
+        $clouds = $this->api->getClouds();
         return "<div class='wrapWeather wrapCondition'>
                     <div>
                         <h2>$cityName, $country</h2>
                     </div>
-                    <div class='sunIcon'></div>
+                    <div id='sunIcon' class='sunIcon'></div>
                     <div>
                         <h1>$temperature °$tempUnitUpper</h1>
                     </div>
                     <div>
                         <h3>$weatherDescription</h3>
                     </div>
+                    <script>setCondition($clouds)</script>
                 </div>";
     }
 
