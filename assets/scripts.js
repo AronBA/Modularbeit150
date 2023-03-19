@@ -10,7 +10,8 @@ function getHour(time) {
 }
 function setProgress(time) {
     const date = new Date();
-    const hour = getHour(date)
+    let hour = getHour(date)
+    if (hour === 0) hour = 12
     const progress = getId("progressWeather")
     const parent = create()
     parent.classList.add("wrapProgressBar")
