@@ -253,13 +253,19 @@
     background-image: url("../assets/backgrounds/sky.png");
 }
 .sunIcon {
-    --sunStrength: 100px;
+    --sunPosition: 120px;
     position: absolute;
+    translate: 0 var(--sunPosition);
     right: 50px;
     top: 50px;
     width: 75px;
     aspect-ratio: 1;
     border-radius: 50%;
     background: linear-gradient(0.25turn, #ffd938, #ffb336);
-    box-shadow: 0 0 calc(var(--sunStrength) * 1.5) var(--sunStrength) rgba(255, 217, 56, 0.55);
+    box-shadow: 0 0 130px 100px rgba(255, 217, 56, 0.55);
+    animation: sunAppears 800ms;
+}
+@keyframes sunAppears {
+    from {translate: 0 125px}
+    to {translate: 0 var(--sunPosition)}
 }

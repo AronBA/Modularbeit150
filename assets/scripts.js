@@ -85,6 +85,6 @@ function setArrow(rotation) {
 }
 
 function setCondition(clouds) {
-    const sunIcon = getId("sunIcon")
-    sunIcon.style.setProperty("--sunStrength", (clouds*-1 + 100) + "px")
+    console.log(clouds)
+    getId("sunIcon").style.setProperty("--sunPosition", (clouds*1.25) + "px")
 }
