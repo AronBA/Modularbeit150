@@ -34,7 +34,7 @@ class Shortcodes
         return $string;
     }
 
-    function  weatherShortcode(): string {
+    function  conditionShortcode(): string {
         $tempUnit = "c";
         $tempUnitUpper = strtoupper($tempUnit);
         $cityName = $this->api->getCity();
@@ -43,15 +43,19 @@ class Shortcodes
         $weatherDescription = $this->api->getWeatherDescription();
         $clouds = $this->api->getClouds();
         return "<div class='wrapWeather wrapCondition'>
+                    <div class='conditionBackground conditionSky'>                        
+                    </div>
+                    <div id='sunIcon' class='sunIcon'></div>
+                    <div class='conditionBackground conditionClouds'>
+                    </div>
                     <div>
                         <h2>$cityName, $country</h2>
                     </div>
-                    <div id='sunIcon' class='sunIcon'></div>
                     <div>
                         <h1>$temperature °$tempUnitUpper</h1>
                     </div>
                     <div>
-                        <h3>$weatherDescription</h3>
+                        <h2>$weatherDescription</h2>
                     </div>
                     <script>setCondition($clouds)</script>
                 </div>";

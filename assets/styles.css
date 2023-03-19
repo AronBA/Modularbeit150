@@ -13,7 +13,7 @@
 }
 
 .wrapWeather h1, h2, h3, h4 {
-    margin: 0;
+    margin: 0 !important;
 }
 
 .tempWeather {
@@ -42,7 +42,7 @@
 #sunWeather {
     --textColor: black;
     --backgroundUrl: url("backgrounds/day.png");
-    color: var(--textColor);
+    color: var(--textColor) !important;
     background: var(--backgroundUrl);
     background-repeat: no-repeat;
     background-size: cover;
@@ -51,6 +51,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+#sunWeather * {
+    color: var(--textColor) !important;
 }
 .sunWeatherDark {
     --textColor: white !important;
@@ -107,7 +110,6 @@
 
 /* WIND */
 .wrapWind {
-    color: white;
     background-image: url("backgrounds/sunset.png");
     background-size: cover;
     background-position: center;
@@ -115,6 +117,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+.wrapWind * {
+    color: white !important;
 }
 .wrapDangerLevels {
     width: 100%;
@@ -223,15 +228,29 @@
 
 /* CONDITION */
 .wrapCondition {
-    background-image: url("../assets/backgrounds/day.png");
-    background-size: cover;
-    background-position: center;
     position: relative;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
+}
+.wrapCondition h1, h2 {
+    color: black !important;
+}
+.conditionBackground {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+.conditionClouds {
+    background-image: url("../assets/backgrounds/clouds.png");
+}
+.conditionSky {
+    background-image: url("../assets/backgrounds/sky.png");
 }
 .sunIcon {
     --sunStrength: 100px;
