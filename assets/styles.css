@@ -16,6 +16,12 @@
     margin: 0 !important;
 }
 
+.darkBlur {
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px black;
+    backdrop-filter: blur(6px) brightness(70%);
+}
+
 .tempWeather {
     border: solid black;
     border-radius: 15px;
@@ -37,7 +43,6 @@
     border-top-right-radius: 10px;
     background-color: deepskyblue;
 }
-
 
 #sunWeather {
     --textColor: black;
@@ -128,9 +133,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 2px black;
-    backdrop-filter: blur(6px) brightness(50%);
 }
 .dangerLevels {
     display: flex;
@@ -149,6 +151,20 @@
 }
 .dangerLevel.activeLevel {
     opacity: 100%;
+}
+
+.wrapWindSub {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.wrapWindSub .wrapSub {
+    width: 150px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 .compas {
     background-image: url("../assets/wind/compas.png");
@@ -181,6 +197,7 @@
     100% {rotate: var(--arrowRotation)}
 }
 
+/* AQI */
 .aqiWeather {
     border: solid black;
     border-radius: 15px;
@@ -192,8 +209,6 @@
     background-color: whitesmoke;
     line-height: 30px
 }
-
-/* AQI */
 .aqiTitel {
     width: 20rem;
     display: flex;
@@ -204,7 +219,6 @@
     border-top-right-radius: 10px;
     background-color: burlywood;
 }
-
 .wrapAQI {
     color: white;
     background-image: url("../assets/aqi/aqi_bg.png");
@@ -215,7 +229,6 @@
     justify-content: space-between;
     align-items: center;
 }
-
 .iconAQI {
     background-image: url("../assets/aqi/aqi_icon.png");
     background-position: center;

@@ -34,7 +34,7 @@ class Shortcodes
         return $string;
     }
 
-    function  conditionShortcode(): string {
+    function conditionShortcode(): string {
         $tempUnit = "c";
         $tempUnitUpper = strtoupper($tempUnit);
         $cityName = $this->api->getCity();
@@ -62,8 +62,7 @@ class Shortcodes
                     <script>setCondition($clouds)</script>
                 </div>";
     }
-
-	function sunShortcode() :string {
+	function sunShortcode(): string {
 		$city = $this->api->getCity();
 		$timeInt = $this->api->getDayTime();
 		$sunriseInt = $this->api->getSunrise();
@@ -106,22 +105,20 @@ class Shortcodes
         $windSpeed = $this->api->getWindSpeed();
         $windDegree = $this->api->getWindDegree();
         $windGust = $this->api->getWindGust();
-        $iconL = $this->api->getWeatherIcon();
-        $icon = "https://cdn-icons-png.flaticon.com/512/2011/2011448.png";
         return "<div class='wrapWeather wrapWind'>
                     <h2>Windspeed - $windSpeed m/s</h2>
-                    <div class='wrapDangerLevels windBlur'>
+                    <div class='wrapDangerLevels darkBlur'>
                         <h4 id='dangerLevelsDescription'></h4>
                         <div id='dangerLevels' class='dangerLevels'></div>
                     </div>
                     <div class='wrapWindSub'>
-                        <div class='wrapSub windBlur'>
+                        <div class='wrapSub darkBlur' title='Direction of the Wind'>
                             <h3>" . $windDegree . "°</h3>
                             <div class='compas'><div id='arrow' class='arrow'></div></div>
                         </div>
-                        <div class='wrapSub windBlur'>
+                        <div class='wrapSub darkBlur' title='Speed of Wind Gusts'>
+                            <h4>Wind Gusts</h4>
                             <h3>$windGust m/s</h3>
-                            <div class='gust'></div>
                         </div>
                     </div>
                     <script>setDangerLevels($windSpeed)</script>
@@ -148,7 +145,7 @@ class Shortcodes
 	    $aqi = $this->api->getAirQualityIndex();
 	    return "<div class='wrapWeather wrapAQI'>
                     <h2>Luftqualität</h2>
-                    <div class='wrapDangerLevels'>
+                    <div class='wrapDangerLevels darkBlur'>
                         <h4 id='indexOfAQIDescription'></h4>
                         <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
