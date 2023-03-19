@@ -59,7 +59,6 @@ if ( !class_exists( 'Weather' ) ) {
             add_shortcode('windWeather', array($this->shortcodes,'windShortcode'));
             add_shortcode('conditionWeather', array($this->shortcodes, 'conditionShortcode'));
 	        add_shortcode('sunWeather', array($this->shortcodes, 'sunShortcode'));
-            add_shortcode('largeWeather', array($this->shortcodes, 'largeWeatherShortcode'));
             add_shortcode('temparatureWeather', array($this->shortcodes, 'temparatureShortcode'));
             add_shortcode('aqiAirPollution', array($this->shortcodes, 'aqiShortcode'));
         }
