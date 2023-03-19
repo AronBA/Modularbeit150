@@ -48,14 +48,16 @@ class Shortcodes
                     <div id='sunIcon' class='sunIcon'></div>
                     <div class='conditionBackground conditionClouds'>
                     </div>
-                    <div>
-                        <h2>$cityName, $country</h2>
-                    </div>
-                    <div>
-                        <h1>$temperature °$tempUnitUpper</h1>
-                    </div>
-                    <div>
-                        <h2>$weatherDescription</h2>
+                    <div class='conditionContent'>
+                        <div>
+                            <h2>$cityName, $country</h2>
+                        </div>
+                        <div>
+                            <h1>$temperature °$tempUnitUpper</h1>
+                        </div>
+                        <div>
+                            <h2>$weatherDescription</h2>
+                        </div>
                     </div>
                     <script>setCondition($clouds)</script>
                 </div>";
