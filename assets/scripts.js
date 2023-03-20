@@ -1,5 +1,5 @@
 function getId(id){return document.getElementById(id)}
-function setSun(time, sunrise, sunset) {
+function   setSun(time, sunrise, sunset) {
     const background = getId("sunWeather")
     if (time < sunrise || time > sunset) background.classList.add("sunWeatherDark")
 }
@@ -82,6 +82,27 @@ function setBar(target, levels, name) {
 function setArrow(rotation) {
     const arrow = getId("arrow")
     arrow.style.setProperty("--arrowRotation", rotation + "deg")
+}
+
+let i = 0;
+
+function thermo() {
+    if (i == 0) {
+        i = 1;
+        const elem = document.getElementById("block");
+        let height = 1;
+        const id = setInterval(frame, 10);
+
+        function frame() {
+            if (height >= 100) {
+                clearInterval(id);
+                i = 0;
+            } else {
+                height++;
+                elem.style.width = height + "%";
+            }
+        }
+    }
 }
 
 function setCondition(clouds) {
