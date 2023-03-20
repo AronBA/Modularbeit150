@@ -144,12 +144,12 @@ class Shortcodes
     function aqiShortcode(): string {
 	    $aqi = $this->api->getAirQualityIndex();
 	    return "<div class='wrapWeather wrapAQI'>
-                    <h2>Luftqualität</h2>
+                    <h2 style='color: #fffff0'>Air Quality Index (AQI)</h2>
                     <div class='wrapDangerLevels darkBlur'>
                         <h4 id='indexOfAQIDescription'></h4>
                         <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
                     <script>setAQI($aqi)</script>
-                <div class='iconAQI'></div>";
+                    <p>More advise <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advise'>here</a>.</p>";
     }
 }

@@ -219,6 +219,7 @@
     border-top-right-radius: 10px;
     background-color: burlywood;
 }
+
 .wrapAQI {
     color: white;
     background-image: url("../assets/aqi/aqi_bg.png");
@@ -229,14 +230,17 @@
     justify-content: space-between;
     align-items: center;
 }
-.iconAQI {
-    background-image: url("../assets/aqi/aqi_icon.png");
-    background-position: center;
-    background-size: contain;
-    width: 100px;
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
+
+.advise:link {
+    color: deepskyblue;
+}
+
+.advise:visited {
+    color: hotpink;
+}
+
+.advise:hover {
+    color: darkblue;
 }
 
 /* CONDITION */
