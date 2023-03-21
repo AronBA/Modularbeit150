@@ -6,17 +6,23 @@
 
 .wrapWeather {
     height: 400px;
-    aspect-ratio: 1;
+    aspect-ratio: 1.75;
     border-radius: 8px;
     box-shadow: 0 0 12px 4px var(--shadow);
+    padding: 30px;
 }
 
-.wrapWeather h2, h3, h4 {
-    margin: 0;
+.wrapWeather h1, h2, h3, h4 {
+    margin: 0 !important;
 }
 
-.tempWeather{
+.darkBlur {
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px black;
+    backdrop-filter: blur(6px) brightness(70%);
+}
 
+.tempWeather {
     border: solid black;
     border-radius: 15px;
     width: 20rem;
@@ -38,25 +44,25 @@
     background-color: deepskyblue;
 }
 
-
 #sunWeather {
     --textColor: black;
-    --backgroundUrl: url("../assets/sunrise/day.png");
-    color: var(--textColor);
+    --backgroundUrl: url("backgrounds/day.png");
+    color: var(--textColor) !important;
     background: var(--backgroundUrl);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    aspect-ratio: 2;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
+}
+#sunWeather * {
+    color: var(--textColor) !important;
 }
 .sunWeatherDark {
     --textColor: white !important;
-    --backgroundUrl: url("../assets/sunrise/night.png") !important;
+    --backgroundUrl: url("backgrounds/night.png") !important;
 }
 .sunTime {
     width: 100%;
@@ -109,16 +115,16 @@
 
 /* WIND */
 .wrapWind {
-    color: white;
-    aspect-ratio: 1.75;
-    background-image: url("../assets/sunrise/sunset.png");
+    background-image: url("backgrounds/sunset.png");
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
+}
+.wrapWind * {
+    color: white !important;
 }
 .wrapDangerLevels {
     width: 100%;
@@ -127,9 +133,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 2px black;
-    backdrop-filter: blur(6px) brightness(50%);
 }
 .dangerLevels {
     display: flex;
@@ -149,8 +152,22 @@
 .dangerLevel.activeLevel {
     opacity: 100%;
 }
+
+.wrapWindSub {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.wrapWindSub .wrapSub {
+    width: 150px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
 .compas {
-    background-image: url("../assets/compas/compas.png");
+    background-image: url("../assets/wind/compas.png");
     background-position: center;
     background-size: contain;
     width: 100px;
@@ -161,7 +178,7 @@
 .compas .arrow {
     --arrowRotation: 0deg;
     rotate: var(--arrowRotation);
-    background-image: url("../assets/compas/arrow.png");
+    background-image: url("../assets/wind/arrow.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -178,4 +195,101 @@
     25% {rotate: calc(var(--arrowRotation) + 12deg)}
     75% {rotate: calc(var(--arrowRotation) - 5deg)}
     100% {rotate: var(--arrowRotation)}
+}
+
+/* AQI */
+.aqiWeather {
+    border: solid black;
+    border-radius: 15px;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    line-height: 30px
+}
+.aqiTitel {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: burlywood;
+}
+
+.wrapAQI {
+    color: white;
+    background-image: url("../assets/aqi/aqi_bg.png");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.advise:link {
+    color: deepskyblue;
+}
+
+.advise:visited {
+    color: hotpink;
+}
+
+.advise:hover {
+    color: darkblue;
+}
+
+/* CONDITION */
+.wrapCondition {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+.wrapCondition h1, h2 {
+    color: black !important;
+}
+.conditionBackground {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+.conditionClouds {
+    background-image: url("../assets/backgrounds/clouds.png");
+}
+.conditionSky {
+    background-image: url("../assets/backgrounds/sky.png");
+}
+.sunIcon {
+    --sunPosition: 0px;
+    position: absolute;
+    translate: 0 var(--sunPosition);
+    right: 50px;
+    top: 50px;
+    width: 75px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: linear-gradient(0.25turn, #ffd938, #ffb336);
+    box-shadow: 0 0 130px 100px rgba(255, 217, 56, 0.55);
+    animation: sunAppears 800ms;
+}
+@keyframes sunAppears {
+    from {translate: 0 125px}
+    to {translate: 0 var(--sunPosition)}
+}
+
+.conditionContent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }

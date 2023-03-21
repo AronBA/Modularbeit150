@@ -10,16 +10,17 @@ function getHour(time) {
 }
 function setProgress(time) {
     const date = new Date();
-    const hour = getHour(date)
+    let hour = getHour(date)
+    if (hour === 0) hour = 12
     const progress = getId("progressWeather")
     const parent = create()
     parent.classList.add("wrapProgressBar")
-    for(let i = 0; i < 13; i++) {
+    for(let i = 1; i < 13; i++) {
         const wrap = create()
         wrap.classList.add("wrapBar")
         const child = create()
         child.classList.add("progressBar")
-        if (i === hour) child.classList.add("now")
+        if (i === hour || i === hour-12) child.classList.add("now")
         wrap.append(child)
         if (i % 2 === 0) {
             const time = create()
@@ -30,7 +31,6 @@ function setProgress(time) {
     }
     progress.append(parent)
 }
-
 function setDangerLevels(speed) {
     const kmh = speed * 3.6
     const levels = [{min:0,max:2,c:"66FFFF",d:"Calm"},{min:3,max:5,c:"00FFFF",d:"Light air"},{min:6,max:11,c:"00FF99",d:"Light breeze"},
@@ -38,12 +38,36 @@ function setDangerLevels(speed) {
         {min:40,max:50,c:"CCFF33",d:"Strong breeze"},{min:51,max:61,c:"FFFF00",d:"Moderate gale"},{min:62,max:74,c:"FFC000",d:"Fresh gale"},
         {min:75,max:87,c:"FF9900",d:"Strong gale"},{min:88,max:101,c:"FF6600",d:"Whole gale"},{min:102,max:116,c:"FF3300",d:"Violent storm"},
         {min:117,max:9999,c:"FF0000",d:"Hurricane"}]
+    setBar(kmh, levels, "dangerLevels")
+}
 
-    const level = levels.find(element => kmh >= element.min && kmh <= element.max)
-    const description = getId("dangerLevelsDescription")
+function setAQI(aqi) {
+    const airQuality = [
+        {
+            min:1,max:1,c:"66FFFF",d:"😃"
+        },
+        {
+            min:2,max:2,c:"00FF99",d:"🙂"
+        },
+        {
+            min:3,max:3,c:"FFFF00",d:"😐"
+        },
+        {
+            min:4,max:3,c:"FF9900",d:"😷"
+        },
+        {
+            min:4,max:3,c:"FF3300",d:"☠️"
+        }
+    ]
+    setBar(aqi, airQuality, "indexOfAQI")
+}
+
+function setBar(target, levels, name) {
+    const level = levels.find(element => target >= element.min && target <= element.max)
+    const description = getId(name + "Description")
     description.innerHTML = level.d
-    const dangerLevels = getId("dangerLevels")
-    for (let i = 0; i < 12; i++) {
+    const dangerLevels = getId(name)
+    for (let i = 0; i < levels.length; i++) {
         const child = create()
         child.classList.add("dangerLevel")
         child.style.backgroundColor = "#" + levels[i].c
@@ -58,4 +82,9 @@ function setDangerLevels(speed) {
 function setArrow(rotation) {
     const arrow = getId("arrow")
     arrow.style.setProperty("--arrowRotation", rotation + "deg")
+}
+
+function setCondition(clouds) {
+    console.log(clouds)
+    getId("sunIcon").style.setProperty("--sunPosition", (clouds*1.25) + "px")
 }
