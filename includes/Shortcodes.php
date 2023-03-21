@@ -182,18 +182,28 @@ class Shortcodes
         $MaxTemp = $this->api->getTemperaturMax("c");
         $MinTemp = $this->api->getTemperaturMin("c");
         $FeelsTemp = $this->api->getTemperaturFeelslike("c");
-        return "<div class='tempWeather'>
+        return "    <script>tempJS('$CurrentTemp')</script>
+                    <div class='wrapWeather'>
                     <div class='tempTitel'>Temparatur</div>
+                    <div class='tempData'>
+                    <div class='Tcontainer'>
                     Temparatur momentan: $CurrentTemp °C<br/>
                     Min Temparatur: $MaxTemp °C <br/>
                     Max Temparatur: $MinTemp ° C <br/>
                     Fühlt sich wie $FeelsTemp ° C an<br/>
+                    </div>
+                    <div class='Tcontainer'>
+                    <div class='TempU' id='Temp'>$CurrentTemp&deg;C
+                    <div class='bar'></div> </div>
+                    </div>
+                    </div>
                 </div>";
     }
 
     // aqi = Air Quality Index
     function aqiShortcode(): string {
 	    $aqi = $this->api->getAirQualityIndex();
+
 	    switch ($aqi) {
 		    case 1:
 			    $aqi = 'Sehr gut';

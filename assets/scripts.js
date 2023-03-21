@@ -109,3 +109,37 @@ function setCondition(clouds) {
     console.log(clouds)
     getId("sunIcon").style.setProperty("--sunPosition", (clouds*1.25) + "px")
 }
+function setTemp(tempJS) {
+    const Tempsegment = [
+        {
+            min:-20,max:-10,c:100
+        },
+        {
+            min:-10,max:0,c:86
+        },
+        {
+            min:0,max:10,c:72.5
+        },
+        {
+            min:10,max:20,c:58
+        },
+        {
+            min:20,max:30,c:43.5
+        },
+        {
+            min:30,max:40,c:29
+        },
+        {
+            min:40,max:50,c:14.5
+        }
+    ]
+    setTempBar(Temparature, Procent, "TempInProcent")
+}
+function  setTempBar(Temp, pro, name){
+    const proc = pro.find(element => Temp >= element.min && Temp <= element.max)
+
+}
+function setTemp(tempJS){
+    const Temp = getId("Temp")
+    Temp.style.setProperty("--tp", tempJS+"%")
+}
