@@ -112,7 +112,7 @@ class adminPanel
      * Echos Admin Panel for Weather plugin
      */
     public function getAdminPanel(): void{
-        $this->addSettings();
+        do_settings_fields('weather_plugin_manager', 'weather_main');
         /*
         $this->setValues();
         $key = self::$key;
@@ -174,21 +174,28 @@ class adminPanel
         echo $echoVal;
         */
     }
-
+    function WeatherPSettings(){
+        echo 'Edit values to be used in Shortcodes';
+    }
     function addSettings(): void
     {
-        register_setting('options', 'key', Array('type'=>'string', 'show_in_rest'=>'true', 'default' => 'default'));
-        register_setting('options', 'lon', Array('type'=>'number', 'show_in_rest'=>'true', 'default' => 7.5885761));
-        register_setting('options', 'lat', Array('type'=>'number', 'show_in_rest'=>'true', 'default' => 47.5595986));
-        register_setting('options', 'lang', Array('type'=>'string', 'show_in_rest'=>'true', 'default' => 'en'));
-        register_setting('options', 'col', Array('type'=>'string', 'show_in_rest'=>'true', 'default' => '#ffffff'));
-        register_setting('options', 'unit', Array('type'=>'string', 'show_in_rest'=>'true', 'sanitize_callback', 'default' => 'c'));
+        add_options_page('Weather Plugin', 'Weather Plugin', 'manage_options', 'weather_options_page');
+
+        add_settings_section('weather_main', 'Weather Plugin Settings', 'WeatherPSettings', 'weather_plugin_manager');
+
+        register_setting('options_weather', 'key', Array('type'=>'string', 'show_in_rest'=>'true', 'default' => 'default'));
+        register_setting('options_weather', 'lon', Array('type'=>'number', 'show_in_rest'=>'true', 'default' => 7.5885761));
+        register_setting('options_weather', 'lat', Array('type'=>'number', 'show_in_rest'=>'true', 'default' => 47.5595986));
+        register_setting('options_weather', 'lang', Array('type'=>'string', 'show_in_rest'=>'true', 'default' => 'en'));
+        register_setting('options_weather', 'col', Array('type'=>'string', 'show_in_rest'=>'true', 'default' => '#ffffff'));
+        register_setting('options_weather', 'unit', Array('type'=>'string', 'show_in_rest'=>'true', 'sanitize_callback', 'default' => 'c'));
+
         add_settings_field(
             'key',
             'API Key',
             'keyCall',
             'Weather Manager',
-            'default',
+            'weather_main',
             array('label-for'=>'Key')
         );
         add_settings_field(
@@ -196,7 +203,7 @@ class adminPanel
             'Longitude',
             'LonCall',
             'Weather Manager',
-            'default',
+            'weather_main',
             array('label-for'=>'Longitude')
             );
         add_settings_field(
@@ -204,7 +211,7 @@ class adminPanel
             'Latitude',
             'LatCall',
             'Weather Manager',
-            'default',
+            'weather_main',
             array('label-for'=>'Latitude')
         );
         add_settings_field(
@@ -212,7 +219,7 @@ class adminPanel
             'Units',
             'unitCall',
             'Weather Manager',
-            'default',
+            'weather_main',
             array('label-for'=>'Unit')
         );
         add_settings_field(
@@ -220,7 +227,7 @@ class adminPanel
             'Language',
             'LangCall',
             'Weather Manager',
-            'default',
+            'weather_main',
             array('label-for'=>'Language')
         );
         add_settings_field(
@@ -228,7 +235,7 @@ class adminPanel
             'Colour',
             'colCall',
             'Weather Manager',
-            'default',
+            'weather_main',
             array('label-for'=>'Colour')
         );
     }
@@ -268,7 +275,7 @@ class adminPanel
         $val = get_option('lang');
         $echoVal = "<select id='lang' name='lang' class='sel' required />";
         foreach (self::$langArr as $lan=>$lan_val){
-            if ($val == self::$lan) {
+            if ($val == self::$lang) {
                 $echoVal = $echoVal . "<option value='$lan' selected>$lan_val</option>";
             } else {
                 $echoVal = $echoVal."<option value='$lan'>$lan_val</option>";
