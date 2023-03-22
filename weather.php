@@ -48,6 +48,7 @@ if ( !class_exists( 'Weather' ) ) {
 
         function addAdminMenu(): void
         {
+            add_action('admin_init', array($this->adminPanel, 'addSettings'));
             add_menu_page('Weather Manager', 'Weather Manager', 'manage_options', 'weather_plugin_manager', array( $this->adminPanel, 'getAdminPanel'), 'dashicons-admin-generic', 110);
         }
 
@@ -57,10 +58,9 @@ if ( !class_exists( 'Weather' ) ) {
             add_action( 'wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
             add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
             add_shortcode('windWeather', array($this->shortcodes,'windShortcode'));
-            add_shortcode('temperatureWeather', array($this->shortcodes, 'weatherShortcode'));
+            add_shortcode('conditionWeather', array($this->shortcodes, 'conditionShortcode'));
 	        add_shortcode('sunWeather', array($this->shortcodes, 'sunShortcode'));
-            add_shortcode('largeWeather', array($this->shortcodes, 'largeWeatherShortcode'));
-            add_shortcode('temparature2Weather', array($this->shortcodes, 'temparatureShortcode'));
+            add_shortcode('temparatureWeather', array($this->shortcodes, 'temparatureShortcode'));
             add_shortcode('aqiAirPollution', array($this->shortcodes, 'aqiShortcode'));
         }
 

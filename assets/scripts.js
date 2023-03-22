@@ -10,16 +10,17 @@ function getHour(time) {
 }
 function setProgress(time) {
     const date = new Date();
-    const hour = getHour(date)
+    let hour = getHour(date)
+    if (hour === 0) hour = 12
     const progress = getId("progressWeather")
     const parent = create()
     parent.classList.add("wrapProgressBar")
-    for(let i = 0; i < 13; i++) {
+    for(let i = 1; i < 13; i++) {
         const wrap = create()
         wrap.classList.add("wrapBar")
         const child = create()
         child.classList.add("progressBar")
-        if (i === hour) child.classList.add("now")
+        if (i === hour || i === hour-12) child.classList.add("now")
         wrap.append(child)
         if (i % 2 === 0) {
             const time = create()
@@ -43,19 +44,19 @@ function setDangerLevels(speed) {
 function setAQI(aqi) {
     const airQuality = [
         {
-            min:1,max:1,c:"66FFFF",d:"Sehr gut"
+            min:1,max:1,c:"66FFFF",d:"😃"
         },
         {
-            min:2,max:2,c:"00FF99",d:"Gut"
+            min:2,max:2,c:"00FF99",d:"🙂"
         },
         {
-            min:3,max:3,c:"FFFF00",d:"Mittel"
+            min:3,max:3,c:"FFFF00",d:"😐"
         },
         {
-            min:4,max:3,c:"FF9900",d:"Schlecht"
+            min:4,max:3,c:"FF9900",d:"😷"
         },
         {
-            min:4,max:3,c:"FF3300",d:"Sehr schlecht"
+            min:4,max:3,c:"FF3300",d:"☠️"
         }
     ]
     setBar(aqi, airQuality, "indexOfAQI")
@@ -66,7 +67,7 @@ function setBar(target, levels, name) {
     const description = getId(name + "Description")
     description.innerHTML = level.d
     const dangerLevels = getId(name)
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < levels.length; i++) {
         const child = create()
         child.classList.add("dangerLevel")
         child.style.backgroundColor = "#" + levels[i].c
@@ -81,4 +82,9 @@ function setBar(target, levels, name) {
 function setArrow(rotation) {
     const arrow = getId("arrow")
     arrow.style.setProperty("--arrowRotation", rotation + "deg")
+}
+
+function setCondition(clouds) {
+    console.log(clouds)
+    getId("sunIcon").style.setProperty("--sunPosition", (clouds*1.25) + "px")
 }

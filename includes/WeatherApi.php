@@ -128,7 +128,7 @@ class WeatherApi
      */
     public function getClouds(): int
     {
-        return $this->responseWeatherAPI["all"];
+        return $this->getDataFrom("clouds")["all"];
     }
 
     /**
