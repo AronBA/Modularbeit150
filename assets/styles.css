@@ -44,6 +44,8 @@
     font-size: 1em;
     line-height: 300%;
     font-weight: 600;
+    z-index: 1;
+
 
 
 }
@@ -64,6 +66,9 @@
     color:#4a1c03;
 
 
+
+
+
 }
 
 .TempU:before{
@@ -74,11 +79,12 @@
     position:absolute;
     top:142px;
     left:-16px;
-    z-index:-1; /* Place the bulb under the column */
     background:#db3f02;
     border-radius:44px;
     border:5px solid #4a1c03;
     box-shadow:inset 0 0 0 4px #fff;
+    z-index: -1;
+
 }
 
 

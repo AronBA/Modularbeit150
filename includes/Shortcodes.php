@@ -189,8 +189,8 @@ class Shortcodes
                     <div class='tempData'>
                     <div class='Tcontainer'>
                     Temparatur momentan: $CurrentTemp °C<br/>
-                    Min Temparatur: $MaxTemp °C <br/>
-                    Max Temparatur: $MinTemp ° C <br/>
+                    Max Temparatur: $MaxTemp °C <br/>
+                    Min Temparatur: $MinTemp ° C <br/>
                     Fühlt sich wie $FeelsTemp ° C an<br/>
                     </div>
                     <div class='Tcontainer'>
