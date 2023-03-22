@@ -182,8 +182,9 @@ class Shortcodes
         $MaxTemp = $this->api->getTemperaturMax("c");
         $MinTemp = $this->api->getTemperaturMin("c");
         $FeelsTemp = $this->api->getTemperaturFeelslike("c");
-        return "    <script>tempJS('$CurrentTemp')</script>
-                    <div class='wrapWeather'>
+        return "                    
+
+                    <div class='wrapWeather wrapTemp'>
                     <div class='tempTitel'>Temparatur</div>
                     <div class='tempData'>
                     <div class='Tcontainer'>
@@ -194,10 +195,12 @@ class Shortcodes
                     </div>
                     <div class='Tcontainer'>
                     <div class='TempU' id='Temp'>$CurrentTemp&deg;C
-                    <div class='bar'></div> </div>
                     </div>
                     </div>
-                </div>";
+                    </div>
+                </div>
+                <script>setTemp($CurrentTemp)</script>
+";
     }
 
     // aqi = Air Quality Index
