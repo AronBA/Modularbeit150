@@ -326,7 +326,7 @@ class WeatherApi
      * @return int returns the AQI as int
      */
     public function getAirQualityIndex(): int {
-        return $this->getDataFrom("list","PollutionAPI")[0]["main"]["aqi"];
+        return $this->getDataFrom("list", "PollutionAPI")[0]["main"]["aqi"];
     }
     /**
      * gets the compenents of the air in an array. All units in μg/m3

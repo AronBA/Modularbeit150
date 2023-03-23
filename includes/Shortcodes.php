@@ -143,13 +143,30 @@ class Shortcodes
     // aqi = Air Quality Index
     function aqiShortcode(): string {
 	    $aqi = $this->api->getAirQualityIndex();
+        $components = $this->api->getAirCompenents();
+        $co = $components["co"];
+        $no = $components["no"];
+        $no2 = $components["no2"];
+        $o3 = $components["o3"];
+        $so2 = $components["so2"];
+        $nh3 = $components["nh3"];
 	    return "<div class='wrapWeather wrapAQI'>
-                    <h2 style='color: #fffff0'>Air Quality Index (AQI)</h2>
+                    <h2>Air Quality Index (AQI)</h2>
                     <div class='wrapDangerLevels darkBlur'>
                         <h4 id='indexOfAQIDescription'></h4>
                         <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
                     <script>setAQI($aqi)</script>
-                    <p>More advise <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advise'>here</a>.</p>";
+                    <select name='components' id='listComponents'>
+                        <option selected disabled>Other components</option>
+                        <option value=$co>Carbon Monoxide (CO)</option>
+                        <option value=$no>Nitric oxide (NO)</option>
+                        <option value=$no2>Nitrogen dioxide (NO2)</option>
+                        <option value=$o3>Ozone level (O3)</option>
+                        <option value=$so2>Sulfur dioxide (SO2)</option>
+                        <option value=$nh3>Ammonia (NH3)</option>
+                    </select>
+                    <p>More advise <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advise'>here</a>.</p>
+                </div>";
     }
 }
