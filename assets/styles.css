@@ -19,35 +19,34 @@
 .darkBlur {
     border-radius: 10px;
     box-shadow: 0 0 10px 2px black;
-    backdrop-filter: blur(6px) brightness(70%);
+    backdrop-filter: blur(4px) brightness(70%);
+}
+
+.lightBlur {
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px black;
+    backdrop-filter: blur(6px) brightness(120%);
 }
 /* Temp */
-.tempData{
-    display: flex;
-
-}
 .wrapTemp{
     background: url("backgrounds/TempPic.png");
     background-size: cover;
     background-position: center;
     justify-content: center;
     align-items: center;
-
-
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 80px 1fr;
+    place-items: center;
+}
+.tempTitel{
+    text-align: center;
+    grid-column: span 2;
 }
 .Tcontainer{
-    flex: 1;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1em;
-    line-height: 300%;
-    font-weight: 600;
     z-index: 1;
-
-
-
+    padding: 20px;
+    font-weight: 600;
 }
 
 .TempU{
@@ -56,19 +55,15 @@
     width:22px;
     height:150px;
     font:bold 14px/152px helvetica, arial, sans-serif;
+    font-weight: 600;
     text-indent: 36px;
     background: -webkit-linear-gradient(top, #fff var(--tp), #db3f02 0%);
     border-radius:22px 22px 0 0;
     border:5px solid #4a1c03;
     border-bottom:none;
-    position:absolute;
+    position:relative;
     box-shadow:inset 0 0 0 4px #fff;
     color:#4a1c03;
-
-
-
-
-
 }
 
 .TempU:before{
@@ -84,16 +79,6 @@
     border:5px solid #4a1c03;
     box-shadow:inset 0 0 0 4px #fff;
     z-index: -1;
-
-}
-
-
-.tempTitel{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 3em;
 
 }
 

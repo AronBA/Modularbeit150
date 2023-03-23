@@ -182,24 +182,19 @@ class Shortcodes
         $MaxTemp = $this->api->getTemperaturMax("c");
         $MinTemp = $this->api->getTemperaturMin("c");
         $FeelsTemp = $this->api->getTemperaturFeelslike("c");
-        return "                    
-
-                    <div class='wrapWeather wrapTemp'>
-                    <div class='tempTitel'>Temparatur</div>
-                    <div class='tempData'>
-                    <div class='Tcontainer'>
-                    Temparatur momentan: $CurrentTemp °C<br/>
-                    Max Temparatur: $MaxTemp °C <br/>
-                    Min Temparatur: $MinTemp ° C <br/>
-                    Fühlt sich wie $FeelsTemp ° C an<br/>
+        return "<div class='wrapWeather wrapTemp'>
+                    <h2 class='tempTitel'>Temparatur</h2>
+                    <div class='Tcontainer lightBlur'>
+                    Current 🌡️: $CurrentTemp °C<br/>
+                    Max 🌡️: $MaxTemp °C <br/>
+                    Min 🌡️: $MinTemp °C <br/>
+                    Feels like $FeelsTemp °C<br/>
                     </div>
                     <div class='Tcontainer'>
-                    <div class='TempU' id='Temp'>$CurrentTemp&deg;C
+                        <div class='TempU' id='Temp'>$CurrentTemp&deg;C</div>
                     </div>
-                    </div>
-                    </div>
+                    <script>setTemp($CurrentTemp)</script>
                 </div>
-                <script>setTemp($CurrentTemp)</script>
 ";
     }
 
