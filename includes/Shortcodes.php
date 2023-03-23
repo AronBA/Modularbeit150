@@ -39,7 +39,7 @@ class Shortcodes
         $tempUnitUpper = strtoupper($tempUnit);
         $cityName = $this->api->getCity();
         $country = $this->api->getCountry();
-        $temperature = $this->api->getTemperatur($tempUnit);
+        $temperature = $this->api->getTemperature($tempUnit);
         $weatherDescription = $this->api->getWeatherDescription();
         $clouds = $this->api->getClouds();
         return "<div class='wrapWeather wrapCondition'>
@@ -127,10 +127,10 @@ class Shortcodes
 	}
     function temparatureShortcode(): string
     {
-        $CurrentTemp = $this->api->getTemperatur("c");
-        $MaxTemp = $this->api->getTemperaturMax("c");
-        $MinTemp = $this->api->getTemperaturMin("c");
-        $FeelsTemp = $this->api->getTemperaturFeelslike("c");
+        $CurrentTemp = $this->api->getTemperature("c");
+        $MaxTemp = $this->api->getTemperatureMax("c");
+        $MinTemp = $this->api->getTemperatureMin("c");
+        $FeelsTemp = $this->api->getTemperatureFeelslike("c");
         return "<div class='tempWeather'>
                     <div class='tempTitel'>Temparatur</div>
                     Temparatur momentan: $CurrentTemp °C<br/>
@@ -143,7 +143,7 @@ class Shortcodes
     // aqi = Air Quality Index
     function aqiShortcode(): string {
 	    $aqi = $this->api->getAirQualityIndex();
-        $components = $this->api->getAirCompenents();
+        $components = $this->api->getAirComponents();
         $co = $components["co"];
         $no = $components["no"];
         $no2 = $components["no2"];
