@@ -61,6 +61,9 @@ function setAQI(aqi) {
     ]
     setBar(aqi, airQuality, "indexOfAQI")
 }
+function setComponents(e) {
+    getId("componentsResult").innerHTML = e.target.value
+}
 
 function setBar(target, levels, name) {
     const level = levels.find(element => target >= element.min && target <= element.max)

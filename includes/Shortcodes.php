@@ -156,17 +156,17 @@ class Shortcodes
                         <h4 id='indexOfAQIDescription'></h4>
                         <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
-                    <script>setAQI($aqi)</script>
-                    <select name='components' id='listComponents'>
-                        <option selected disabled>Other components</option>
-                        <option value=$co>Carbon Monoxide (CO)</option>
-                        <option value=$no>Nitric oxide (NO)</option>
-                        <option value=$no2>Nitrogen dioxide (NO2)</option>
-                        <option value=$o3>Ozone level (O3)</option>
-                        <option value=$so2>Sulfur dioxide (SO2)</option>
-                        <option value=$nh3>Ammonia (NH3)</option>
+                    <select name='components' id='listComponents' onchange='setComponents(event)'>
+                        <option value='$co μg/m3'>Carbon Monoxide (CO)</option>
+                        <option value='$no μg/m3'>Nitric oxide (NO)</option>
+                        <option value='$no2 μg/m3'>Nitrogen dioxide (NO2)</option>
+                        <option value='$o3 μg/m3'>Ozone level (O3)</option>
+                        <option value='$so2 μg/m3'>Sulfur dioxide (SO2)</option>
+                        <option value='$nh3 μg/m3'>Ammonia (NH3)</option>
                     </select>
-                    <p>More advise <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advise'>here</a>.</p>
+                    <h3 id='componentsResult'>$co μg/m3</h3>
+                    <script>setAQI($aqi)</script>
+                    <p>More advice <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advice'>here</a>.</p>
                 </div>";
     }
 }
