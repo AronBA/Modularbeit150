@@ -1,12 +1,15 @@
 <?php
+
 include "WeatherApi.php";
 include 'adminPanel.php';
+include "config.php";
 class Shortcodes
 {
     private WeatherApi $api;
     public function __construct()
     {
-        $this->api = WeatherApi::construct(adminPanel::$key, adminPanel::$lon, adminPanel::$lat, adminPanel::$lang);
+
+        $this->api = WeatherApi::construct("key",12,12,"de");
     }
     function weather_enqueue_scripts(): void
     {

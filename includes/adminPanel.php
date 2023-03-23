@@ -25,7 +25,6 @@ class adminPanel
      * @var string
      * Contains Hexadecimal color value
      **/
-    public static string $color = "6666ff";
     /**
      * @var string
      * Contains short-form character to indicate Measurement System
@@ -48,7 +47,7 @@ class adminPanel
      */
     function saveToFile(): void{
         $config = include 'config.php';
-        $config['col'] = self::$color;
+
         $config['unit'] = self::$unit;
         $config['APIKey'] = self::$key;
         $config['lang'] = self::$lang;
@@ -63,7 +62,7 @@ class adminPanel
      */
     function pullFromFile():void{
         $config = include 'config.php';
-        self::$color = $config['col'];
+
         self::$unit = $config['unit'];
         self::$key = $config['APIKey'];
         self::$lang = $config['lang'];
@@ -71,7 +70,7 @@ class adminPanel
         self::$lat = $config['lat'];
     }
     public function __construct(){
-        $this->pullFromFile();
+       // $this->pullFromFile();
     }
 
 
@@ -92,9 +91,7 @@ class adminPanel
         if(isset($_POST["lang"])){
             self::$lang = $_POST["lang"];
         }
-        if(isset($_POST["col"])){
-            self::$color = $_POST["col"];
-        }
+
         if(isset($_POST["unit"])){
             self::$unit = $_POST["unit"];
         }
@@ -104,8 +101,8 @@ class adminPanel
     /**
      * @param string $key
      * @param string $unit
-     * @param string $language
-     * @param string $color
+     * @param string $languagebackground
+     * @param string
      * @param number $longitude
      * @param number $latitude
      * @return void
@@ -124,7 +121,7 @@ class adminPanel
         $lon = self::$lon;
         $lang = self::$lang;
         $unit = strtolower(self::$unit);
-        $color = self::$color;
+         = self::;
         $echoVal  = "
         <div class='adminPanel'>
             <form class='input' method='post'>
@@ -170,7 +167,7 @@ class adminPanel
             </div><br />
             <div class='groupIn'>
                 <label for='col'>Color</label><br />
-                <input type='color' id='col' name='col' class='col' value='$color' required />
+                <input type='color' id='col' name='col' class='col' value='' required />
             </div><br />
             <button type='submit' class='submit' value='Submit' onclick='this.form.submit()'>Submit</button>
             </form>
