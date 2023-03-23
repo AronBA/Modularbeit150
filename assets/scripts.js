@@ -44,22 +44,25 @@ function setDangerLevels(speed) {
 function setAQI(aqi) {
     const airQuality = [
         {
-            min:1,max:1,c:"66FFFF",d:"😃"
+            min:1,max:1,c:"66FFFF",d:"Very good 😃"
         },
         {
-            min:2,max:2,c:"00FF99",d:"🙂"
+            min:2,max:2,c:"00FF99",d:"Good 🙂"
         },
         {
-            min:3,max:3,c:"FFFF00",d:"😐"
+            min:3,max:3,c:"FFFF00",d:"Fair 😐"
         },
         {
-            min:4,max:3,c:"FF9900",d:"😷"
+            min:4,max:3,c:"FF9900",d:"Poor 😷"
         },
         {
-            min:4,max:3,c:"FF3300",d:"☠️"
+            min:4,max:3,c:"FF3300",d:"Hazardous ☠️"
         }
     ]
     setBar(aqi, airQuality, "indexOfAQI")
+}
+function setComponents(e) {
+    getId("componentsResult").innerHTML = e.target.value
 }
 
 function setBar(target, levels, name) {

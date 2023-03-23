@@ -1,8 +1,6 @@
 <?php
-
 include "WeatherApi.php";
 include 'adminPanel.php';
-include "config.php";
 class Shortcodes
 {
     private WeatherApi $api;
@@ -41,7 +39,7 @@ class Shortcodes
         $tempUnitUpper = strtoupper($tempUnit);
         $cityName = $this->api->getCity();
         $country = $this->api->getCountry();
-        $temperature = $this->api->getTemperatur($tempUnit);
+        $temperature = $this->api->getTemperature($tempUnit);
         $weatherDescription = $this->api->getWeatherDescription();
         $clouds = $this->api->getClouds();
         return "<div class='wrapWeather wrapCondition'>
@@ -129,10 +127,10 @@ class Shortcodes
 	}
     function temparatureShortcode(): string
     {
-        $CurrentTemp = $this->api->getTemperatur("c");
-        $MaxTemp = $this->api->getTemperaturMax("c");
-        $MinTemp = $this->api->getTemperaturMin("c");
-        $FeelsTemp = $this->api->getTemperaturFeelslike("c");
+        $CurrentTemp = $this->api->getTemperature("c");
+        $MaxTemp = $this->api->getTemperatureMax("c");
+        $MinTemp = $this->api->getTemperatureMin("c");
+        $FeelsTemp = $this->api->getTemperatureFeelslike("c");
         return "<div class='tempWeather'>
                     <div class='tempTitel'>Temparatur</div>
                     Temparatur momentan: $CurrentTemp °C<br/>
@@ -145,13 +143,30 @@ class Shortcodes
     // aqi = Air Quality Index
     function aqiShortcode(): string {
 	    $aqi = $this->api->getAirQualityIndex();
+        $components = $this->api->getAirComponents();
+        $co = $components["co"];
+        $no = $components["no"];
+        $no2 = $components["no2"];
+        $o3 = $components["o3"];
+        $so2 = $components["so2"];
+        $nh3 = $components["nh3"];
 	    return "<div class='wrapWeather wrapAQI'>
-                    <h2 style='color: #fffff0'>Air Quality Index (AQI)</h2>
+                    <h2>Air Quality Index (AQI)</h2>
                     <div class='wrapDangerLevels darkBlur'>
                         <h4 id='indexOfAQIDescription'></h4>
                         <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
+                    <select name='components' id='listComponents' onchange='setComponents(event)'>
+                        <option value='$co μg/m3'>Carbon Monoxide (CO)</option>
+                        <option value='$no μg/m3'>Nitric oxide (NO)</option>
+                        <option value='$no2 μg/m3'>Nitrogen dioxide (NO2)</option>
+                        <option value='$o3 μg/m3'>Ozone level (O3)</option>
+                        <option value='$so2 μg/m3'>Sulfur dioxide (SO2)</option>
+                        <option value='$nh3 μg/m3'>Ammonia (NH3)</option>
+                    </select>
+                    <h3 id='componentsResult'>$co μg/m3</h3>
                     <script>setAQI($aqi)</script>
-                    <p>More advice <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advice'>here</a>.</p>";
+                    <p>More advice <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advice'>here</a>.</p>
+                </div>";
     }
 }
