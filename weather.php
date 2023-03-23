@@ -49,7 +49,7 @@ if ( !class_exists( 'Weather' ) ) {
         function addAdminMenu(): void
         {
             add_action('admin_init', array($this->adminPanel, 'addSettings'));
-            add_menu_page('Weather Manager', 'Weather Manager', 'manage_options', 'weather_plugin_manager', array( $this->adminPanel, 'getAdminPanel'), 'dashicons-admin-generic', 110);
+            add_options_page('Weather Manager', 'Weather Manager', 'manage_options', 'weather_main_options', array( $this->adminPanel, 'getAdminPanel'));
         }
 
 

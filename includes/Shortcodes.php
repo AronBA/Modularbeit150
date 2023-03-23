@@ -6,7 +6,7 @@ class Shortcodes
     private WeatherApi $api;
     public function __construct()
     {
-        $this->api = WeatherApi::construct(adminPanel::$key, adminPanel::$lon, adminPanel::$lat, adminPanel::$lang);
+        $this->api = WeatherApi::construct(get_option('key'), get_option('lon'), get_option('lat'), get_option('lang'));
     }
     function weather_enqueue_scripts(): void
     {
