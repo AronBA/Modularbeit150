@@ -95,18 +95,20 @@ function setCondition(clouds) {
     console.log(clouds)
     getId("sunIcon").style.setProperty("--sunPosition", (clouds*1.25) + "px")
 }
-function setTemp(tempJS) {
+
+
+function setTemp(tempJS,dataT) {
     // input = -20 - 50
     // output = 100 - 0
-    if (option = "c"){
-        const temperature = ((tempJS*2)*-1 + 100)/1.4
-    } else if (option = "f"){
-        let te = ((tempJS-32)*5)/9;
-        const temperature = ((te*2)*-1 + 100)/1.4
+    let te = 0;
+    if (dataT == "c"){
+        te = tempJS;
+    } else if (dataT == "f"){
+        te = ((tempJS-32)*5)/9;
     } else{
-        let te = tempJS-273.15
-        const temperature = ((te*2)*-1 + 100)/1.4
+        te = tempJS-273.15
     }
+    const temperature = ((te*2)*-1 + 100)/1.4
     // -40 - 100
     getId("Temp").style.setProperty("--tp", temperature+"%")
 }
