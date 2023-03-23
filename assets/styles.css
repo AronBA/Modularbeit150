@@ -262,7 +262,7 @@
 }
 
 .wrapAQI {
-    color: white;
+    color: white !important;
     background-image: url("../assets/aqi/aqi_bg.png");
     background-size: cover;
     background-position: center;
@@ -272,15 +272,15 @@
     align-items: center;
 }
 
-.advise:link {
+.advice:link {
     color: deepskyblue;
 }
 
-.advise:visited {
+.advice:visited {
     color: hotpink;
 }
 
-.advise:hover {
+.advice:hover {
     color: darkblue;
 }
 

@@ -3,7 +3,7 @@
 /*
 Plugin Name: Weather
 Plugin URI: https://github.com/AronBA/Modularbeit150
-Description: This is my first attempt on writing a custom Plugin for this amazing tutorial series.
+Description: This is a Plugin which adds various weather related shortcodes
 Version: 1.0.0
 Author: Aron
 Author URI: https://github.com/AronBA
@@ -48,7 +48,8 @@ if ( !class_exists( 'Weather' ) ) {
 
         function addAdminMenu(): void
         {
-            add_menu_page('Weather Manager', 'Weather Manager', 'manage_options', 'weather_plugin_manager', array( $this->adminPanel, 'getAdminPanel'), 'dashicons-admin-generic', 110);
+            add_action('admin_init', array($this->adminPanel, 'addSettings'));
+            add_options_page('Weather Manager', 'Weather Manager', 'manage_options', 'weather_main_options', array( $this->adminPanel, 'getAdminPanel'));
         }
 
 
