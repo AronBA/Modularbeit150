@@ -3,7 +3,7 @@
 /*
 Plugin Name: Weather
 Plugin URI: https://github.com/AronBA/Modularbeit150
-Description: This is my first attempt on writing a custom Plugin for this amazing tutorial series.
+Description: This is a Plugin which adds various weather related shortcodes
 Version: 1.0.0
 Author: Aron
 Author URI: https://github.com/AronBA
