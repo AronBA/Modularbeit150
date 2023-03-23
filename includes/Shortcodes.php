@@ -35,7 +35,7 @@ class Shortcodes
     }
 
     function conditionShortcode(): string {
-        $tempUnit = "c";
+        $tempUnit = get_option("unit");
         $tempUnitUpper = strtoupper($tempUnit);
         $cityName = $this->api->getCity();
         $country = $this->api->getCountry();
