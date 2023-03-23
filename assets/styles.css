@@ -38,6 +38,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 80px 1fr;
     place-items: center;
+    padding-bottom: 10px;
 }
 .tempTitel{
     text-align: center;
@@ -55,7 +56,8 @@
     width:22px;
     height:150px;
     font:bold 14px/152px helvetica, arial, sans-serif;
-    font-weight: 600;
+    font-weight: 800;
+    font-size: 18px;
     text-indent: 36px;
     background: -webkit-linear-gradient(top, #fff var(--tp), #db3f02 0%);
     border-radius:22px 22px 0 0;
