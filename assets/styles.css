@@ -231,15 +231,15 @@
     align-items: center;
 }
 
-.advise:link {
+.advice:link {
     color: deepskyblue;
 }
 
-.advise:visited {
+.advice:visited {
     color: hotpink;
 }
 
-.advise:hover {
+.advice:hover {
     color: darkblue;
 }
 

@@ -1,6 +1,8 @@
 <?php
+
 include "WeatherApi.php";
 include 'adminPanel.php';
+include "config.php";
 class Shortcodes
 {
     private WeatherApi $api;
@@ -150,6 +152,6 @@ class Shortcodes
                         <div id='indexOfAQI' class='dangerLevels'></div>
                     </div>
                     <script>setAQI($aqi)</script>
-                    <p>More advise <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advise'>here</a>.</p>";
+                    <p>More advice <a href='https://en.wikipedia.org/wiki/Air_quality_index' target='_blank' class='advice'>here</a>.</p>";
     }
 }
