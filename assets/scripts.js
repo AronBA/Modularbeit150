@@ -84,26 +84,9 @@ function setArrow(rotation) {
     arrow.style.setProperty("--arrowRotation", rotation + "deg")
 }
 
-let i = 0;
 
-function thermo() {
-    if (i == 0) {
-        i = 1;
-        const elem = document.getElementById("block");
-        let height = 1;
-        const id = setInterval(frame, 10);
 
-        function frame() {
-            if (height >= 100) {
-                clearInterval(id);
-                i = 0;
-            } else {
-                height++;
-                elem.style.width = height + "%";
-            }
-        }
-    }
-}
+
 
 function setCondition(clouds) {
     console.log(clouds)
@@ -112,11 +95,16 @@ function setCondition(clouds) {
 function setTemp(tempJS) {
     // input = -20 - 50
     // output = 100 - 0
-    const temperature = ((tempJS*2)*-1 + 100)/1.4
+    if (option = "c"){
+        const temperature = ((tempJS*2)*-1 + 100)/1.4
+    } else if (option = "f"){
+        let te = ((tempJS-32)*5)/9;
+        const temperature = ((te*2)*-1 + 100)/1.4
+    } else{
+        let te = tempJS-273.15
+        const temperature = ((te*2)*-1 + 100)/1.4
+    }
     // -40 - 100
     getId("Temp").style.setProperty("--tp", temperature+"%")
 }
-function  setTempBar(Temp, pro, name){
-    const proc = pro.find(element => Temp >= element.min && Temp <= element.max)
 
-}

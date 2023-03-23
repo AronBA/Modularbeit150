@@ -177,13 +177,14 @@ class Shortcodes
                 </div>";
 	}
     function temparatureShortcode(): string
-    {
-        $CurrentTemp = $this->api->getTemperatur("c");
-        $MaxTemp = $this->api->getTemperaturMax("c");
-        $MinTemp = $this->api->getTemperaturMin("c");
-        $FeelsTemp = $this->api->getTemperaturFeelslike("c");
+    {   $city = $this->api->getCity();
+        $option = get_option("unit");
+        $CurrentTemp = $this->api->getTemperatur(get_option("unit"));
+        $MaxTemp = $this->api->getTemperaturMax(get_option("unit"));
+        $MinTemp = $this->api->getTemperaturMin(get_option("unit"));
+        $FeelsTemp = $this->api->getTemperaturFeelslike(get_option("unit"));
         return "<div class='wrapWeather wrapTemp'>
-                    <h2 class='tempTitel'>Temparatur</h2>
+                    <h2 class='tempTitel'>Temperature - $city</h2>
                     <div class='Tcontainer lightBlur'>
                     Current 🌡️: $CurrentTemp °C<br/>
                     Max 🌡️: $MaxTemp °C <br/>
@@ -194,6 +195,8 @@ class Shortcodes
                         <div class='TempU' id='Temp'>$CurrentTemp&deg;C</div>
                     </div>
                     <script>setTemp($CurrentTemp)</script>
+                    <script>const option = '<?php echo $option; ?>';</script>
+
                 </div>
 ";
     }
