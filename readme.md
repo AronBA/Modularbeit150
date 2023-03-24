@@ -12,18 +12,27 @@ This plugin adds 4 shortcodes that display weather and air quality information o
 
 The plugin adds the following shortcodes:
 
-[current_temp]
-Use the `current_temp` shortcode to display the current temperature in Celsius for the location you set in the plugin settings.
+[weather_Temperatur]
+Use the `weather_Temperatur` shortcode to display the current temperature in Celsius for the location you set in the plugin settings.
+
+[weather_General]
+Use the `weather_General` shortcode to display general information about the current weather.
+
+[weather_Wind]
+Use the `weather_Wind` shortcode to display the current wind speed and direction for the location you set in the plugin settings.
+<br>
+![image](https://user-images.githubusercontent.com/72823328/227488208-deae6305-0818-4fca-9108-84896a4a15f0.png)
+
+[weather_Polution]
+Use the `weather_Polution` shortcode to display the current air quality index (AQI) for the location you set in the plugin settings.
+
+[weather_Time]
+Use the `weather_Time` shortcode to display the current time for the location you set in the plugin settings.
+<br>
+![image](https://user-images.githubusercontent.com/72823328/227489837-c9b7746b-41fd-405e-8e1f-d260ecf77020.png)
 
 
-[win_info]
-Use the `wind_info` shortcode to display the current wind speed and direction for the location you set in the plugin settings.
 
-[air_quality]
-Use the `air_quality` shortcode to display the current air quality index (AQI) for the location you set in the plugin settings.
-
-[current_time]
-Use the `current_time` shortcode to display the current time for the location you set in the plugin settings.
 
 ## Usage
 
