@@ -31,20 +31,13 @@ To use the shortcodes, simply add them to any page or post on your WordPress sit
 
 ### Location
 
-To display weather or air quality data for a different location, you can specify the latitude and longitude in the shortcode. For example:
-current_temp lat="37.7749" lon="-122.4194"
+To display weather or air quality data for a different location, you can specify the latitude and longitude in the options. For example:
+lat="37.7749" lon="-122.4194"
 
 ### Units
 
-To display temperature in a different unit of measurement, you can specify the units parameter in the shortcode. Available options are `metric` (default) and `imperial`. For example:
+To display temperature in a different unit of measurement, you can specify the units parameter in the shortcode. Available options are `metric` (default) and `imperial`. 
 
-current_temp units="imperial"
-
-### Language
-
-To display data in a different language, you can specify the language parameter in the shortcode. Available options are `en` (default), `fr`, `es`, `de`, `it`, `pt`, `ru`, `zh`, `ja`, `ko`, `ar`. For example:
-
-wind_info lang="fr"
 
 ## Credits
 
