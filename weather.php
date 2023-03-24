@@ -56,12 +56,13 @@ if ( !class_exists( 'Weather' ) ) {
         function register(): void {
             add_action('admin_menu', array( $this, 'addAdminMenu' ));
             add_action( 'wp_enqueue_scripts', array($this->shortcodes, 'weather_enqueue_scripts'));
-            add_shortcode('testWeather', array($this->shortcodes,'testShortcode'));
-            add_shortcode('windWeather', array($this->shortcodes,'windShortcode'));
-            add_shortcode('conditionWeather', array($this->shortcodes, 'conditionShortcode'));
-	        add_shortcode('sunWeather', array($this->shortcodes, 'sunShortcode'));
-            add_shortcode('temparatureWeather', array($this->shortcodes, 'temparatureShortcode'));
-            add_shortcode('aqiAirPollution', array($this->shortcodes, 'aqiShortcode'));
+
+
+            add_shortcode('weather_Wind', array($this->shortcodes,'windShortcode'));
+            add_shortcode('weather_General', array($this->shortcodes, 'conditionShortcode'));
+	        add_shortcode('weather_Time', array($this->shortcodes, 'sunShortcode'));
+            add_shortcode('weather_Temperature', array($this->shortcodes, 'temparatureShortcode'));
+            add_shortcode('weather_Polution', array($this->shortcodes, 'aqiShortcode'));
         }
 
         function activate(): void {
