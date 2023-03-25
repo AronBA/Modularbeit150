@@ -62,7 +62,7 @@ if ( !class_exists( 'Weather' ) ) {
             add_shortcode('weather_General', array($this->shortcodes, 'conditionShortcode'));
 	        add_shortcode('weather_Time', array($this->shortcodes, 'sunShortcode'));
             add_shortcode('weather_Temperature', array($this->shortcodes, 'temparatureShortcode'));
-            add_shortcode('weather_Polution', array($this->shortcodes, 'aqiShortcode'));
+            add_shortcode('weather_Pollution', array($this->shortcodes, 'aqiShortcode'));
         }
 
         function activate(): void {
