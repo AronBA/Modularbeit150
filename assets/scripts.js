@@ -1,5 +1,5 @@
 function getId(id){return document.getElementById(id)}
-function setSun(time, sunrise, sunset) {
+function   setSun(time, sunrise, sunset) {
     const background = getId("sunWeather")
     if (time < sunrise || time > sunset) background.classList.add("sunWeatherDark")
 }
@@ -93,69 +93,19 @@ function setCondition(clouds) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function setTemp(tempJS,dataT) {
+    // input = -20 - 50
+    // output = 100 - 0
+    let te = 0;
+    if (dataT == "c"){
+        te = tempJS;
+    } else if (dataT == "f"){
+        te = ((tempJS-32)*5)/9;
+    } else{
+        te = tempJS-273.15
+    }
+    const temperature = ((te*2)*-1 + 100)/1.4
+    // -40 - 100
+    getId("Temp").style.setProperty("--tp", temperature+"%")
+}
 

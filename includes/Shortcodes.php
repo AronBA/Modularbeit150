@@ -127,18 +127,29 @@ class Shortcodes
 	}
     function temparatureShortcode(): string
     {
-        $CurrentTemp = $this->api->getTemperature("c");
-        $MaxTemp = $this->api->getTemperatureMax("c");
-        $MinTemp = $this->api->getTemperatureMin("c");
-        $FeelsTemp = $this->api->getTemperatureFeelslike("c");
-        return "<div class='tempWeather'>
-                    <div class='tempTitel'>Temparatur</div>
-                    Temparatur momentan: $CurrentTemp °C<br/>
-                    Min Temparatur: $MaxTemp °C <br/>
-                    Max Temparatur: $MinTemp ° C <br/>
-                    Fühlt sich wie $FeelsTemp ° C an<br/>
-                </div>";
+        $city = $this->api->getCity();
+        $option = get_option("unit");
+        $CurrentTemp = $this->api->getTemperature($option);
+        $MaxTemp = $this->api->getTemperatureMax($option);
+        $MinTemp = $this->api->getTemperatureMin($option);
+        $FeelsTemp = $this->api->getTemperatureFeelslike($option);
+        return "<div class='wrapWeather wrapTemp'>
+                    <h2 class='tempTitel'>Temperature - $city</h2>
+                    <div class='Tcontainer lightBlur'>
+                    Current 🌡️: $CurrentTemp °$option<br/>
+                    Max 🌡️: $MaxTemp °$option <br/>
+                    Min 🌡️: $MinTemp °$option <br/>
+                    Feels like $FeelsTemp °$option<br/>
+                    </div>
+                    <div class='Tcontainer'>
+                        <div class='TempU' id='Temp'>$CurrentTemp&deg;$option</div>
+                    </div>
+                    <script>setTemp($CurrentTemp,'$option')</script>
+ 
+                </div>
+";
     }
+
 
     // aqi = Air Quality Index
     function aqiShortcode(): string {
