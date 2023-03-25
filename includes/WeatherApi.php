@@ -41,19 +41,19 @@ class WeatherApi
      * @param string $lang the language of the result
      * @return WeatherApi|false <br> an instance of the WeatherAPI Class or throws a WordPress error
      */
-    public static function construct(string $apikey,float $lon, float $lat,string $lang): ?WeatherApi
+    public static function construct(string $apikey,float $lon, float $lat,string $lang): WP_Error|bool|WeatherApi
     {
-         $api = new WeatherApi($apikey);
 
-         if ($api->getData($lon,$lat,$lang)){
-             return $api;
-         }
-         else {
-             wp_die(__("Oh no! something went wrong while trying to retrieve the weather data. Please check your API key and location and try again."));
-             return false;
-         }
-
+            $api = new WeatherApi($apikey);
+            $err = $api->getData($lon,$lat,$lang);
+            if (!is_wp_error($err)){
+                return $api;
+            }
+            else {
+                return $err;
+            }
     }
+
     /**
      * Makes a Get Request to the all APIs and stores the response.
      *
@@ -61,12 +61,27 @@ class WeatherApi
      * @param float $lat City geolocation, latitude
      * @param string $lang the language of the result
      *
-     * @return bool returns false on error
+     * @return WP_Error|bool returns wp_error on error
      */
-    public function getData(float $lon, float $lat,string $lang = "de"): bool
+    public function getData(float $lon, float $lat,string $lang = "de"): WP_Error|bool
     {
+
         $responseWeatherAPI=wp_remote_get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&lang=$lang&appid=$this->apikey");
         $responsePollutionAPI=wp_remote_get("https://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lon&appid=$this->apikey");
+
+        $codeWeatherAPI = wp_remote_retrieve_response_code($responseWeatherAPI);
+        $codePollutionAPI = wp_remote_retrieve_response_code($responsePollutionAPI);
+
+        if ($codePollutionAPI == 401 || $codeWeatherAPI == 401){
+            return new WP_Error('api_error', __('API call failed. There is probably an issue with your APIKey. Go to the settings and check if it was set correctly.', 'text-domain'));
+        }
+        else if ($codeWeatherAPI == 400 || $codePollutionAPI == 400){
+            return new WP_Error('api_error', __('API call failed. There is probably an issue with you Coordinates. Go to the setting and check if they were set correctly', 'text-domain'));
+        }
+        else if ($codeWeatherAPI !== 200 || $codePollutionAPI !== 200) {
+            return new WP_Error('api_error', __('API call failed. There is a unexpected problem with the API ', 'text-domain'));
+        }
+
 
         $jsonWeatherAPI = wp_remote_retrieve_body($responseWeatherAPI);
         $jsonPollutionAPI = wp_remote_retrieve_body($responsePollutionAPI);
@@ -76,9 +91,7 @@ class WeatherApi
 	    $this->responseWeatherAPI = $resultWeatherAPI;
 	    $this->responsePollutionAPI = $resultPollutionAPI;
 
-		if(!$this->responseWeatherAPI && $this->responsePollutionAPI){
-			return false;
-		}
+
 		return true;
     }
 
