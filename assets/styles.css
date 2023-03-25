@@ -52,7 +52,7 @@
 
 .TempU{
     --tp: 0%;
-    margin-left: 0px;
+    margin-left: 0;
     width:22px;
     height:150px;
     font:bold 14px/152px helvetica, arial, sans-serif;
@@ -81,7 +81,6 @@
     border:5px solid #4a1c03;
     box-shadow:inset 0 0 0 4px #fff;
     z-index: -1;
-
 }
 
 
@@ -239,28 +238,6 @@
 }
 
 /* AQI */
-.aqiWeather {
-    border: solid black;
-    border-radius: 15px;
-    width: 20rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: whitesmoke;
-    line-height: 30px
-}
-.aqiTitel {
-    width: 20rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    background-color: burlywood;
-}
-
 .wrapAQI {
     color: white !important;
     background-image: url("../assets/aqi/aqi_bg.png");
@@ -271,17 +248,25 @@
     justify-content: space-between;
     align-items: center;
 }
-
-.advice:link {
-    color: deepskyblue;
+.wrapComponents {
+    width: 60%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: white;
 }
-
-.advice:visited {
-    color: hotpink;
+.wrapComponents select {
+    color: white;
+    background-color: transparent;
+    border-color: var(--shadow);
 }
-
-.advice:hover {
-    color: darkblue;
+.wrapComponents select:focus {
+    outline: none;
+}
+.wrapComponents select option {
+    background-color: rgb(50,50,50);
 }
 
 /* CONDITION */
@@ -326,6 +311,7 @@
 
 .conditionContent {
     position: absolute;
+    padding: 30px;
     width: 100%;
     height: 100%;
     display: flex;
