@@ -15,33 +15,20 @@ class Shortcodes
         wp_enqueue_style( 'weather-stylesheet' );
         wp_enqueue_script( 'weather-scripts' );
     }
-    function testShortcode(): string
-    {
-        //pull data from the api
-
-        //get temperatur from the result
-        $temperatur = $this->api->getAirQualityIndex();
-        //get city name from the result
-        $city = $this->api->getCity();
-		$co = $this->api->getAirCompenents()["co"];
-        //shortcode
-        $string = "
-        <div>
-            <h2>Stadt: $city</h2>
-            <p>Air Quality index: $temperatur °</p>
-             <p>amount of bullshit in the air: $co °</p>
-        </div>";
-        return $string;
-    }
 
     function conditionShortcode(): string {
-        $tempUnit = get_option("unit");
-        $tempUnitUpper = strtoupper($tempUnit);
-        $cityName = $this->api->getCity();
-        $country = $this->api->getCountry();
-        $temperature = $this->api->getTemperature($tempUnit);
-        $weatherDescription = ucfirst($this->api->getWeatherDescription());
-        $clouds = $this->api->getClouds();
+        try {
+            $tempUnit = get_option("unit");
+            $tempUnitUpper = strtoupper($tempUnit);
+            $cityName = $this->api->getCity();
+            $country = $this->api->getCountry();
+            $temperature = $this->api->getTemperature($tempUnit);
+            $weatherDescription = ucfirst($this->api->getWeatherDescription());
+            $clouds = $this->api->getClouds();
+        } catch (Exception){
+            return 'Wrong coordinates given for this shortcode';
+        }
+
         return "<div class='wrapWeather wrapCondition'>
                     <div class='conditionBackground conditionSky'>                        
                     </div>
@@ -63,14 +50,19 @@ class Shortcodes
                 </div>";
     }
 	function sunShortcode(): string {
-		$city = $this->api->getCity();
-		$timeInt = $this->api->getDayTime();
-		$sunriseInt = $this->api->getSunrise();
-		$sunsetInt = $this->api->getSunset();
-		$dateFormat = "h:i a";
-		$time = date($dateFormat, $timeInt);
-		$sunrise = date($dateFormat, $sunriseInt);
-		$sunset = date($dateFormat, $sunsetInt);
+        try {
+            $city = $this->api->getCity();
+            $timeInt = $this->api->getDayTime();
+            $sunriseInt = $this->api->getSunrise();
+            $sunsetInt = $this->api->getSunset();
+            $dateFormat = "h:i a";
+            $time = date($dateFormat, $timeInt);
+            $sunrise = date($dateFormat, $sunriseInt);
+            $sunset = date($dateFormat, $sunsetInt);
+        } catch (Exception){
+            return 'Wrong coordinates given for this shortcode';
+        }
+
 		return "<div class='wrapWeather wrapSun' id='sunWeather'>
 				<h2>$city</h2>
 				<div id='progressWeather'></div>
@@ -102,9 +94,14 @@ class Shortcodes
 	}
     function windShortcode(): string
     {
-        $windSpeed = $this->api->getWindSpeed();
-        $windDegree = $this->api->getWindDegree();
-        $windGust = $this->api->getWindGust();
+        try {
+            $windSpeed = $this->api->getWindSpeed();
+            $windDegree = $this->api->getWindDegree();
+            $windGust = $this->api->getWindGust();
+        } catch (Exception){
+            return 'Wrong coordinates given for this shortcode';
+        }
+
         return "<div class='wrapWeather wrapWind'>
                     <h2>Windspeed - $windSpeed m/s</h2>
                     <div class='wrapDangerLevels darkBlur'>
@@ -127,12 +124,17 @@ class Shortcodes
 	}
     function temparatureShortcode(): string
     {
-        $city = $this->api->getCity();
-        $option = get_option("unit");
-        $CurrentTemp = $this->api->getTemperature($option);
-        $MaxTemp = $this->api->getTemperatureMax($option);
-        $MinTemp = $this->api->getTemperatureMin($option);
-        $FeelsTemp = $this->api->getTemperatureFeelslike($option);
+        try {
+            $city = $this->api->getCity();
+            $option = get_option("unit");
+            $CurrentTemp = $this->api->getTemperature($option);
+            $MaxTemp = $this->api->getTemperatureMax($option);
+            $MinTemp = $this->api->getTemperatureMin($option);
+            $FeelsTemp = $this->api->getTemperatureFeelslike($option);
+        } catch (Exception){
+            return 'Wrong coordinates given for this shortcode';
+        }
+
         return "<div class='wrapWeather wrapTemp'>
                     <h2 class='tempTitel'>Temperature - $city</h2>
                     <div class='Tcontainer lightBlur'>
@@ -153,14 +155,18 @@ class Shortcodes
 
     // aqi = Air Quality Index
     function aqiShortcode(): string {
-	    $aqi = $this->api->getAirQualityIndex();
-        $components = $this->api->getAirComponents();
-        $co = $components["co"];
-        $no = $components["no"];
-        $no2 = $components["no2"];
-        $o3 = $components["o3"];
-        $so2 = $components["so2"];
-        $nh3 = $components["nh3"];
+        try {
+            $aqi = $this->api->getAirQualityIndex();
+            $components = $this->api->getAirComponents();
+            $co = $components["co"];
+            $no = $components["no"];
+            $no2 = $components["no2"];
+            $o3 = $components["o3"];
+            $so2 = $components["so2"];
+            $nh3 = $components["nh3"];
+        } catch (Exception){
+            return 'Wrong coordinates given for this shortcode';
+        }
 	    return "<div class='wrapWeather wrapAQI'>
                     <h2>Air Quality Index (AQI)</h2>
                     <div class='wrapDangerLevels darkBlur'>
