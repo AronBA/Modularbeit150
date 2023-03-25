@@ -67,11 +67,11 @@ class adminPanel
 class SettingFieldCalls{
     function lonCall(){
         $val = get_option('lon');
-        echo "<input type='number' id='lon' name='lon' class='num' value='$val' required /><br />";
+        echo "<input type='number' id='lon' max=180 min=-180 name='lon' step='any' class='num' value='$val' required /><br />";
     }
     function latCall(){
         $val = get_option('lat');
-        echo "<input type='number' id='lat' name='lat' class='num' value='$val' required /><br />";
+        echo "<input type='number' id='lat' max=90 min=-90 name='lat' step='any' class='num' value='$val' required /><br />";
     }
     function keyCall(){
         $val = get_option('key');
