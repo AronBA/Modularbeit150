@@ -67,34 +67,28 @@ class adminPanel
 class SettingFieldCalls{
     function lonCall(){
         $val = get_option('lon');
-        echo "
-              <input type='number' id='lon' name='lon' class='num' value='$val' required /><br />";
+        echo "<input type='number' id='lon' name='lon' class='num' value='$val' required /><br />";
     }
     function latCall(){
         $val = get_option('lat');
-        echo "
-              <input type='number' id='lat' name='lat' class='num' value='$val' required /><br />";
+        echo "<input type='number' id='lat' name='lat' class='num' value='$val' required /><br />";
     }
     function keyCall(){
         $val = get_option('key');
-        echo "
-              <input id='key' name='key' type='text' value='$val' required /><br />";
+        echo "<input id='key' name='key' type='text' value='$val' required /><br />";
     }
     function unitCall(){
         $val = strtolower(get_option('unit'));
         if($val == "k"){
-            echo "
-                  <input type='radio' value='k' id='unit' name='unit' class='rad' checked /> <label>Kelvin (°K)</label><br />
+            echo "<input type='radio' value='k' id='unit' name='unit' class='rad' checked /> <label>Kelvin (°K)</label><br />
                   <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
                   <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
         } elseif ($val == "c") {
-            echo "
-                  <input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
+            echo "<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
                   <input type='radio' value='c' id='unit' name='unit' class='rad' checked /> <label>Celsius (°C)</label><br />
                   <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
         } else {
-            echo "
-                  <input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
+            echo "<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
                   <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
                   <input type='radio' value='f' id='unit' name='unit' class='rad' checked /> <label>Fahrenheit (°F)</label><br />";
         }
