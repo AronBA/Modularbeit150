@@ -23,7 +23,12 @@ class Shortcodes
         wp_enqueue_style( 'weather-stylesheet' );
         wp_enqueue_script( 'weather-scripts' );
     }
-
+    function handleError($error): string {
+        if(isset($this->error)){
+            return $this->error . "<br>";
+        }
+        return "There was an unexpected error" . $error;
+    }
     function conditionShortcode(): string {
         try {
             $tempUnit = get_option("unit");
@@ -33,8 +38,8 @@ class Shortcodes
             $temperature = $this->api->getTemperature($tempUnit);
             $weatherDescription = ucfirst($this->api->getWeatherDescription());
             $clouds = $this->api->getClouds();
-        } catch (Error){
-            return $this->error . "<br>";
+        } catch (Error $error){
+            return $this->handleError($error);
         }
 
         return "<div class='wrapWeather wrapCondition'>
@@ -67,8 +72,8 @@ class Shortcodes
             $time = date($dateFormat, $timeInt);
             $sunrise = date($dateFormat, $sunriseInt);
             $sunset = date($dateFormat, $sunsetInt);
-        } catch (Error){
-            return $this->error . "<br>";
+        } catch (Error $error){
+            return $this->handleError($error);
         }
 
 		return "<div class='wrapWeather wrapSun' id='sunWeather'>
@@ -94,8 +99,7 @@ class Shortcodes
 					setInterval(function() {
 						const currentTime = document.getElementById('currentTime');
 						const date = new Date();
-						const time = date.toLocaleTimeString();
-						currentTime.innerHTML = time;
+						currentTime.innerHTML = date.toLocaleTimeString();
 					}, 1000);
 				</script>
 			</div>";
@@ -106,8 +110,8 @@ class Shortcodes
             $windSpeed = $this->api->getWindSpeed();
             $windDegree = $this->api->getWindDegree();
             $windGust = $this->api->getWindGust();
-        } catch (Error){
-            return $this->error . "<br>";
+        } catch (Error $error){
+            return $this->handleError($error);
         }
 
         return "<div class='wrapWeather wrapWind'>
@@ -139,8 +143,8 @@ class Shortcodes
             $MaxTemp = $this->api->getTemperatureMax($option);
             $MinTemp = $this->api->getTemperatureMin($option);
             $FeelsTemp = $this->api->getTemperatureFeelslike($option);
-        } catch (Error){
-            return $this->error . "<br>";
+        } catch (Error $error){
+            return $this->handleError($error);
         }
 
         return "<div class='wrapWeather wrapTemp'>
@@ -155,11 +159,8 @@ class Shortcodes
                         <div class='TempU' id='Temp'>$CurrentTemp&deg;$option</div>
                     </div>
                     <script>setTemp($CurrentTemp,'$option')</script>
- 
-                </div>
-";
+                </div>";
     }
-
 
     // aqi = Air Quality Index
     function aqiShortcode(): string {
@@ -172,8 +173,8 @@ class Shortcodes
             $o3 = $components["o3"];
             $so2 = $components["so2"];
             $nh3 = $components["nh3"];
-        } catch (Error){
-            return $this->error . "<br>";
+        } catch (Error $error){
+            return $this->handleError($error);
         }
 	    return "<div class='wrapWeather wrapAQI'>
                     <h2>Air Quality Index (AQI)</h2>
