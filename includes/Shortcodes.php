@@ -40,7 +40,7 @@ class Shortcodes
         $cityName = $this->api->getCity();
         $country = $this->api->getCountry();
         $temperature = $this->api->getTemperature($tempUnit);
-        $weatherDescription = $this->api->getWeatherDescription();
+        $weatherDescription = ucfirst($this->api->getWeatherDescription());
         $clouds = $this->api->getClouds();
         return "<div class='wrapWeather wrapCondition'>
                     <div class='conditionBackground conditionSky'>                        
