@@ -25,7 +25,7 @@ class Shortcodes
             $temperature = $this->api->getTemperature($tempUnit);
             $weatherDescription = ucfirst($this->api->getWeatherDescription());
             $clouds = $this->api->getClouds();
-        } catch (Exception){
+        } catch (Error){
             return 'Wrong coordinates given for this shortcode';
         }
 
@@ -59,7 +59,7 @@ class Shortcodes
             $time = date($dateFormat, $timeInt);
             $sunrise = date($dateFormat, $sunriseInt);
             $sunset = date($dateFormat, $sunsetInt);
-        } catch (Exception){
+        } catch (Error){
             return 'Wrong coordinates given for this shortcode';
         }
 
@@ -98,7 +98,7 @@ class Shortcodes
             $windSpeed = $this->api->getWindSpeed();
             $windDegree = $this->api->getWindDegree();
             $windGust = $this->api->getWindGust();
-        } catch (Exception){
+        } catch (Error){
             return 'Wrong coordinates given for this shortcode';
         }
 
@@ -131,7 +131,7 @@ class Shortcodes
             $MaxTemp = $this->api->getTemperatureMax($option);
             $MinTemp = $this->api->getTemperatureMin($option);
             $FeelsTemp = $this->api->getTemperatureFeelslike($option);
-        } catch (Exception){
+        } catch (Error){
             return 'Wrong coordinates given for this shortcode';
         }
 
@@ -164,7 +164,7 @@ class Shortcodes
             $o3 = $components["o3"];
             $so2 = $components["so2"];
             $nh3 = $components["nh3"];
-        } catch (Exception){
+        } catch (Error){
             return 'Wrong coordinates given for this shortcode';
         }
 	    return "<div class='wrapWeather wrapAQI'>
