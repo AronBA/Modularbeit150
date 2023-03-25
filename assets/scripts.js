@@ -1,5 +1,5 @@
 function getId(id){return document.getElementById(id)}
-function   setSun(time, sunrise, sunset) {
+function setSun(time, sunrise, sunset) {
     const background = getId("sunWeather")
     if (time < sunrise || time > sunset) background.classList.add("sunWeatherDark")
 }
@@ -33,31 +33,23 @@ function setProgress(time) {
 }
 function setDangerLevels(speed) {
     const kmh = speed * 3.6
-    const levels = [{min:0,max:2,c:"66FFFF",d:"Calm"},{min:3,max:5,c:"00FFFF",d:"Light air"},{min:6,max:11,c:"00FF99",d:"Light breeze"},
-        {min:12,max:19,c:"00FF99",d:"Gentle breeze"},{min:20,max:29,c:"66FF66",d:"Moderate breeze"},{min:30,max:39,c:"99FF33",d:"Fresh breeze"},
-        {min:40,max:50,c:"CCFF33",d:"Strong breeze"},{min:51,max:61,c:"FFFF00",d:"Moderate gale"},{min:62,max:74,c:"FFC000",d:"Fresh gale"},
-        {min:75,max:87,c:"FF9900",d:"Strong gale"},{min:88,max:101,c:"FF6600",d:"Whole gale"},{min:102,max:116,c:"FF3300",d:"Violent storm"},
-        {min:117,max:9999,c:"FF0000",d:"Hurricane"}]
+    const levels = [
+        {val:2,c:"66FFFF",d:"Calm"},{val:5,c:"00FFFF",d:"Light air"},{val:11,c:"00FF99",d:"Light breeze"},
+        {val:19,c:"00FF99",d:"Gentle breeze"},{val:29,c:"66FF66",d:"Moderate breeze"},{val:39,c:"99FF33",d:"Fresh breeze"},
+        {val:50,c:"CCFF33",d:"Strong breeze"},{val:61,c:"FFFF00",d:"Moderate gale"},{val:74,c:"FFC000",d:"Fresh gale"},
+        {val:87,c:"FF9900",d:"Strong gale"},{val:101,c:"FF6600",d:"Whole gale"},{val:116,c:"FF3300",d:"Violent storm"},
+        {val:9999,c:"FF0000",d:"Hurricane"}
+    ]
     setBar(kmh, levels, "dangerLevels")
 }
 
 function setAQI(aqi) {
     const airQuality = [
-        {
-            min:1,max:1,c:"66FFFF",d:"Very good 😃"
-        },
-        {
-            min:2,max:2,c:"00FF99",d:"Good 🙂"
-        },
-        {
-            min:3,max:3,c:"FFFF00",d:"Fair 😐"
-        },
-        {
-            min:4,max:3,c:"FF9900",d:"Poor 😷"
-        },
-        {
-            min:4,max:3,c:"FF3300",d:"Hazardous ☠️"
-        }
+        { val:1,c:"66FFFF",d:"Very good 😃" },
+        { val:2,c:"00FF99",d:"Good 🙂" },
+        { val:3,c:"FFFF00",d:"Fair 😐" },
+        { val:4,c:"FF9900",d:"Poor 😷" },
+        { val:5,c:"FF3300",d:"Hazardous ☠️" }
     ]
     setBar(aqi, airQuality, "indexOfAQI")
 }
@@ -66,10 +58,8 @@ function setComponents(e) {
 }
 
 function setBar(target, levels, name) {
-    const level = levels.find(element => target >= element.min && target <= element.max)
-    const description = getId(name + "Description")
-    description.innerHTML = level.d
-    const dangerLevels = getId(name)
+    const level = levels.find(element => element.val >= target)
+    getId(name + "Description").innerHTML = level.d
     for (let i = 0; i < levels.length; i++) {
         const child = create()
         child.classList.add("dangerLevel")
@@ -79,7 +69,7 @@ function setBar(target, levels, name) {
             child.classList.add("activeLevel")
             child.style.boxShadow = "0 0 10px 2px #" + levels[i].c
         }
-        dangerLevels.append(child)
+        getId(name).append(child)
     }
 }
 function setArrow(rotation) {
@@ -88,24 +78,24 @@ function setArrow(rotation) {
 }
 
 function setCondition(clouds) {
-    console.log(clouds)
     getId("sunIcon").style.setProperty("--sunPosition", (clouds*1.25) + "px")
 }
 
 
 function setTemp(tempJS,dataT) {
-    // input = -20 - 50
-    // output = 100 - 0
     let te = 0;
-    if (dataT == "c"){
-        te = tempJS;
-    } else if (dataT == "f"){
-        te = ((tempJS-32)*5)/9;
-    } else{
-        te = tempJS-273.15
+    switch (dataT) {
+        case "c":
+            te = tempJS
+            break
+        case "f":
+            te = ((tempJS-32)*5)/9
+            break
+        case "k":
+            te = tempJS-273.15
+            break
     }
     const temperature = ((te*2)*-1 + 100)/1.4
-    // -40 - 100
     getId("Temp").style.setProperty("--tp", temperature+"%")
 }
 
