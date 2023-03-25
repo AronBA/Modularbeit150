@@ -4,9 +4,17 @@ include 'adminPanel.php';
 class Shortcodes
 {
     private WeatherApi $api;
+    private string $error;
     public function __construct()
     {
-        $this->api = WeatherApi::construct(get_option('key'), get_option('lon'), get_option('lat'), get_option('lang'));
+
+        $api = WeatherApi::construct(get_option('key'), get_option('lon'), get_option('lat'), get_option('lang'));
+        if(is_wp_error($api)){
+            $errormsg = $api->get_error_message();
+            $this->error = "<div class='wrapWeather wrapCondition'>$errormsg </div>";
+        } else {
+        $this->api = $api;
+        }
     }
     function weather_enqueue_scripts(): void
     {
@@ -25,8 +33,11 @@ class Shortcodes
             $temperature = $this->api->getTemperature($tempUnit);
             $weatherDescription = ucfirst($this->api->getWeatherDescription());
             $clouds = $this->api->getClouds();
-        } catch (Error){
-            return 'Wrong coordinates given for this shortcode';
+        } catch (Error $error){
+            if(isset($this->error)){
+                return $this->error . "<br>";
+            }
+            return "There was an unexpected error" . $error;
         }
 
         return "<div class='wrapWeather wrapCondition'>
@@ -59,8 +70,11 @@ class Shortcodes
             $time = date($dateFormat, $timeInt);
             $sunrise = date($dateFormat, $sunriseInt);
             $sunset = date($dateFormat, $sunsetInt);
-        } catch (Error){
-            return 'Wrong coordinates given for this shortcode';
+        } catch (Error $error){
+            if(isset($this->error)){
+                return $this->error . "<br>";
+            }
+            return "There was an unexpected error" . $error;
         }
 
 		return "<div class='wrapWeather wrapSun' id='sunWeather'>
@@ -98,8 +112,11 @@ class Shortcodes
             $windSpeed = $this->api->getWindSpeed();
             $windDegree = $this->api->getWindDegree();
             $windGust = $this->api->getWindGust();
-        } catch (Error){
-            return 'Wrong coordinates given for this shortcode';
+        } catch (Error $error){
+            if(isset($this->error)){
+                return $this->error . "<br>";
+            }
+            return "There was an unexpected error" . $error;
         }
 
         return "<div class='wrapWeather wrapWind'>
@@ -131,8 +148,11 @@ class Shortcodes
             $MaxTemp = $this->api->getTemperatureMax($option);
             $MinTemp = $this->api->getTemperatureMin($option);
             $FeelsTemp = $this->api->getTemperatureFeelslike($option);
-        } catch (Error){
-            return 'Wrong coordinates given for this shortcode';
+        } catch (Error $error){
+            if(isset($this->error)){
+                return $this->error . "<br>";
+            }
+            return "There was an unexpected error" . $error;
         }
 
         return "<div class='wrapWeather wrapTemp'>
@@ -164,8 +184,11 @@ class Shortcodes
             $o3 = $components["o3"];
             $so2 = $components["so2"];
             $nh3 = $components["nh3"];
-        } catch (Error){
-            return 'Wrong coordinates given for this shortcode';
+        } catch (Error $error){
+            if(isset($this->error)){
+                return $this->error . "<br>";
+            }
+            return "There was an unexpected error" . $error;
         }
 	    return "<div class='wrapWeather wrapAQI'>
                     <h2>Air Quality Index (AQI)</h2>
