@@ -49,28 +49,30 @@
     z-index: 1;
     padding: 20px;
     font-weight: 600;
+    color: black !important;
 }
-
+.wrapThermo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 .TempU{
     --tp: 0%;
     margin-left: 0;
-    width:22px;
-    height:150px;
-    font:bold 14px/152px helvetica, arial, sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    text-indent: 36px;
+    width: 22px;
+    height: 150px;
     background: -webkit-linear-gradient(top, #fff var(--tp), #db3f02 0%);
     border-radius:22px 22px 0 0;
     border:5px solid #4a1c03;
     border-bottom:none;
     position:relative;
     box-shadow:inset 0 0 0 4px #fff;
-    color:#4a1c03;
 }
 
 .TempU:before{
-    content:' ';
+    content:'';
     width:44px;
     height:44px;
     display:block;
