@@ -7,14 +7,20 @@ class Shortcodes
     private string $error;
     public function __construct()
     {
-
-        $api = WeatherApi::construct(get_option('key'), get_option('lon'), get_option('lat'), get_option('lang'));
-        if(is_wp_error($api)){
-            $errormsg = $api->get_error_message();
-            $this->error = "<div class='wrapWeather wrapCondition'>$errormsg </div>";
-        } else {
-        $this->api = $api;
+        try {
+            $api = WeatherApi::construct(get_option('key'), get_option('lon'), get_option('lat'), get_option('lang'));
+            if(is_wp_error($api)){
+                $errormsg = $api->get_error_message();
+                $this->error = "<div class='wrapWeather wrapCondition'>If you see this you are probably trying to break things on purpose: <br> $errormsg </div>";
+            } else {
+                $this->api = $api;
+            }
+        } catch (Error $errormsg){
+            $this->error = "<div class='wrapWeather wrapCondition'>If you see this you are probably trying to break things on purpose: <br> $errormsg  </div>";
         }
+
+
+
     }
     function weather_enqueue_scripts(): void
     {
