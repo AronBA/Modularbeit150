@@ -1,18 +1,16 @@
-function getId(id){return document.getElementById(id)}
+function getId(id){ return document.getElementById(id) }
 function setSun(time, sunrise, sunset) {
-    const background = getId("sunWeather")
-    if (time < sunrise || time > sunset) background.classList.add("sunWeatherDark")
+    if (time < sunrise || time > sunset) {
+        getId("sunWeather").classList.add("sunWeatherDark")
+    }
 }
-function create(tag = "div") {return document.createElement(tag)}
+function create(tag = "div") { return document.createElement(tag) }
 
-function getHour(time) {
-    return new Date(time).getHours()
-}
+function getHour(time) { return new Date(time).getHours() }
 function setProgress(time) {
     const date = new Date();
     let hour = getHour(date)
     if (hour === 0) hour = 12
-    const progress = getId("progressWeather")
     const parent = create()
     parent.classList.add("wrapProgressBar")
     for(let i = 1; i < 13; i++) {
@@ -29,10 +27,9 @@ function setProgress(time) {
         }
         parent.append(wrap)
     }
-    progress.append(parent)
+    getId("progressWeather").append(parent)
 }
 function setDangerLevels(speed) {
-    const kmh = speed * 3.6
     const levels = [
         {val:2,c:"66FFFF",d:"Calm"},{val:5,c:"00FFFF",d:"Light air"},{val:11,c:"00FF99",d:"Light breeze"},
         {val:19,c:"00FF99",d:"Gentle breeze"},{val:29,c:"66FF66",d:"Moderate breeze"},{val:39,c:"99FF33",d:"Fresh breeze"},
@@ -40,7 +37,7 @@ function setDangerLevels(speed) {
         {val:87,c:"FF9900",d:"Strong gale"},{val:101,c:"FF6600",d:"Whole gale"},{val:116,c:"FF3300",d:"Violent storm"},
         {val:9999,c:"FF0000",d:"Hurricane"}
     ]
-    setBar(kmh, levels, "dangerLevels")
+    setBar(speed * 3.6, levels, "dangerLevels")
 }
 
 function setAQI(aqi) {
@@ -60,6 +57,7 @@ function setComponents(e) {
 function setBar(target, levels, name) {
     const level = levels.find(element => element.val >= target)
     getId(name + "Description").innerHTML = level.d
+    const parent = getId(name)
     for (let i = 0; i < levels.length; i++) {
         const child = create()
         child.classList.add("dangerLevel")
@@ -69,12 +67,11 @@ function setBar(target, levels, name) {
             child.classList.add("activeLevel")
             child.style.boxShadow = "0 0 10px 2px #" + levels[i].c
         }
-        getId(name).append(child)
+        parent.append(child)
     }
 }
 function setArrow(rotation) {
-    const arrow = getId("arrow")
-    arrow.style.setProperty("--arrowRotation", rotation + "deg")
+    getId("arrow").style.setProperty("--arrowRotation", rotation + "deg")
 }
 
 function setCondition(clouds) {
@@ -96,6 +93,6 @@ function setTemp(tempJS,dataT) {
             break
     }
     const temperature = ((te*2)*-1 + 100)/1.4
-    getId("Temp").style.setProperty("--tp", temperature+"%")
+    getId("Temp").style.setProperty("--tp", temperature + "%")
 }
 
