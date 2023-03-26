@@ -6,7 +6,8 @@ This plugin adds 4 shortcodes that display weather and air quality information o
 
 1. Upload the plugin files to the `/wp-content/plugins/weather-and-air-quality-plugin` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Go to the plugin settings page and enter your API key and the coordinates for the location you want to display data for.
+3. Get your APIKey from https://openweathermap.org
+4. Go to the plugin settings page and enter your API key and the coordinates for the location you want to display data for.
 
 ## Shortcodes
 

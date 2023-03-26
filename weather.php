@@ -34,16 +34,16 @@ if ( !class_exists( 'Weather' ) ) {
 
     class Weather
     {
-        private Shortcodes $shortcodes;
+        private WeatherShortcodes $shortcodes;
         private adminPanel $adminPanel;
         public string $plugin;
 
         function __construct() {
-            include_once "includes/Shortcodes.php";
-            include_once "includes/adminPanel.php";
+            include_once "includes/WeatherShortcodes.php";
+            include_once "includes/WeatherAdminPanel.php";
             $this->plugin = plugin_basename( __FILE__ );
             $this->adminPanel = new adminPanel();
-            $this->shortcodes = new Shortcodes();
+            $this->shortcodes = new WeatherShortcodes();
         }
 
         function addAdminMenu(): void

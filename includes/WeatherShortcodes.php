@@ -1,7 +1,7 @@
 <?php
 include "WeatherApi.php";
-include 'adminPanel.php';
-class Shortcodes
+include 'WeatherAdminPanel.php';
+class WeatherShortcodes
 {
     private WeatherApi $api;
     private string $error;
