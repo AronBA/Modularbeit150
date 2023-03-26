@@ -19,7 +19,7 @@ class adminPanel
     }
 
     /**
-     * Adds settings to Wordpress
+     * Adds settings to WordPress
      * @return void
      */
     function addSettings(): void
@@ -65,33 +65,23 @@ class adminPanel
 }
 
 class SettingFieldCalls{
-    function lonCall(){
+    function lonCall(): void {
         $val = get_option('lon',"12");
         echo "<input type='number' id='lon' max=180 min=-180 name='lon' step='any' class='num' value='$val' required /><br />";
     }
-    function latCall(){
+    function latCall(): void {
         $val = get_option('lat',"12");
         echo "<input type='number' id='lat' max=90 min=-90 name='lat' step='any' class='num' value='$val' required /><br />";
     }
-    function keyCall(){
+    function keyCall(): void {
         $val = get_option('key');
         echo "<input id='key' name='key' type='text' value='$val' required /><br />";
     }
-    function unitCall(){
+    function unitCall(): void {
         $val = strtolower(get_option('unit',"f"));
-        if($val == "k"){
-            echo "<input type='radio' value='k' id='unit' name='unit' class='rad' checked /> <label>Kelvin (°K)</label><br />
-                  <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
-                  <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
-        } elseif ($val == "c") {
-            echo "<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
-                  <input type='radio' value='c' id='unit' name='unit' class='rad' checked /> <label>Celsius (°C)</label><br />
-                  <input type='radio' value='f' id='unit' name='unit' class='rad' /> <label>Fahrenheit (°F)</label><br />";
-        } else {
-            echo "<input type='radio' value='k' id='unit' name='unit' class='rad' /> <label>Kelvin (°K)</label><br />
-                  <input type='radio' value='c' id='unit' name='unit' class='rad' /> <label>Celsius (°C)</label><br />
-                  <input type='radio' value='f' id='unit' name='unit' class='rad' checked /> <label>Fahrenheit (°F)</label><br />";
-        }
+        echo "<input type='radio' value='k' id='unit' name='unit' class='rad' " . ((strcmp($val,'k')==0)?'checked':'') . " /> <label>Kelvin (°K)</label><br/>
+              <input type='radio' value='c' id='unit' name='unit' class='rad' " . ((strcmp($val,'c')==0)?'checked':'') . " /> <label>Celsius (°C)</label><br/>
+              <input type='radio' value='f' id='unit' name='unit' class='rad' " . ((strcmp($val,'f')==0)?'checked':'') . " /> <label>Fahrenheit (°F)</label><br/>";
     }
     function sectionCall():void{
     }
