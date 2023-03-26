@@ -1,6 +1,6 @@
 <?php
 
-class adminPanel
+class WeatherAdminPanel
 {
     public SettingFieldCalls $obj;
     public function __construct(){
