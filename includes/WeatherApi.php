@@ -39,7 +39,7 @@ class WeatherApi
      * @param float $lon the longitude of the location
      * @param float $lat the latitude of the location
      * @param string $lang the language of the result
-     * @return WeatherApi|false <br> an instance of the WeatherAPI Class or throws a WordPress error
+     * @return WP_Error|bool|WeatherApi <br> an instance of the WeatherAPI Class or throws a WordPress error
      */
     public static function construct(string $apikey,float $lon, float $lat,string $lang): WP_Error|bool|WeatherApi
     {
@@ -326,8 +326,13 @@ class WeatherApi
      */
     public function getCountry(): string
     {
-        return $this->getDataFrom("sys")["country"];
+        $data = isset($this->getDataFrom("sys")["country"]);
+        if ($data){
+            return $this->getDataFrom("sys")["country"];
+        } return "no country";
+
     }
+
 
     /**
      * gets the current time
