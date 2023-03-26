@@ -144,11 +144,12 @@ class WeatherShortcodes
     {
         try {
             $city = $this->api->getCity();
-            $option = get_option("unit");
-            $CurrentTemp = $this->api->getTemperature($option);
-            $MaxTemp = $this->api->getTemperatureMax($option);
-            $MinTemp = $this->api->getTemperatureMin($option);
-            $FeelsTemp = $this->api->getTemperatureFeelslike($option);
+            $unit = get_option("unit");
+            $unitUpper = strtoupper($unit);
+            $CurrentTemp = $this->api->getTemperature($unit);
+            $MaxTemp = $this->api->getTemperatureMax($unit);
+            $MinTemp = $this->api->getTemperatureMin($unit);
+            $FeelsTemp = $this->api->getTemperatureFeelslike($unit);
         } catch (Error $error){
             return $this->handleError($error);
         }
@@ -156,15 +157,16 @@ class WeatherShortcodes
         return "<div class='wrapWeather wrapTemp'>
                     <h2 class='tempTitel'>Temperature - $city</h2>
                     <div class='Tcontainer lightBlur'>
-                    Current 🌡️: $CurrentTemp °$option<br/>
-                    Max 🌡️: $MaxTemp °$option <br/>
-                    Min 🌡️: $MinTemp °$option <br/>
-                    Feels like $FeelsTemp °$option<br/>
+                    Current 🌡️: $CurrentTemp °$unitUpper<br/>
+                    Max 🌡️: $MaxTemp °$unitUpper <br/>
+                    Min 🌡️: $MinTemp °$unitUpper <br/>
+                    Feels like $FeelsTemp °$unitUpper<br/>
                     </div>
-                    <div class='Tcontainer'>
-                        <div class='TempU' id='Temp'>$CurrentTemp&deg;$option</div>
+                    <div class='Tcontainer wrapThermo'>
+                        <div class='TempU' id='Temp'></div>
+                        <h2>$CurrentTemp&deg;$unitUpper</h2>
                     </div>
-                    <script>setTemp($CurrentTemp,'$option')</script>
+                    <script>setTemp($CurrentTemp,'$unit')</script>
                 </div>";
     }
 
