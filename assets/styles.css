@@ -10,6 +10,7 @@
     border-radius: 8px;
     box-shadow: 0 0 12px 4px var(--shadow);
     padding: 30px;
+    box-sizing: border-box;
 }
 
 .wrapWeather h1, h2, h3, h4 {
@@ -318,4 +319,5 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
 }
