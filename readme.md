@@ -1,6 +1,6 @@
 # Weather and Air Quality Plugin
 
-This plugin adds 4 shortcodes that display weather and air quality information on your WordPress site. The plugin uses the OpenWeather API (You will require a key for this API) and the PollutionAPI to access current weather and air quality data for a given location.
+This plugin adds 4 shortcodes that display weather and air quality information on your WordPress site. The plugin uses the OpenWeather API (The key can be aquired here: https://openweathermap.org/api) and the PollutionAPI to access current weather and air quality data for a given location.
 
 ## Installation
 
